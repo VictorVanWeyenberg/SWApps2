@@ -1,0 +1,12 @@
+﻿<Application x:Name="SWApps2"
+    x:Class="SWApps2.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm1="using:SWApps2.ModelView">
+    <Application.Resources>
+        <ResourceDictionary>
+            <vm1:ViewModelLocator x:Key="Locator" xmlns:vm="clr-namespace:SWApps2.ModelView" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+
