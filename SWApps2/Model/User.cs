@@ -61,7 +61,5 @@ namespace SWApps2.Model
             get { return _email; }
             set { Set("Email", ref _email, value); }
         }
-
-
     }
 }

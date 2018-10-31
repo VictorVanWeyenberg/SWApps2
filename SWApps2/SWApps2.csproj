@@ -98,8 +98,6 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ModelView\MainViewModel.cs" />
-    <Compile Include="ModelView\ViewModelLocator.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Entrepreneur.cs" />
     <Compile Include="Model\Establishment.cs" />
@@ -111,8 +109,10 @@
     <Compile Include="Model\TimeInterval.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\EstablishmentSearchBox.xaml.cs">
-      <DependentUpon>EstablishmentSearchBox.xaml</DependentUpon>
+    <Compile Include="ViewModel\EstablishmentListViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\EstablishmentListView.xaml.cs">
+      <DependentUpon>EstablishmentListView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -120,7 +120,6 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <PRIResource Include="i18n\en-US\Resources.resw" />
-    <None Include="SWApps2_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
@@ -141,7 +140,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\EstablishmentSearchBox.xaml">
+    <Page Include="View\EstablishmentListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

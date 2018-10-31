@@ -64,6 +64,5 @@ namespace SWApps2.Model
             Name = name;
             Description = description;
         }
-
     }
 }

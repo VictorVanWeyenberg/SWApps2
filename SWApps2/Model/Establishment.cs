@@ -95,7 +95,7 @@ namespace SWApps2.Model
             RaisePropertyChanged("Prmotions");
         }
 
-        
+
 
         /// <summary>
         /// A readonly version of the list of EstablishmentEvent, as a Property

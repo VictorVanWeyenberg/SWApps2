@@ -11,6 +11,7 @@ namespace SWApps2.Model
     /// </summary>
     public class Promotion : Event
     {
+
         private long _id;
 
         public long ID

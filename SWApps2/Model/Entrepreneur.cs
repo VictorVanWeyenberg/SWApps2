@@ -12,7 +12,7 @@ namespace SWApps2.Model
         private Establishment _establishment;
 
         public Entrepreneur(string firstname, string lastname, string email, Establishment establishment)
-            : base(firstname,lastname,email)
+            : base(firstname, lastname, email)
         {
             Establishment = establishment;
         }

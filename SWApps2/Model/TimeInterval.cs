@@ -40,21 +40,23 @@ namespace SWApps2.Model
                 //if start time is not now or in the future, throw exception
                 if (value.CompareTo(new LocalTime(DateTime.Now.Hour, DateTime.Now.Minute)) < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Een start datum voor een tijdsinterval moet in de toekomst liggen");
+                    var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse();
+                    throw new ArgumentOutOfRangeException(resourceLoader.GetString("TimeInterval_StartTimeInvalid"));
                 }
                 _startTime = value;
             }
         }
-        //End Propety
+        //End Property
         public LocalTime End
         {
             get { return _endTime; }
             set
             {
                 //if end time is not later than start time, throw exception
-                if (value.CompareTo(_startTime) <=0 )
+                if (value.CompareTo(_startTime) <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("Een eind datum voor een tijdsinterval moet later zijn dan de start datum");
+                    var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse();
+                    throw new ArgumentOutOfRangeException(resourceLoader.GetString("TimeInterval_EndTimeInvalid"));
                 }
                 _endTime = value;
             }

@@ -121,4 +121,10 @@
     <value>Search Establishment</value>
     <comment>The establishment search box placeholder text</comment>
   </data>
+  <data name="TimeInterval_EndTimeInvalid" xml:space="preserve">
+    <value>An end date should be later than the start date</value>
+  </data>
+  <data name="TimeInterval_StartTimeInvalid" xml:space="preserve">
+    <value>A start date for a time interval should be in the future</value>
+  </data>
 </root>
