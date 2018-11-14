@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using SWApps2.Data;
+using SWApps2.Model;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -25,6 +27,8 @@ namespace SWApps2
         public MainPage()
         {
             this.InitializeComponent();
+            FakeDataService fakenews = new FakeDataService();
+            List<Establishment> establishments = fakenews.Establishments;
         }
     }
 }

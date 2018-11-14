@@ -23,13 +23,18 @@ namespace SWApps2.Model
 
         //the type of this establishment
         private EstablishmentType _type;
+
+        // An image of the establishment
+        private Uri _image;
+
+        public Uri Image { get { return this._image; } }
         //the address of the establishment
         public Address Address { get; }
 
         //ServiceHours property
         public ServiceHours Hours { get; }
 
-        public Establishment(string name, Address address, ServiceHours hours, EstablishmentType type)
+        public Establishment(string name, Address address, ServiceHours hours, EstablishmentType type, Uri image)
         {
             Name = name;
             Address = address;
@@ -38,6 +43,7 @@ namespace SWApps2.Model
             _tags = new List<string>();
             _promotions = new List<Promotion>();
             _events = new List<EstablishmentEvent>();
+            _image = image
         }
 
 
