@@ -12,14 +12,14 @@
     <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Top">
 
         <Image Width="100px" Height="100px" Source="/Assets/comicsans.jpg">
-            
+
         </Image>
 
         <StackPanel Orientation="Vertical" Padding="10,0">
 
             <TextBlock Text="Establishment Title" FontSize="32"></TextBlock>
             <TextBlock Text="Establishment description; location, publicity etc." FontSize="10" Foreground="#FF1D1D1D"></TextBlock>
-            
+
         </StackPanel>
 
     </StackPanel>

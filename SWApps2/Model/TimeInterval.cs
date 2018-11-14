@@ -38,11 +38,11 @@ namespace SWApps2.Model
             {
                 //accept DateTime.Now as valid date or not?
                 //if start time is not now or in the future, throw exception
-                if (value.CompareTo(new LocalTime(DateTime.Now.Hour, DateTime.Now.Minute)) < 0)
-                {
-                    var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse();
-                    throw new ArgumentOutOfRangeException(resourceLoader.GetString("TimeInterval_StartTimeInvalid"));
-                }
+                // if (value.CompareTo(new LocalTime(DateTime.Now.Hour, DateTime.Now.Minute)) < 0)
+                // {
+                //     var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse();
+                //     throw new ArgumentOutOfRangeException(resourceLoader.GetString("TimeInterval_StartTimeInvalid"));
+                // }
                 _startTime = value;
             }
         }

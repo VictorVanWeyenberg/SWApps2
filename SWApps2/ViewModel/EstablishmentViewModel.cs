@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
 using SWApps2.Model;
 
 namespace SWApps2.ViewModel
 {
-    class EstablishmentViewModel
+    public class EstablishmentViewModel : ViewModelBase
     {
-        private Establishment _establishment;
+        public Establishment _establishment;
         public EstablishmentViewModel(Establishment establishment)
         {
             this._establishment = establishment;
@@ -17,6 +18,10 @@ namespace SWApps2.ViewModel
 
         public String Name { get { return this._establishment.Name; } }
         public Address Address { get { return this._establishment.Address; } }
-        public Uri Image { get { return this._establishment.Image; } }
+
+        public static implicit operator EstablishmentViewModel(EstablishmentListViewModel v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -28,6 +28,11 @@ namespace SWApps2.Model
             Number = number;
         }
 
+        public override string ToString()
+        {
+            return Street + " " + Number + ", " + city;
+        }
+
         #region Properties
         public string City
         {

@@ -31,9 +31,6 @@ namespace SWApps2
         {
             this.InitializeComponent();
             this._pageWrapper = this.FindName("PageWrapper") as Frame;
-
-            FakeDataService fakenews = new FakeDataService();
-            List<Establishment> establishments = fakenews.Establishments;
         }
 
         private void Establisments_Page(object sender, RoutedEventArgs e)
