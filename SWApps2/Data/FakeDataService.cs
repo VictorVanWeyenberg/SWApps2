@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SWApps2.Model
+using SWApps2.Model;
 
 namespace SWApps2.Data
 {
@@ -13,7 +13,7 @@ namespace SWApps2.Data
 
         public FakeDataService()
         {
-            establishments = new List<Establishment>();
+            Establishments = new List<Establishment>();
             Address address1 = new Address("Klein Turkije", 8);
             ServiceHours serviceHours1 = new ServiceHours();
             NodaTime.LocalTime openHour = new NodaTime.LocalTime(16, 0);
@@ -23,9 +23,10 @@ namespace SWApps2.Data
             {
                 serviceHours1.setHoursForDay(i, timeInterval1);
             }
-            Establishment establishment1 = new Establishment("Comic Sans", address1, serviceHours1, EstablishmentType.BAR, new Uri("/Assets/comicsans.jpg"));
+            // Establishment establishment1 = new Establishment("Comic Sans", address1, serviceHours1, EstablishmentType.BAR, new Uri("/Assets/comicsans.jpg"));
+            Establishment establishment1 = new Establishment("Comic Sans", address1, serviceHours1, EstablishmentType.BAR);
 
-            establishments.Add(establishment1);
+            Establishments.Add(establishment1);
         }
     }
 }

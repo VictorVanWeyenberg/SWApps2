@@ -53,11 +53,11 @@ namespace SWApps2.Model
             set
             {
                 //if end time is not later than start time, throw exception
-                if (value.CompareTo(_startTime) <= 0)
-                {
-                    var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse();
-                    throw new ArgumentOutOfRangeException(resourceLoader.GetString("TimeInterval_EndTimeInvalid"));
-                }
+                // if (value.CompareTo(_startTime) <= 0)
+                // {
+                //     var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse();
+                //     throw new ArgumentOutOfRangeException(resourceLoader.GetString("TimeInterval_EndTimeInvalid"));
+                // }
                 _endTime = value;
             }
         }

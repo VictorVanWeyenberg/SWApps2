@@ -34,7 +34,7 @@ namespace SWApps2.Model
         //ServiceHours property
         public ServiceHours Hours { get; }
 
-        public Establishment(string name, Address address, ServiceHours hours, EstablishmentType type, Uri image)
+        public Establishment(string name, Address address, ServiceHours hours, EstablishmentType type, Uri image = null)
         {
             Name = name;
             Address = address;
@@ -43,7 +43,13 @@ namespace SWApps2.Model
             _tags = new List<string>();
             _promotions = new List<Promotion>();
             _events = new List<EstablishmentEvent>();
-            _image = image
+            if (image == null)
+            {
+                image = new Uri("ms-appx:///Assets/comicsans.jpg");
+            } else
+            {
+                _image = image;
+            }
         }
 
 

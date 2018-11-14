@@ -6,8 +6,23 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <StackPanel Orientation="Vertical">
+        <CommandBar Padding="10">
+            <AppBarButton Icon="World" Label="Establisments" x:Name="Establisments" Click="Establisments_Page"></AppBarButton>
+            <AppBarButton Icon="OutlineStar" Label="Promotions" x:Name="Promotions" Margin="5,0"></AppBarButton>
+            <AppBarButton Icon="MapPin"  Label="Events" x:Name="Events" Margin="5,0"></AppBarButton>
+            <AppBarButton Icon="People" Label="Profile" x:Name="Profile" Margin="5,0"></AppBarButton>
+        </CommandBar>
+        <Frame x:Name="PageWrapper"></Frame>
+    </StackPanel>
 
-    <Grid>
-
-    </Grid>
+    <!-- <NavigationView >
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Establisments" x:Name="Establishments"></NavigationViewItem>
+            <NavigationViewItem Content="Promotions" x:Name="Promotions"></NavigationViewItem>
+            <NavigationViewItem Content="Events" x:Name="Events"></NavigationViewItem>
+            <NavigationViewItem Content="Profile" x:Name="Profile"></NavigationViewItem>
+        </NavigationView.MenuItems>
+        
+    </NavigationView>-->
 </Page>
