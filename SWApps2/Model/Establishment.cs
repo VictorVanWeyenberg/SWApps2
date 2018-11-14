@@ -43,7 +43,7 @@ namespace SWApps2.Model
             _tags = new List<string>();
             _promotions = new List<Promotion>();
             _events = new List<EstablishmentEvent>();
-            _image = image
+            _image = image;
         }
 
 
