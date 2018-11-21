@@ -40,5 +40,16 @@ namespace SWApps2
         {
             this._pageWrapper.Navigate(typeof(EstablishmentListView));
         }
+
+        private void Change_Page(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            NavigationViewItem selectedViewItem = args.SelectedItem as NavigationViewItem;
+            switch(selectedViewItem.Name)
+            {
+                case "Establishments":
+                    this._pageWrapper.Navigate(typeof(EstablishmentListView));
+                    break;
+            }
+        }
     }
 }

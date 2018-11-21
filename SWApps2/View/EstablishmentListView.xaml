@@ -12,9 +12,7 @@
     <Grid>
         <AutoSuggestBox MinWidth="300" Height="40"  x:Name="inputBox"
                         QuerySubmitted="inputBox_QuerySubmitted" SuggestionChosen="inputBox_SuggestionChosen"
-                        TextChanged="inputBox_TextChanged" QueryIcon="Find"/>
-        <StackPanel x:Name="items">
-
-        </StackPanel>
+                        TextChanged="inputBox_TextChanged" QueryIcon="Find" Margin="10"/>
+        <StackPanel x:Name="items" />
     </Grid>
 </Page>
