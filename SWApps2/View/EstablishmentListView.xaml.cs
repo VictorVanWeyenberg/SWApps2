@@ -27,9 +27,12 @@ namespace SWApps2.View
         public EstablishmentListViewModel EstablishmentList { get; set; }
         public EstablishmentListView()
         {
-            EstablishmentList = new EstablishmentListViewModel();
             InitializeComponent();
             InitializeSearchBox();
+            this.DataContextChanged += (s, e) =>
+            {
+                EstablishmentList = DataContext as EstablishmentListViewModel;
+            };
         }
 
         /// <summary>

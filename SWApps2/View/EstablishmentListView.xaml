@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    xmlns:viewModels="using:SWApps2.ViewModel">
+    xmlns:viewModels="using:SWApps2.ViewModel"
+    DataContext="{Binding EstablishmentList, Source={StaticResource Locator}}">
 
     <StackPanel Orientation="Vertical">
         <AutoSuggestBox MinWidth="300" Height="40"  x:Name="inputBox"
@@ -17,7 +18,7 @@
                   ItemsSource="{x:Bind EstablishmentList.Establishments}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewModels:EstablishmentViewModel">
-                    <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Top">
+                        <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Top">
                         <Image Width="100px" Height="100px" Source="/Assets/comicsans.jpg"></Image>
                         <StackPanel Orientation="Vertical" Padding="10,0">
                             <TextBlock Text="{x:Bind Name}" FontSize="32"></TextBlock>

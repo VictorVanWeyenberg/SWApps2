@@ -46,6 +46,8 @@ namespace SWApps2.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public EstablishmentListViewModel EstablishmentListViewModel => ServiceLocator.Current.GetInstance<EstablishmentListViewModel>();
+        public EstablishmentListViewModel EstablishmentList {
+            get { return ServiceLocator.Current.GetInstance<EstablishmentListViewModel>(); }
+        }
     }
 }
