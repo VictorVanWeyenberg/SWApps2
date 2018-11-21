@@ -19,8 +19,8 @@ namespace SWApps2.Model
             get { return _id; }
         }
 
-        public Promotion(string name, string description, DateTime start, DateTime end, long id) :
-            base(name, description, start, end)
+        public Promotion(Establishment establishment, string name, string description, DateTime start, DateTime end, long id) :
+            base(establishment, name, description, start, end)
         {
             _id = id;
         }

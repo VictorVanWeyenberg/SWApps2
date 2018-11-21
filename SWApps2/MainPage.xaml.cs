@@ -46,6 +46,9 @@ namespace SWApps2
                 case "Establishments":
                     this._pageWrapper.Navigate(typeof(EstablishmentListView));
                     break;
+                case "Promotions":
+                    this._pageWrapper.Navigate(typeof(PromotionListView));
+                    break;
             }
         }
     }

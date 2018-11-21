@@ -38,6 +38,7 @@ namespace SWApps2.ViewModel
             }
 
             SimpleIoc.Default.Register<EstablishmentListViewModel>();
+            SimpleIoc.Default.Register<PromotionListViewModel>();
         }
 
         /// <summary>
@@ -48,6 +49,13 @@ namespace SWApps2.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public EstablishmentListViewModel EstablishmentList {
             get { return ServiceLocator.Current.GetInstance<EstablishmentListViewModel>(); }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public PromotionListViewModel PromotionList {
+            get { return ServiceLocator.Current.GetInstance<PromotionListViewModel>(); }
         }
     }
 }

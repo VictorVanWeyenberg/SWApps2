@@ -10,8 +10,11 @@ namespace SWApps2.Data
     class FakeDataService
     {
         public List<Establishment> Establishments { get; }
+        public List<Promotion> Promotions { get; }
         public FakeDataService() {
                 Establishments = new List<Establishment>();
+            Promotions = new List<Promotion>();
+
                 Address address1 = new Address("Klein Turkije", 8);
                 ServiceHours serviceHours1 = new ServiceHours();
                 NodaTime.LocalTime openHour = new NodaTime.LocalTime(16, 0);
@@ -24,6 +27,13 @@ namespace SWApps2.Data
                 // Establishment establishment1 = new Establishment("Comic Sans", address1, serviceHours1, EstablishmentType.BAR, new Uri("/Assets/comicsans.jpg"));
                 Establishment establishment1 = new Establishment("Comic Sans", address1, serviceHours1, EstablishmentType.BAR);
 
+            DateTime start = new DateTime(2018, 11, 24, 19, 0, 0);
+            DateTime end = new DateTime(2018, 11, 25, 2, 0, 0);
+            Promotion promotion1 = new Promotion(establishment1, "Karaoke", "Sing yer lungs out", start, end, 0);
+
+            establishment1.AddPromotion(promotion1);
+
+            Promotions.Add(promotion1);
                 Establishments.Add(establishment1);
         }
     }

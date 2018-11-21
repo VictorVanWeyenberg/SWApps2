@@ -101,7 +101,7 @@ namespace SWApps2.Model
             RaisePropertyChanged("Promotions");
         }
         //Add a Promotion, then raise propertyChanged
-        public void AddTag(Promotion promo)
+        public void AddPromotion(Promotion promo)
         {
             _promotions.Add(promo);
             RaisePropertyChanged("Prmotions");
@@ -124,7 +124,7 @@ namespace SWApps2.Model
             RaisePropertyChanged("EstablishmentEvents");
         }
         //Add an event, then raise propertyChanged
-        public void AddTag(EstablishmentEvent ev)
+        public void AddEvent(EstablishmentEvent ev)
         {
             _events.Add(ev);
             RaisePropertyChanged("EstablishmentEvents");
