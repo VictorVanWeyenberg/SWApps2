@@ -8,27 +8,41 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     xmlns:viewModels="using:SWApps2.ViewModel"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     DataContext="{Binding EstablishmentList, Source={StaticResource Locator}}">
 
-    <StackPanel Orientation="Vertical">
-        <AutoSuggestBox MinWidth="300" Height="40"  x:Name="inputBox"
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <AutoSuggestBox x:Name="inputBox"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Grid.ColumnSpan="2"
                         QuerySubmitted="inputBox_QuerySubmitted" SuggestionChosen="inputBox_SuggestionChosen"
                         TextChanged="inputBox_TextChanged" QueryIcon="Find"/>
+        <Maps:MapControl Name="map" MapServiceToken="U7pmYpAbgRHmgVyrHL5s~iOovcTR0_2Ph6QXuv2cW8A~AiH8_GfWmXLz0SrnP8Pq3qgtI-6Bf3XXB3nInhD3986LPt12pOU52AKLQtQrJIk6" Grid.Column="0" Grid.Row="1" />
         <ListView x:Name="items"
-                  ItemsSource="{x:Bind EstablishmentList.Establishments}"
-                  ItemClick="{x:Bind ItemClickHandler}"
-                  IsItemClickEnabled="True">
+                  ItemsSource="{x:Bind Path=EstablishmentList.Establishments}"
+                  ItemClick="{x:Bind Path=ItemClickHandler}"
+                  IsItemClickEnabled="True"
+                  Grid.Column="1"
+                  Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewModels:EstablishmentViewModel">
-                        <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Top">
-                        <Image Width="100px" Height="100px" Source="/Assets/comicsans.jpg"></Image>
+                    <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Top">
                         <StackPanel Orientation="Vertical" Padding="10,0">
-                            <TextBlock Text="{x:Bind Name}" FontSize="32"></TextBlock>
-                            <TextBlock Text="{x:Bind Address}" FontSize="10" Foreground="#FF1D1D1D"></TextBlock>
+                            <TextBlock Text="{x:Bind Path=Name}" FontSize="32"/>
+                            <TextBlock Text="{x:Bind Path=Address}" FontSize="10" Foreground="#FF1D1D1D"/>
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackPanel>
+    </Grid>
 </Page>

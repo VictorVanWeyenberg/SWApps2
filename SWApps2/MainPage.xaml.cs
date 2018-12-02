@@ -27,10 +27,13 @@ namespace SWApps2
     {
 
         private Frame _pageWrapper;
+        private NavigationView _navigation;
         public MainPage()
         {
             this.InitializeComponent();
             this._pageWrapper = this.FindName("PageWrapper") as Frame;
+            this._navigation = this.FindName("Nav") as NavigationView;
+            this._navigation.IsBackEnabled = this._pageWrapper.CanGoBack;
         }
 
         private void Establisments_Page(object sender, RoutedEventArgs e)
@@ -57,6 +60,15 @@ namespace SWApps2
                 case "Establishment":
                     this._pageWrapper.Navigate(typeof(EstablishmentView), Parameters);
                     break;
+            }
+            this._navigation.IsBackEnabled = this._pageWrapper.CanGoBack;
+        }
+
+        public void BackRequestedHandler(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            if (this._pageWrapper.CanGoBack)
+            {
+                this._pageWrapper.GoBack();
             }
         }
     }

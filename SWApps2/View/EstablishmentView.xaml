@@ -8,6 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     xmlns:viewModels="using:SWApps2.ViewModel"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     DataContext="{Binding Establishment, Source={StaticResource Locator}}">
 
     <Grid>
@@ -16,15 +17,24 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <TextBlock Padding="10,0" FontSize="64" Text="{x:Bind Establishment.Name}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
-        <StackPanel Orientation="Vertical" Padding="10" Grid.Row="1">
-            <TextBlock Text="{x:Bind Establishment.ServiceHours}" />
-            <TextBlock Text="{x:Bind Establishment.Address}" />
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Padding="10,0,10,0" HorizontalAlignment="Right">
+        <ScrollViewer Grid.Column="0" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Maps:MapControl Name="map" MapServiceToken="U7pmYpAbgRHmgVyrHL5s~iOovcTR0_2Ph6QXuv2cW8A~AiH8_GfWmXLz0SrnP8Pq3qgtI-6Bf3XXB3nInhD3986LPt12pOU52AKLQtQrJIk6" Grid.Column="0" Grid.Row="0" />
+                <StackPanel Orientation="Vertical" Padding="10" Grid.Row="1">
+                    <TextBlock Text="{x:Bind Establishment.Address}" />
+                    <TextBlock Text="{x:Bind Establishment.ServiceHours}" />
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Padding="10,0,10,0">
             <TextBlock FontSize="32" Text="Events" />
             <ListView ItemsSource="{x:Bind Establishment.Events}">
                 <ListView.ItemTemplate>
