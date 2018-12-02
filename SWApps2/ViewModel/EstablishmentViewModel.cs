@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,14 +11,33 @@ namespace SWApps2.ViewModel
 {
     public class EstablishmentViewModel : ViewModelBase
     {
-        public Establishment _establishment;
-        public EstablishmentViewModel(Establishment establishment)
+        private Establishment _establishment;
+        public Establishment Establishment
         {
-            this._establishment = establishment;
+            get { return _establishment; }
+            set {
+                _establishment = value;
+                Events = new ObservableCollection<EventViewModel>();
+                foreach (EstablishmentEvent establishmentEvent in value.EstablishmentEvents)
+                {
+                    Events.Add(new EventViewModel(establishmentEvent));
+                }
+                Promotions = new ObservableCollection<PromotionViewModel>();
+                foreach (Promotion promotion in value.Promotions)
+                {
+                    Promotions.Add(new PromotionViewModel(promotion));
+                }
+            }
         }
 
-        public String Name { get { return this._establishment.Name; } }
-        public Address Address { get { return this._establishment.Address; } }
+        public EstablishmentViewModel() { }
+
+        public string Name { get { return this.Establishment.Name; } }
+        public Address Address { get { return this.Establishment.Address; } }
+        public ServiceHours ServiceHours { get { return this.Establishment.Hours; } }
+        
+        public ObservableCollection<EventViewModel> Events { get; set; }
+        public ObservableCollection<PromotionViewModel> Promotions { get; set; }
 
         public static implicit operator EstablishmentViewModel(EstablishmentListViewModel v)
         {

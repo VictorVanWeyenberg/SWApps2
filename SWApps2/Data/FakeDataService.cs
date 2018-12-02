@@ -11,9 +11,11 @@ namespace SWApps2.Data
     {
         public List<Establishment> Establishments { get; }
         public List<Promotion> Promotions { get; }
+        public List<EstablishmentEvent> EstablishmentEvents { get; }
         public FakeDataService() {
                 Establishments = new List<Establishment>();
             Promotions = new List<Promotion>();
+            EstablishmentEvents = new List<EstablishmentEvent>();
 
                 Address address1 = new Address("Klein Turkije", 8);
                 ServiceHours serviceHours1 = new ServiceHours();
@@ -30,11 +32,14 @@ namespace SWApps2.Data
             DateTime start = new DateTime(2018, 11, 24, 19, 0, 0);
             DateTime end = new DateTime(2018, 11, 25, 2, 0, 0);
             Promotion promotion1 = new Promotion(establishment1, "Karaoke", "Sing yer lungs out", start, end, 0);
+            EstablishmentEvent event1 = new EstablishmentEvent(establishment1, "Karaoke", "Sing yer lungs out", start, end);
 
             establishment1.AddPromotion(promotion1);
+            establishment1.AddEvent(event1);
 
             Promotions.Add(promotion1);
-                Establishments.Add(establishment1);
+            Establishments.Add(establishment1);
+            EstablishmentEvents.Add(event1);
         }
     }
 }

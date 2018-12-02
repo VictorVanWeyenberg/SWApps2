@@ -104,7 +104,7 @@ namespace SWApps2.Model
         public void AddPromotion(Promotion promo)
         {
             _promotions.Add(promo);
-            RaisePropertyChanged("Prmotions");
+            RaisePropertyChanged("Promotions");
         }
 
 

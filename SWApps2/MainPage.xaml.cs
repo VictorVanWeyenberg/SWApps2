@@ -23,7 +23,7 @@ namespace SWApps2
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page, NavigationPage
     {
 
         private Frame _pageWrapper;
@@ -35,19 +35,27 @@ namespace SWApps2
 
         private void Establisments_Page(object sender, RoutedEventArgs e)
         {
-            this._pageWrapper.Navigate(typeof(EstablishmentListView));
+            this._pageWrapper.Navigate(typeof(EstablishmentListView), this);
         }
 
         private void Change_Page(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             NavigationViewItem selectedViewItem = args.SelectedItem as NavigationViewItem;
-            switch(selectedViewItem.Name)
+            (this as NavigationPage).Navigate(selectedViewItem.Name, new { Navigator = (this as NavigationPage) });
+        }
+
+        void NavigationPage.Navigate(string pageName, object Parameters)
+        {
+            switch (pageName)
             {
                 case "Establishments":
-                    this._pageWrapper.Navigate(typeof(EstablishmentListView));
+                    this._pageWrapper.Navigate(typeof(EstablishmentListView), Parameters);
                     break;
                 case "Promotions":
-                    this._pageWrapper.Navigate(typeof(PromotionListView));
+                    this._pageWrapper.Navigate(typeof(PromotionListView), Parameters);
+                    break;
+                case "Establishment":
+                    this._pageWrapper.Navigate(typeof(EstablishmentView), Parameters);
                     break;
             }
         }

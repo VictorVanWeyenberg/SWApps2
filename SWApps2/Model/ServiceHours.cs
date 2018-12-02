@@ -32,5 +32,20 @@ namespace SWApps2.Model
         {
             Hours = new TimeInterval[7];
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 7; i++)
+            {
+                string dayOfWeek = ((DayOfWeek)i).ToString();
+                sb.Append(dayOfWeek);
+                sb.Append(":\t");
+                if (dayOfWeek.Length < 8) sb.Append("\t");
+                sb.Append(Hours[i].ToString());
+                sb.Append("\n");
+            }
+            return sb.ToString();
+        }
     }
 }

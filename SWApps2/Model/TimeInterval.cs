@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NodaTime.Text;
+using System.Globalization;
 
 namespace SWApps2.Model
 {
@@ -60,6 +62,18 @@ namespace SWApps2.Model
                 // }
                 _endTime = value;
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            CultureInfo culture = (CultureInfo) CultureInfo.InvariantCulture.Clone();
+            LocalTimePattern pattern = LocalTimePattern.Create("HH:mm", culture);
+
+            sb.Append(pattern.Format(_startTime));
+            sb.Append(" - ");
+            sb.Append(pattern.Format(_endTime));
+            return sb.ToString();
         }
     }
 }

@@ -15,7 +15,9 @@
                         QuerySubmitted="inputBox_QuerySubmitted" SuggestionChosen="inputBox_SuggestionChosen"
                         TextChanged="inputBox_TextChanged" QueryIcon="Find"/>
         <ListView x:Name="items"
-                  ItemsSource="{x:Bind EstablishmentList.Establishments}">
+                  ItemsSource="{x:Bind EstablishmentList.Establishments}"
+                  ItemClick="{x:Bind ItemClickHandler}"
+                  IsItemClickEnabled="True">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewModels:EstablishmentViewModel">
                         <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Top">
