@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using SWApps2.ViewModel;
+using SWApps2.Model;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,6 +26,7 @@ namespace SWApps2.View
     public sealed partial class EstablishmentListView : Page
     {
         public EstablishmentListViewModel EstablishmentList { get; set; }
+        private NavigationPage _navigator;
         public EstablishmentListView()
         {
             InitializeComponent();
@@ -33,6 +35,18 @@ namespace SWApps2.View
             {
                 EstablishmentList = DataContext as EstablishmentListViewModel;
             };
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            _navigator = (e.Parameter as dynamic).Navigator;
+            base.OnNavigatedTo(e);
+        }
+
+        public void ItemClickHandler(object sender, ItemClickEventArgs e)
+        {
+            Establishment selectedEstablishment = (e.ClickedItem as EstablishmentViewModel).Establishment;
+            this._navigator.Navigate("Establishment", new { Navigator = this._navigator, Parameter = selectedEstablishment });
         }
 
         /// <summary>

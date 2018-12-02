@@ -30,7 +30,7 @@ namespace SWApps2.ViewModel
 
             if (ViewModelBase.IsInDesignModeStatic || UseDesignTimeData)
             {
-                
+                return;
             }
             else
             {
@@ -39,6 +39,7 @@ namespace SWApps2.ViewModel
 
             SimpleIoc.Default.Register<EstablishmentListViewModel>();
             SimpleIoc.Default.Register<PromotionListViewModel>();
+            SimpleIoc.Default.Register<EstablishmentViewModel>();
         }
 
         /// <summary>
@@ -56,6 +57,13 @@ namespace SWApps2.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public PromotionListViewModel PromotionList {
             get { return ServiceLocator.Current.GetInstance<PromotionListViewModel>(); }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public EstablishmentViewModel Establishment {
+            get { return ServiceLocator.Current.GetInstance<EstablishmentViewModel>(); }
         }
     }
 }

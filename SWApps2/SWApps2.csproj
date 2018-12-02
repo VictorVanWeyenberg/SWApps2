@@ -105,6 +105,7 @@
     <Compile Include="Model\EstablishmentEvent.cs" />
     <Compile Include="Model\EstablishmentType.cs" />
     <Compile Include="Model\Event.cs" />
+    <Compile Include="Model\NavigationPage.cs" />
     <Compile Include="Model\Promotion.cs" />
     <Compile Include="Model\ServiceHours.cs" />
     <Compile Include="Model\TimeInterval.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\EstablishmentListViewModel.cs" />
     <Compile Include="ViewModel\EstablishmentViewModel.cs" />
+    <Compile Include="ViewModel\EventViewModel.cs" />
     <Compile Include="ViewModel\PromotionListViewModel.cs" />
     <Compile Include="ViewModel\PromotionViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

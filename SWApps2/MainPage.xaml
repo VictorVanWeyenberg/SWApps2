@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <StackPanel Orientation="Horizontal">
-        <Windows10FallCreatorsUpdate:NavigationView IsPaneOpen="True" SelectionChanged="Change_Page">
+        <Windows10FallCreatorsUpdate:NavigationView SelectionChanged="Change_Page">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Establishments" x:Name="Establishments" Icon="World"></NavigationViewItem>
                 <NavigationViewItem Content="Promotions" x:Name="Promotions" Icon="OutlineStar"></NavigationViewItem>

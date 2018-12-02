@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using SWApps2.Data;
 using SWApps2.Model;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Controls;
 
 namespace SWApps2.ViewModel
 {
@@ -20,8 +21,9 @@ namespace SWApps2.ViewModel
             FakeDataService fakenews = new FakeDataService();
             foreach (Establishment establishment in fakenews.Establishments)
             {
-                _establishments.Add(new EstablishmentViewModel(establishment));
-                Console.WriteLine(establishment.Name);
+                var evm = new EstablishmentViewModel();
+                evm.Establishment = establishment;
+                _establishments.Add(evm);
             }
         }
     }
