@@ -8,9 +8,7 @@ namespace SWApps2.Model
 {
     public class EstablishmentEvent : Event
     {
-        public EstablishmentEvent(string name, string description, DateTime start, DateTime end)
-        : base(name, description, start, end)
-        {
-        }
+        public EstablishmentEvent(string name, string description, DateTime start, DateTime end, Establishment estbl)
+        : base(name, description, start, end,estbl){}
     }
 }

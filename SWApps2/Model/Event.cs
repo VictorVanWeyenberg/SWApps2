@@ -48,6 +48,8 @@ namespace SWApps2.Model
             set { Set("Description", ref _description, value); }
         }
 
+        public Establishment Establishment { get; private set; }
+
         #endregion
 
         /// <summary>
@@ -57,12 +59,13 @@ namespace SWApps2.Model
         /// <param name="description">The description of the event</param>
         /// <param name="start">The start date</param>
         /// <param name="end">The end date</param>
-        public Event(string name, string description, DateTime start, DateTime end)
+        public Event(string name, string description, DateTime start, DateTime end, Establishment establishment)
         {
             Start = start;
             End = end;
             Name = name;
             Description = description;
+            Establishment = establishment;
         }
     }
 }

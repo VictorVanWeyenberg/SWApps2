@@ -1,0 +1,29 @@
+﻿<UserControl
+    x:Class="SWApps2.View.EventView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SWApps2.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="EventType" Grid.Row="0" HorizontalAlignment="Center" Margin="0,10,0,10">EVENT TYPE</TextBlock>
+        <StackPanel Grid.Row="1">
+            <TextBlock x:Name="NameLbl" Margin="15,0,0,0">EVENT NAME LABEL</TextBlock>
+            <TextBlock x:Name="EventName" Margin="15,0,0,0">EVENT NAME VALUE</TextBlock>
+            <TextBlock x:Name="DescriptionLbl" Margin="15,0,0,0">EVENT DESCRIPTION LABEL</TextBlock>
+            <TextBlock x:Name="EventDescription" Margin="15,0,0,0">EVENT DESCRIPTION VALUE</TextBlock>
+            <TextBlock x:Name="StartDateLbl" Margin="15,0,0,0">EVENT STARTDATE LABEL</TextBlock>
+            <TextBlock x:Name="EventStartDate" Margin="15,0,0,0">EVENT STARTDATE VALUE</TextBlock>
+            <TextBlock x:Name="EndDateLbl" Margin="15,0,0,0">EVENT ENDDATE LABEL</TextBlock>
+            <TextBlock x:Name="EventEndDate" Margin="15,0,0,0">EVENT ENDDATE VALUE</TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

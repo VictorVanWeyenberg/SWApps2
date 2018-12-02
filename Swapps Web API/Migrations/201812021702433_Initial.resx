@@ -117,32 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
+  <data name="Target" xml:space="preserve">
+    <value>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</value>
   </data>
-  <data name="EndDate" xml:space="preserve">
-    <value>End Date</value>
-  </data>
-  <data name="EstablishSearchPlaceholder" xml:space="preserve">
-    <value>Search Establishment</value>
-    <comment>The establishment search box placeholder text</comment>
-  </data>
-  <data name="Event" xml:space="preserve">
-    <value>Event</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Promotion" xml:space="preserve">
-    <value>Promotion</value>
-  </data>
-  <data name="StartDate" xml:space="preserve">
-    <value>Start Date</value>
-  </data>
-  <data name="TimeInterval_EndTimeInvalid" xml:space="preserve">
-    <value>An end date should be later than the start date</value>
-  </data>
-  <data name="TimeInterval_StartTimeInvalid" xml:space="preserve">
-    <value>A start date for a time interval should be in the future</value>
+  <data name="DefaultSchema" xml:space="preserve">
+    <value>dbo</value>
   </data>
 </root>
