@@ -22,10 +22,7 @@ namespace SWApps2.Model
         private string _description;
 
         #region Properties
-        public Establishment Establishment {
-            get { return _establishment; }
-            set { _establishment = value; }
-        }
+
         //Start date property
         public DateTime Start
         {
@@ -67,7 +64,6 @@ namespace SWApps2.Model
         /// <param name="end">The end date</param>
         public Event(Establishment establishment, string name, string description, DateTime start, DateTime end)
         {
-            Establishment = establishment;
             Start = start;
             End = end;
             Name = name;
