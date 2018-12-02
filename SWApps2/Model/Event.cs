@@ -54,6 +54,8 @@ namespace SWApps2.Model
             set { Set("Description", ref _description, value); }
         }
 
+        public Establishment Establishment { get; private set; }
+
         #endregion
 
         /// <summary>
@@ -70,6 +72,7 @@ namespace SWApps2.Model
             End = end;
             Name = name;
             Description = description;
+            Establishment = establishment;
         }
     }
 }
