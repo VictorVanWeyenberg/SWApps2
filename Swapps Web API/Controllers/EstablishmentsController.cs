@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Swapps_Web_API.Models;
@@ -19,7 +15,12 @@ namespace Swapps_Web_API.Controllers
         // GET: api/Establishments
         public IQueryable<Establishment> GetEstablishments()
         {
-            return db.Establishments;
+            IQueryable<Establishment> establishments = db.Establishments
+                .Include(est => est.Address)
+                .Include(est => est.Events)
+                .Include(est => est.Promotions)
+                .Include(est => est.ServiceHours);
+            return establishments;
         }
 
         // GET: api/Establishments/5

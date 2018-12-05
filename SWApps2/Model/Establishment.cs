@@ -63,10 +63,10 @@ namespace SWApps2.Model
         /// <summary>
         /// A readonly version of the list of tags, as a Property
         /// </summary>
-        public IEnumerable<string> Tags
-        {
+        public IEnumerable<string> Tags {
             //Get readonly collection of tags
             get { return _tags.AsEnumerable(); }
+            set { _tags = value as List<string>; }
         }
         //Remove a tag, then raise propertyChanged
         public void RemoveTag(string tag)
@@ -92,6 +92,7 @@ namespace SWApps2.Model
         public IEnumerable<Promotion> Promotions
         {
             get { return _promotions.AsEnumerable(); }
+            set { _promotions = value as List<Promotion>; }
         }
 
         //Remove a Promotion, then raise propertyChanged
@@ -116,6 +117,7 @@ namespace SWApps2.Model
         {
             //Get readonly collection of tags
             get { return _events.AsEnumerable(); }
+            set { _events = value as List<EstablishmentEvent>; }
         }
         //Remove an event, then raise propertyChanged
         public void RemoveEvent(EstablishmentEvent ev)

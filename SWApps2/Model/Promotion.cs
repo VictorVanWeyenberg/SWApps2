@@ -12,17 +12,9 @@ namespace SWApps2.Model
     public class Promotion : Event
     {
 
-        private long _id;
-
-        public long ID
-        {
-            get { return _id; }
-        }
-
-        public Promotion(Establishment establishment, string name, string description, DateTime start, DateTime end, long id) :
+        public Promotion(Establishment establishment, string name, string description, DateTime start, DateTime end) :
             base(establishment, name, description, start, end)
         {
-            _id = id;
         }
     }
 }

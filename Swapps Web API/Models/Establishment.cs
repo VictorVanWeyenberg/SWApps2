@@ -11,7 +11,9 @@ namespace Swapps_Web_API.Models
     {
         [Key]
         public int EstablishmentID { get; set; }
-        public List<string> Tags { get; set; }
+        [NotMapped]
+        public ICollection<string> Tags { get; set; }
+        public string TagsString { get { return string.Join(",", Tags); } set { Tags = value.Split(',').ToList(); } }
 
         public string Name { get; set; }
         //Image is ignored, currently a locally stored image is used

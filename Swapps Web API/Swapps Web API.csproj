@@ -186,6 +186,10 @@
     <Compile Include="Migrations\201812021702433_Initial.Designer.cs">
       <DependentUpon>201812021702433_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812040749199_Tags.cs" />
+    <Compile Include="Migrations\201812040749199_Tags.Designer.cs">
+      <DependentUpon>201812040749199_Tags.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Entrepreneur.cs" />
@@ -210,6 +214,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201812021702433_Initial.resx">
       <DependentUpon>201812021702433_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812040749199_Tags.resx">
+      <DependentUpon>201812040749199_Tags.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

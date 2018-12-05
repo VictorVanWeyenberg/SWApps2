@@ -31,7 +31,7 @@ namespace SWApps2.Data
 
             DateTime start = new DateTime(2018, 11, 24, 19, 0, 0);
             DateTime end = new DateTime(2018, 11, 25, 2, 0, 0);
-            Promotion promotion1 = new Promotion(establishment1, "Karaoke", "Sing yer lungs out", start, end, 0);
+            Promotion promotion1 = new Promotion(establishment1, "Karaoke", "Sing yer lungs out", start, end);
             EstablishmentEvent event1 = new EstablishmentEvent(establishment1, "Karaoke", "Sing yer lungs out", start, end);
 
             establishment1.AddPromotion(promotion1);

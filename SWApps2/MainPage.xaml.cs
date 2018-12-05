@@ -34,6 +34,7 @@ namespace SWApps2
             this._pageWrapper = this.FindName("PageWrapper") as Frame;
             this._navigation = this.FindName("Nav") as NavigationView;
             this._navigation.IsBackEnabled = this._pageWrapper.CanGoBack;
+            (this as NavigationPage).Navigate("Establishments", new { Navigator = (this as NavigationPage) });
         }
 
         private void Establisments_Page(object sender, RoutedEventArgs e)

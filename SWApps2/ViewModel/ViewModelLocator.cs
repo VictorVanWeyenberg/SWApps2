@@ -23,6 +23,7 @@ namespace SWApps2.ViewModel
             }
         }
 
+        [PreferredConstructor]
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -37,14 +38,21 @@ namespace SWApps2.ViewModel
                 
             }
 
+            SimpleIoc.Default.Register<EstablishmentViewModel>();
             SimpleIoc.Default.Register<EstablishmentListViewModel>();
             SimpleIoc.Default.Register<PromotionListViewModel>();
-            SimpleIoc.Default.Register<EstablishmentViewModel>();
         }
 
         /// <summary>
         /// Gets the Main property.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public EstablishmentViewModel Establishment {
+            get { return ServiceLocator.Current.GetInstance<EstablishmentViewModel>(); }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
@@ -57,13 +65,6 @@ namespace SWApps2.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public PromotionListViewModel PromotionList {
             get { return ServiceLocator.Current.GetInstance<PromotionListViewModel>(); }
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-            "CA1822:MarkMembersAsStatic",
-            Justification = "This non-static member is needed for data binding purposes.")]
-        public EstablishmentViewModel Establishment {
-            get { return ServiceLocator.Current.GetInstance<EstablishmentViewModel>(); }
         }
     }
 }

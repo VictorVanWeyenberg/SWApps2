@@ -16,16 +16,19 @@ namespace SWApps2.ViewModel
         {
             get { return _establishment; }
             set {
-                _establishment = value;
-                Events = new ObservableCollection<EventViewModel>();
-                foreach (EstablishmentEvent establishmentEvent in value.EstablishmentEvents)
+                if (value != null)
                 {
-                    Events.Add(new EventViewModel(establishmentEvent));
-                }
-                Promotions = new ObservableCollection<PromotionViewModel>();
-                foreach (Promotion promotion in value.Promotions)
-                {
-                    Promotions.Add(new PromotionViewModel(promotion));
+                    _establishment = value;
+                    Events = new ObservableCollection<EventViewModel>();
+                    foreach (EstablishmentEvent establishmentEvent in value.EstablishmentEvents)
+                    {
+                        Events.Add(new EventViewModel(establishmentEvent));
+                    }
+                    Promotions = new ObservableCollection<PromotionViewModel>();
+                    foreach (Promotion promotion in value.Promotions)
+                    {
+                        Promotions.Add(new PromotionViewModel(promotion));
+                    }
                 }
             }
         }
@@ -38,10 +41,5 @@ namespace SWApps2.ViewModel
         
         public ObservableCollection<EventViewModel> Events { get; set; }
         public ObservableCollection<PromotionViewModel> Promotions { get; set; }
-
-        public static implicit operator EstablishmentViewModel(EstablishmentListViewModel v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

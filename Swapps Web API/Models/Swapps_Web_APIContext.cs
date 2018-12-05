@@ -20,7 +20,14 @@ namespace Swapps_Web_API.Models
         }
 
         public System.Data.Entity.DbSet<Swapps_Web_API.Models.Establishment> Establishments { get; set; }
-
         public System.Data.Entity.DbSet<Swapps_Web_API.Models.Address> Addresses { get; set; }
+        public System.Data.Entity.DbSet<Swapps_Web_API.Models.EstablishmentEvent> Events { get; set; }
+        public System.Data.Entity.DbSet<Swapps_Web_API.Models.Promotion> Promotions { get; set; }
+        public System.Data.Entity.DbSet<Swapps_Web_API.Models.TimeInterval> TimeIntervals { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace SWApps2.View
             };
             this.InitializeComponent();
             _map = (MapControl)this.FindName("map");
-            _map.ZoomLevel = 14.5;
+            _map.ZoomLevel = 20;
         }
 
         async private void GeneratePointOfInterest()
@@ -49,9 +49,10 @@ namespace SWApps2.View
             if (Establishment.Establishment == null) return;
             MapLocationFinderResult result = await MapLocationFinder.FindLocationsAsync(Establishment.Address.ToString(), referencePoint);
 
+            Geopoint position = referencePoint;
             if (result.Status == MapLocationFinderStatus.Success)
             {
-                Geopoint position = new Geopoint(new BasicGeoposition
+                position = new Geopoint(new BasicGeoposition
                 {
                     Longitude = result.Locations[0].Point.Position.Longitude,
                     Latitude = result.Locations[0].Point.Position.Latitude
@@ -69,7 +70,7 @@ namespace SWApps2.View
                 MapElements = mapLocations
             };
             _map.Layers.Add(positionsLayer);
-            _map.Center = referencePoint;
+            _map.Center = position;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

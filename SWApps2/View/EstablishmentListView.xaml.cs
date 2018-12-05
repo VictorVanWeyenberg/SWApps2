@@ -74,6 +74,7 @@ namespace SWApps2.View
             };
             _map.Layers.Add(positionsLayer);
             _map.Center = referencePoint;
+            _map.UpdateLayout();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
