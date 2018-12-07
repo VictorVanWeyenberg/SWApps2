@@ -1,0 +1,32 @@
+﻿<Page
+    x:Class="SWApps2.View.LoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SWApps2.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding LoginViewModel, Source={StaticResource Locator}}">
+
+    <Grid>
+        <TextBlock x:Name="Title" Text="Log In" HorizontalAlignment="Center" Margin="0,50,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <RelativePanel Margin="20,0,0,10">
+                <TextBox x:Name="Email" Header="Email" HorizontalAlignment="Left" MinWidth="300"  PlaceholderText="john.doe@example.com" Text="{x:Bind Email}"/>
+                <TextBlock x:Name="EmailError" HorizontalAlignment="Left" Text="{x:Bind EmailError}" Foreground="Red" RelativePanel.Below="Email"/>
+            </RelativePanel>
+            <RelativePanel Margin="20,0,0,0" Grid.Row="1">
+                <PasswordBox x:Name="Password" Header="Password" HorizontalAlignment="Left" MinWidth="300" Password="{x:Bind Password}"/>
+                <TextBlock x:Name="PasswordError" HorizontalAlignment="Left" Text="{x:Bind PasswordError}" Foreground="Red" RelativePanel.Below="Password"/>
+            </RelativePanel>
+            <Button x:Name="LoginButton" Content="Log In" Grid.Row="2" HorizontalAlignment="Center" Margin="0,50,0,0"/>
+        </Grid>
+    </Grid>
+</Page>
