@@ -200,9 +200,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Core">
-      <Version>5.2.7</Version>
-    </PackageReference>
     <PackageReference Include="FluentValidation">
       <Version>8.1.0</Version>
     </PackageReference>
