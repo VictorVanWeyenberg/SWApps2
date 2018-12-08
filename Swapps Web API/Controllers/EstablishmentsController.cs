@@ -15,12 +15,11 @@ namespace Swapps_Web_API.Controllers
         // GET: api/Establishments
         public IQueryable<Establishment> GetEstablishments()
         {
-            IQueryable<Establishment> establishments = db.Establishments
+            return db.Establishments
                 .Include(est => est.Address)
                 .Include(est => est.Events)
                 .Include(est => est.Promotions)
                 .Include(est => est.ServiceHours);
-            return establishments;
         }
 
         // GET: api/Establishments/5

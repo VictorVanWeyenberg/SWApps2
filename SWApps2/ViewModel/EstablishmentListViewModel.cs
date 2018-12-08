@@ -11,12 +11,13 @@ using Windows.UI.Xaml.Controls;
 using System.Net;
 using Newtonsoft.Json;
 using SWApps2.Converters;
+using Windows.Web.Http;
 
 namespace SWApps2.ViewModel
 {
     public class EstablishmentListViewModel : ViewModelBase
     {
-        const string url = @"http://localhost:54100//api/Establishments";
+        const string url = "http://localhost:54100/api/Establishments";
         public ObservableCollection<EstablishmentViewModel> Establishments { get { return _establishments; } set { _establishments = value; } }
         private ObservableCollection<EstablishmentViewModel> _establishments;
         public EstablishmentListViewModel()
@@ -33,27 +34,25 @@ namespace SWApps2.ViewModel
 
         }
 
-        private void LoadData()
+        private async void LoadData()
         {
-            WebClient webClient = new WebClient();
-            webClient.Headers["Accept"] = "application/json";
-            webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownloadCompleted);
-            webClient.DownloadStringAsync(new Uri(url));
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            string jsonresult = await client.GetStringAsync(new Uri(url));
+            DownloadCompleted(jsonresult);
         }
 
-        private void DownloadCompleted(object sender, DownloadStringCompletedEventArgs e)
+        private void DownloadCompleted(string json)
         {
-            if (e.Result != null)
+            var establishments = JsonConvert.DeserializeObject<Establishment[]>(json, new EstablishmentJsonConverter());
+            Establishments.Clear();
+            foreach (Establishment establishment in establishments)
             {
-                //var establishments = JsonConvert.DeserializeObject<Establishment[]>(e.Result);
-                var establishments = JsonConvert.DeserializeObject<Establishment[]>(e.Result, new EstablishmentJsonConverter());
-                this.Establishments.Clear();
-                foreach (Establishment establishment in establishments)
+                EstablishmentViewModel evm = new EstablishmentViewModel
                 {
-                    EstablishmentViewModel evm = new EstablishmentViewModel();
-                    evm.Establishment = establishment;
-                    this.Establishments.Add(evm);
-                }
+                    Establishment = establishment
+                };
+                Establishments.Add(evm);
             }
         }
     }
