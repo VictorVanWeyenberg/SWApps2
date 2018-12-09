@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SWApps2.Model
 {
-    public interface NavigationPage
+    public interface INavigation
     {
         void Navigate(string pageName, object Parameters);
     }

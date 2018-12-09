@@ -5,8 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Windows10FallCreatorsUpdate="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 5)"
-    xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
-    xmlns:Windows10version1803="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 6)"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
@@ -18,8 +16,8 @@
             SelectionChanged="Change_Page" 
             Grid.Column="0" 
             Name="Nav" 
-            BackRequested="BackRequestedHandler"
             IsPaneOpen="True">
+            <!-- dynamic insert of items-->
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Establishments" x:Name="Establishments" Icon="World"></NavigationViewItem>
                 <NavigationViewItem Content="Promotions" x:Name="Promotions" Icon="OutlineStar"></NavigationViewItem>

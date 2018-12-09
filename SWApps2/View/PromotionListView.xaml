@@ -11,21 +11,19 @@
     DataContext="{Binding PromotionList, Source={StaticResource Locator}}">
 
     <StackPanel Orientation="Vertical">
-        <AutoSuggestBox MinWidth="300" Height="40"  x:Name="inputBox"
-                        QuerySubmitted="inputBox_QuerySubmitted" SuggestionChosen="inputBox_SuggestionChosen"
-                        TextChanged="inputBox_TextChanged" QueryIcon="Find"/>
+        <AutoSuggestBox  x:Name="Search" QueryIcon="Find"/>
         <ListView x:Name="items"
                   ItemsSource="{x:Bind PromotionList.Promotions}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewModels:PromotionViewModel">
                     <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Top">
                         <StackPanel Orientation="Vertical" Padding="10,0">
-                            <TextBlock Text="{x:Bind Name}" FontSize="32"></TextBlock>
+                            <TextBlock Text="{x:Bind Name}" FontSize="32"/>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{x:Bind Date}" FontSize="10" Foreground="#FF1D1D1D"></TextBlock>
-                                <TextBlock Text="{x:Bind Time}" FontSize="10" Foreground="#FF1D1D1D"></TextBlock>
+                                <TextBlock Text="{x:Bind Date}" FontSize="10" Foreground="#FF1D1D1D"/>
+                                <TextBlock Text="{x:Bind Time}" FontSize="10" Foreground="#FF1D1D1D"/>
                             </StackPanel>
-                            <TextBlock Text="{x:Bind Description}" FontSize="12"></TextBlock>
+                            <TextBlock Text="{x:Bind Description}" FontSize="12"/>
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>

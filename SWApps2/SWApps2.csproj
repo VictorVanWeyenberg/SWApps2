@@ -100,6 +100,9 @@
     <Compile Include="Converters\EstablishmentJsonConverter.cs" />
     <Compile Include="Converters\PromotionJsonConverter.cs" />
     <Compile Include="Converters\ServiceHoursJsonConverter.cs" />
+    <Compile Include="CustomControls\GPSMap.xaml.cs">
+      <DependentUpon>GPSMap.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\FakeDataService.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -111,7 +114,7 @@
     <Compile Include="Model\EstablishmentType.cs" />
     <Compile Include="Model\Event.cs" />
     <Compile Include="Model\LoginWrapper.cs" />
-    <Compile Include="Model\NavigationPage.cs" />
+    <Compile Include="Model\INavigation.cs" />
     <Compile Include="Model\Promotion.cs" />
     <Compile Include="Model\RegisterWrapper.cs" />
     <Compile Include="Model\ServiceHours.cs" />
@@ -170,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="CustomControls\GPSMap.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

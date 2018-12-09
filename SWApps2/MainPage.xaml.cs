@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using SWApps2.Data;
 using SWApps2.Model;
 using SWApps2.View;
+using Windows.Foundation.Metadata;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -23,53 +24,52 @@ namespace SWApps2
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page, NavigationPage
+    public sealed partial class MainPage : Page, INavigation
     {
 
         private Frame _pageWrapper;
         private NavigationView _navigation;
         public MainPage()
         {
-            this.InitializeComponent();
-            this._pageWrapper = this.FindName("PageWrapper") as Frame;
-            this._navigation = this.FindName("Nav") as NavigationView;
-            this._navigation.IsBackEnabled = this._pageWrapper.CanGoBack;
-            (this as NavigationPage).Navigate("Establishments", new { Navigator = (this as NavigationPage) });
-        }
-
-        private void Establisments_Page(object sender, RoutedEventArgs e)
-        {
-            this._pageWrapper.Navigate(typeof(EstablishmentListView), this);
+            InitializeComponent();
+            _pageWrapper = FindName("PageWrapper") as Frame;
+            _navigation = FindName("Nav") as NavigationView;
+            _navigation.IsBackEnabled = _pageWrapper.CanGoBack;
+            if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 6))
+            {
+                _navigation.BackRequested += BackRequestedHandler;
+            }
+            (this as INavigation)?.Navigate("Establishments", new { Navigator = (this as INavigation) });
         }
 
         private void Change_Page(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             NavigationViewItem selectedViewItem = args.SelectedItem as NavigationViewItem;
-            (this as NavigationPage).Navigate(selectedViewItem.Name, new { Navigator = (this as NavigationPage) });
+            (this as INavigation)?.Navigate(selectedViewItem.Name, new { Navigator = this as INavigation });
         }
 
-        void NavigationPage.Navigate(string pageName, object Parameters)
+        void INavigation.Navigate(string pageName, object Parameters)
         {
             switch (pageName)
             {
                 case "Establishments":
-                    this._pageWrapper.Navigate(typeof(EstablishmentListView), Parameters);
+                    _pageWrapper.Navigate(typeof(EstablishmentListView), Parameters);
                     break;
                 case "Promotions":
-                    this._pageWrapper.Navigate(typeof(PromotionListView), Parameters);
+                    _pageWrapper.Navigate(typeof(PromotionListView), Parameters);
                     break;
                 case "Establishment":
-                    this._pageWrapper.Navigate(typeof(EstablishmentView), Parameters);
+                    _pageWrapper.Navigate(typeof(EstablishmentView), Parameters);
                     break;
             }
-            this._navigation.IsBackEnabled = this._pageWrapper.CanGoBack;
+            _navigation.IsBackEnabled = _pageWrapper.CanGoBack;
         }
 
         public void BackRequestedHandler(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
-            if (this._pageWrapper.CanGoBack)
+            if (_pageWrapper.CanGoBack)
             {
-                this._pageWrapper.GoBack();
+                _pageWrapper.GoBack();
             }
         }
     }

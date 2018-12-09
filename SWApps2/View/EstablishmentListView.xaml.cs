@@ -17,6 +17,7 @@ using SWApps2.Model;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.Devices.Geolocation;
 using Windows.Services.Maps;
+using SWApps2.CustomControls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -29,19 +30,13 @@ namespace SWApps2.View
     public sealed partial class EstablishmentListView : Page
     {
         public EstablishmentListViewModel EstablishmentList { get; set; }
-        private NavigationPage _navigator;
+        private INavigation _navigator;
         private MapControl _map;
         public EstablishmentListView()
         {
             InitializeComponent();
+            InitializeMap();
             InitializeSearchBox();
-            _map = (MapControl)this.FindName("map");
-            this.DataContextChanged += (s, e) =>
-            {
-                EstablishmentList = DataContext as EstablishmentListViewModel;
-                GeneratePointsOfInterest();
-            };
-            _map.ZoomLevel = 14.5;
         }
 
         async private void GeneratePointsOfInterest()
@@ -79,43 +74,35 @@ namespace SWApps2.View
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _navigator = (e.Parameter as dynamic).Navigator;
+            _navigator = (e.Parameter as dynamic)?.Navigator;
             base.OnNavigatedTo(e);
         }
 
         public void ItemClickHandler(object sender, ItemClickEventArgs e)
         {
-            Establishment selectedEstablishment = (e.ClickedItem as EstablishmentViewModel).Establishment;
-            this._navigator.Navigate("Establishment", new { Navigator = this._navigator, Parameter = selectedEstablishment });
+            Establishment selectedEstablishment = (e.ClickedItem as EstablishmentViewModel)?.Establishment;
+            _navigator.Navigate("Establishment", new { Navigator = _navigator, Parameter = selectedEstablishment });
         }
 
-        /// <summary>
-        /// Set up the search box at the top of this page
-        /// </summary>
+        private void InitializeMap()
+        {
+            GPSMap mapControl = (GPSMap)FindName("MapControl");
+            _map = (MapControl)mapControl.FindName("Map");
+            DataContextChanged += (s, e) =>
+            {
+                EstablishmentList = DataContext as EstablishmentListViewModel;
+                GeneratePointsOfInterest();
+            };
+            _map.ZoomLevel = 14.5;
+        }
+
         private void InitializeSearchBox()
         {
             //get the resource loader to fetch localized strings
             var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-            inputBox.PlaceholderText = resourceLoader.GetString("EstablishSearchPlaceholder");
-        }
-
-        private void inputBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-
-        }
-
-        private void inputBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-
-        }
-
-        private void inputBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-            //if user was typing
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-            {
-                //searchBox.ItemsSource = myFilteredData;
-            }
+            AutoSuggestBox search = (AutoSuggestBox)FindName("Search");
+            search.PlaceholderText = resourceLoader.GetString("EstablishSearchPlaceholder");
+            //TODO: eventHandlers
         }
     }
 }

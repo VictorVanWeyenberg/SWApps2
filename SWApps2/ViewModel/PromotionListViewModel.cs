@@ -12,16 +12,16 @@ namespace SWApps2.ViewModel
 {
     public class PromotionListViewModel : ViewModelBase
     {
-        public ObservableCollection<PromotionViewModel> Promotions { get { return _promotions; } set { _promotions = value; } }
-        private ObservableCollection<PromotionViewModel> _promotions;
+        public ObservableCollection<PromotionViewModel> Promotions { get; set; }
 
         public PromotionListViewModel()
         {
-            _promotions = new ObservableCollection<PromotionViewModel>();
+            Promotions = new ObservableCollection<PromotionViewModel>();
+            //Get data
             FakeDataService fakenews = new FakeDataService();
             foreach (Promotion promotion in fakenews.Promotions)
             {
-                _promotions.Add(new PromotionViewModel(promotion));
+                Promotions.Add(new PromotionViewModel(promotion));
             }
         }
     }

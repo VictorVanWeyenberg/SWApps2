@@ -28,10 +28,7 @@ namespace SWApps2.View
         {
             InitializeComponent();
             InitializeSearchBox();
-            this.DataContextChanged += (s, e) =>
-            {
-                PromotionList = DataContext as PromotionListViewModel;
-            };
+            DataContextChanged += (s, e) => PromotionList = DataContext as PromotionListViewModel;
         }
 
         /// <summary>
@@ -41,26 +38,9 @@ namespace SWApps2.View
         {
             //get the resource loader to fetch localized strings
             var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-            inputBox.PlaceholderText = resourceLoader.GetString("EstablishSearchPlaceholder");
+            AutoSuggestBox search = (AutoSuggestBox)FindName("Search");
+            search.PlaceholderText = resourceLoader.GetString("PromotionSearchPlaceholder");
         }
 
-        private void inputBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-
-        }
-
-        private void inputBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-
-        }
-
-        private void inputBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-            //if user was typing
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-            {
-                //searchBox.ItemsSource = myFilteredData;
-            }
-        }
     }
 }

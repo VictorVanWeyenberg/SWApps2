@@ -1,4 +1,5 @@
-﻿using SWApps2.Model;
+﻿using SWApps2.CustomControls;
+using SWApps2.Model;
 using SWApps2.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -28,18 +29,12 @@ namespace SWApps2.View
     public sealed partial class EstablishmentView : Page
     {
         public EstablishmentViewModel Establishment { get; set; }
-        private NavigationPage _navigator;
+        private INavigation _navigator;
         private MapControl _map;
         public EstablishmentView()
         {
-            this.DataContextChanged += (s, e) =>
-            {
-                Establishment = DataContext as EstablishmentViewModel;
-                GeneratePointOfInterest();
-            };
-            this.InitializeComponent();
-            _map = (MapControl)this.FindName("map");
-            _map.ZoomLevel = 20;
+            InitializeComponent();
+            InitializeMap();
         }
 
         async private void GeneratePointOfInterest()
@@ -75,8 +70,20 @@ namespace SWApps2.View
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this._navigator = (e.Parameter as dynamic).Navigator;
-            this.Establishment.Establishment = (e.Parameter as dynamic).Parameter;
+            _navigator = (e.Parameter as dynamic).Navigator;
+            Establishment.Establishment = (e.Parameter as dynamic).Parameter;
+        }
+
+        private void InitializeMap()
+        {
+            var mapControl = (GPSMap)FindName("GPSMapControl");
+            _map = (MapControl)mapControl.FindName("Map");
+            DataContextChanged += (s, e) =>
+            {
+                Establishment = DataContext as EstablishmentViewModel;
+                GeneratePointOfInterest();
+            };
+            _map.ZoomLevel = 20;
         }
     }
 }

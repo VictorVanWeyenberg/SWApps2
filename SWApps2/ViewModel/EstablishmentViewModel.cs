@@ -20,12 +20,12 @@ namespace SWApps2.ViewModel
                 {
                     _establishment = value;
                     Events = new ObservableCollection<EventViewModel>();
-                    foreach (EstablishmentEvent establishmentEvent in value.EstablishmentEvents)
+                    foreach (EstablishmentEvent establishmentEvent in _establishment.EstablishmentEvents)
                     {
                         Events.Add(new EventViewModel(establishmentEvent));
                     }
                     Promotions = new ObservableCollection<PromotionViewModel>();
-                    foreach (Promotion promotion in value.Promotions)
+                    foreach (Promotion promotion in _establishment.Promotions)
                     {
                         Promotions.Add(new PromotionViewModel(promotion));
                     }

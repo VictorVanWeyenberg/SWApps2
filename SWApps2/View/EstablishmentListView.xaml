@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     xmlns:viewModels="using:SWApps2.ViewModel"
-    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:controls="using:SWApps2.CustomControls"
     DataContext="{Binding EstablishmentList, Source={StaticResource Locator}}">
 
     <Grid>
@@ -20,13 +20,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <AutoSuggestBox x:Name="inputBox"
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        Grid.ColumnSpan="2"
-                        QuerySubmitted="inputBox_QuerySubmitted" SuggestionChosen="inputBox_SuggestionChosen"
-                        TextChanged="inputBox_TextChanged" QueryIcon="Find"/>
-        <Maps:MapControl Name="map" MapServiceToken="U7pmYpAbgRHmgVyrHL5s~iOovcTR0_2Ph6QXuv2cW8A~AiH8_GfWmXLz0SrnP8Pq3qgtI-6Bf3XXB3nInhD3986LPt12pOU52AKLQtQrJIk6" Grid.Column="0" Grid.Row="1" />
+        <AutoSuggestBox x:Name="Search" Grid.ColumnSpan="2" QueryIcon="Find"/>
+        <controls:GPSMap x:Name="MapControl" Grid.Column="0" Grid.Row="1"/>
         <ListView x:Name="items"
                   ItemsSource="{x:Bind Path=EstablishmentList.Establishments}"
                   ItemClick="{x:Bind Path=ItemClickHandler}"

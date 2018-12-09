@@ -9,11 +9,11 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding RegisterViewModel, Source={StaticResource Locator}}">
 
-    <StackPanel>
+    <StackPanel x:Name="Root">
         <TextBlock x:Name="Title" Text="Register" HorizontalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}"/>
         <StackPanel Margin="0,10,0,0" Grid.Row="1">
             <RelativePanel Margin="20,0,0,0">
-                <TextBox x:Name="FirstName" Header="First Name" HorizontalAlignment="Left" MinWidth="300"  PlaceholderText="John" Text="{x:Bind FirstName}"/>
+                <TextBox x:Name="FirstName" Header="First Name" HorizontalAlignment="Left" MinWidth="300" Width="{Binding ElementName=Root,Path=Width}"  PlaceholderText="John" Text="{x:Bind FirstName}"/>
                 <TextBlock x:Name="FirstNameError" HorizontalAlignment="Left" Text="{x:Bind FirstNameError}" Foreground="Red" RelativePanel.Below="FirstName"/>
             </RelativePanel>
             <RelativePanel Margin="20,0,0,0">
@@ -32,7 +32,7 @@
                 <PasswordBox x:Name="PasswordRepeat" Header="Repeat Password" HorizontalAlignment="Left" MinWidth="300" Password="{x:Bind PasswordRepeat}"/>
                 <TextBlock x:Name="PasswordRepeatError" HorizontalAlignment="Left" Text="{x:Bind PasswordRepeatError}" Foreground="Red" RelativePanel.Below="PasswordRepeat"/>
             </RelativePanel>
-            <StackPanel Orientation="Horizontal" Margin="20,10,0,0">
+            <StackPanel Orientation="Horizontal" Margin="20,10,0,0" HorizontalAlignment="Center">
                 <RadioButton x:Name="UserRadio" Content="Normal User" Checked="UserRadio_Checked"/>
                 <RadioButton x:Name="EntrepreneurRadio" Content="Entrepreneur" RelativePanel.LeftOf="UserRadio" Checked="UserRadio_Checked"/>
             </StackPanel>

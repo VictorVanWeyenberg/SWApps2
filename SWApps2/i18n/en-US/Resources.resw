@@ -124,7 +124,7 @@
     <value>End Date</value>
   </data>
   <data name="EstablishSearchPlaceholder" xml:space="preserve">
-    <value>Search Establishment</value>
+    <value>Find Establishment</value>
     <comment>The establishment search box placeholder text</comment>
   </data>
   <data name="Event" xml:space="preserve">
@@ -135,6 +135,9 @@
   </data>
   <data name="Promotion" xml:space="preserve">
     <value>Promotion</value>
+  </data>
+  <data name="PromotionSearchPlaceholder" xml:space="preserve">
+    <value>Find Promotion</value>
   </data>
   <data name="StartDate" xml:space="preserve">
     <value>Start Date</value>
