@@ -39,7 +39,7 @@ namespace SWApps2
             {
                 _navigation.BackRequested += BackRequestedHandler;
             }
-            (this as INavigation)?.Navigate("Establishments", new { Navigator = (this as INavigation) });
+            (this as INavigation)?.Navigate("Establishments", new { Navigator = this as INavigation });
         }
 
         private void Change_Page(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

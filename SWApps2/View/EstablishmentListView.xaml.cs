@@ -35,7 +35,14 @@ namespace SWApps2.View
         public EstablishmentListView()
         {
             InitializeComponent();
-            InitializeMap();
+            GPSMap mapControl = (GPSMap)FindName("MapControl");
+            _map = (MapControl)mapControl.FindName("Map");
+            DataContextChanged += (s, e) =>
+            {
+                EstablishmentList = DataContext as EstablishmentListViewModel;
+                GeneratePointsOfInterest();
+            };
+            _map.ZoomLevel = 14.5;
             InitializeSearchBox();
         }
 
@@ -82,18 +89,6 @@ namespace SWApps2.View
         {
             Establishment selectedEstablishment = (e.ClickedItem as EstablishmentViewModel)?.Establishment;
             _navigator.Navigate("Establishment", new { Navigator = _navigator, Parameter = selectedEstablishment });
-        }
-
-        private void InitializeMap()
-        {
-            GPSMap mapControl = (GPSMap)FindName("MapControl");
-            _map = (MapControl)mapControl.FindName("Map");
-            DataContextChanged += (s, e) =>
-            {
-                EstablishmentList = DataContext as EstablishmentListViewModel;
-                GeneratePointsOfInterest();
-            };
-            _map.ZoomLevel = 14.5;
         }
 
         private void InitializeSearchBox()
