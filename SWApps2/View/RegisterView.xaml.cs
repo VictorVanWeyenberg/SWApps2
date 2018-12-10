@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SWApps2.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -22,12 +24,50 @@ namespace SWApps2.View
     /// </summary>
     public sealed partial class RegisterView : Page
     {
+        public RegisterViewModel RegisterViewModel { get; set; }
         public RegisterView()
         {
+            DataContextChanged += (s, e) => RegisterViewModel = DataContext as RegisterViewModel;
             InitializeComponent();
+            RegisterViewModel.PropertyChanged += RegisterViewModel_PropertyChanged;
+        }
+
+        private void RegisterViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void UserRadio_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FirstName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void LastName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Email_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Password_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PasswordRepeat_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
 
         }

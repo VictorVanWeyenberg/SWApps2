@@ -6,25 +6,24 @@ using System.Threading.Tasks;
 
 namespace SWApps2.Model
 {
+    /// <summary>
+    /// An Entrepreneur is an owner of an <see cref="Establishment"/>
+    /// </summary>
     public class Entrepreneur : User
     {
-        //the establishment of this entrepreneur
-        private Establishment _establishment;
-
+        /// <summary>
+        /// Sole constructor
+        /// </summary>
+        /// <param name="firstname">The entrepreneur's first name</param>
+        /// <param name="lastname">The entrepreneur's last name</param>
+        /// <param name="email">The entrepreneur's email</param>
+        /// <param name="establishment">The entrepreneur's establishment</param>
         public Entrepreneur(string firstname, string lastname, string email, Establishment establishment)
             : base(firstname, lastname, email)
         {
             Establishment = establishment;
         }
 
-        public Establishment Establishment
-        {
-            ///<summary>
-            ///get and set Establishment property
-            ///Setter uses <see cref="ObservableObject.Set{T}(string, ref T, T)"/>
-            /// </summary>
-            get { return _establishment; }
-            set { Set("Establishment", ref _establishment, value); }
-        }
+        public Establishment Establishment { get; }
     }
 }

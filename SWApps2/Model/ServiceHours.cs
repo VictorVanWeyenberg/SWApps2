@@ -7,45 +7,43 @@ using System.Threading.Tasks;
 
 namespace SWApps2.Model
 {
-    public class ServiceHours : ObservableObject
+    /// <summary>
+    /// The opening hours for an establishment
+    /// </summary>
+    public class ServiceHours
     {
-        //Service Hours of this establishment as Property
+        private const string CLOSED = "CLOSED";
+
         public TimeInterval[] Hours { get; }
 
         /// <summary>
-        /// Set the service hours for a given day
-        /// </summary>
-        /// <param name="day">the index of the day</param>
-        /// <param name="newHours">the new hours, as a <see cref="TimeInterval"/></param>
-        public void setHoursForDay(int day, TimeInterval newHours)
-        {
-            Hours[day] = newHours;
-            RaisePropertyChanged("Hours");
-        }
-        /// <summary>
         /// Constructor
         /// </summary>
-        /// <remarks>
-        /// Only allocates an emty array, doesn't fill it
-        /// </remarks>
-        public ServiceHours()
+        /// <param name="serviceHours">An array containing the opening hours</param>
+        public ServiceHours(TimeInterval[] serviceHours)
         {
-            Hours = new TimeInterval[7];
+            Hours = serviceHours;
         }
 
-        public override string ToString()
+        /// <summary>
+        /// Returns a string representation of the opening hours for a certain day
+        /// </summary>
+        /// <param name="number">The day of the week as an integer in the range [0-6]</param>
+        /// <returns></returns>
+        public string HoursForDayToString(int number)
         {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < 7; i++)
+            if (number >= 0 && number < 7)
             {
-                string dayOfWeek = ((DayOfWeek)i).ToString();
-                sb.Append(dayOfWeek);
-                sb.Append(":\t");
-                if (dayOfWeek.Length < 8) sb.Append("\t");
-                sb.Append(Hours[i].ToString());
-                sb.Append("\n");
+                //Get the day as string
+                string dayOfWeek = ((DayOfWeek)number).ToString();
+                //Get the hours
+                TimeInterval day = Hours[number];
+                //If there is an object -> hours available
+                //Else they are closed on said day
+                return string.Format("{0}: {1}", dayOfWeek, day.ToString() ?? CLOSED);         
             }
-            return sb.ToString();
+            //Invalid day
+            return "";
         }
     }
 }

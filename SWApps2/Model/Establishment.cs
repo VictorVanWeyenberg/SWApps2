@@ -7,129 +7,78 @@ using System.Threading.Tasks;
 
 namespace SWApps2.Model
 {
-    public class Establishment : ObservableObject
+    /// <summary>
+    /// An Establishment is a place/building or similar that is important to application users
+    /// </summary>
+    public class Establishment
     {
-        //the list of tags for the establishment
-        private List<string> _tags;
-
-        //the list of promotions for the establishment
-        private List<Promotion> _promotions;
-
-        //the list of events for the establishment
-        private List<EstablishmentEvent> _events;
-
-        //the name of this establishment
-        private string _name;
-
-        //the type of this establishment
-        private EstablishmentType _type;
-
         // An image of the establishment
         private Uri _image;
 
-        public Uri Image { get { return this._image; } }
-        //the address of the establishment
-        public Address Address { get; }
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name">The name of the establishment</param>
+        /// <param name="address">The address of the establishment</param>
+        /// <param name="hours">The opening hours of the establishment</param>
+        /// <param name="type">The type of establishment</param>
+        /// <param name="image">An optional image for the establishment</param>
+        public Establishment(string name, Address address, ServiceHours hours, EstablishmentType type, Uri image)
+            : this(name,address,hours,type,new List<string>(),new List<Promotion>(),new List<EstablishmentEvent>(), image){}
 
-        //ServiceHours property
-        public ServiceHours Hours { get; }
-
-        public Establishment(string name, Address address, ServiceHours hours, EstablishmentType type, Uri image = null)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name">The name of the establishment</param>
+        /// <param name="address">The address of the establishment</param>
+        /// <param name="hours">The opening hours of the establishment</param>
+        /// <param name="type">The type of establishment</param>
+        /// <param name="image">An optional image for the establishment</param>
+        /// <param name="events">A list of events for this establishment</param>
+        /// <param name="promotions">A list of promotions for this establishment</param>
+        /// <param name="tags">A list of tags for this establishment</param>
+        public Establishment(string name, Address address, ServiceHours hours, EstablishmentType type,
+            List<string> tags, List<Promotion> promotions, List<EstablishmentEvent> events, Uri image = null)
         {
             Name = name;
             Address = address;
             Hours = hours;
             Type = type;
-            _tags = new List<string>();
-            _promotions = new List<Promotion>();
-            _events = new List<EstablishmentEvent>();
-            if (image == null)
+            Image = image;
+            Tags = tags;
+            Promotions = promotions;
+            EstablishmentEvents = events;
+        }
+
+        #region properties
+        public EstablishmentType Type { get; set; }
+
+        /// <summary>
+        /// A list of tags that link to this establishment
+        /// E.g. "Beer" or "Drinks" for a Bar type Establishment
+        /// </summary>
+        public List<string> Tags { get; }
+
+        public string Name { get; set; }
+
+        public List<Promotion> Promotions { get; }
+
+        public List<EstablishmentEvent> EstablishmentEvents { get; }
+
+        public Uri Image
+        {
+            get { return _image; }
+            set
             {
-                image = new Uri("ms-appx:///Assets/comicsans.jpg");
-            } else
-            {
-                _image = image;
+                //if the image isn't specified, use default
+                _image = value ?? new Uri("ms-appx:///Assets/comicsans.jpg");
             }
         }
 
+        public Address Address { get; set; }
 
-        //Type property
-        public EstablishmentType Type
-        {
-            get { return _type; }
-            set { Set("Type", ref _type, value); }
-        }
+        public ServiceHours Hours { get; }
 
-        /// <summary>
-        /// A readonly version of the list of tags, as a Property
-        /// </summary>
-        public IEnumerable<string> Tags {
-            //Get readonly collection of tags
-            get { return _tags.AsEnumerable(); }
-            set { _tags = value as List<string>; }
-        }
-        //Remove a tag, then raise propertyChanged
-        public void RemoveTag(string tag)
-        {
-            _tags.Remove(tag);
-            RaisePropertyChanged("Tags");
-        }
-        //Add a tag, then raise propertyChanged
-        public void AddTag(string tag)
-        {
-            _tags.Add(tag);
-            RaisePropertyChanged("Tags");
-        }
-
-        //Name Property
-        public string Name
-        {
-            get { return _name; }
-            set { Set("Name", ref _name, value); }
-        }
-
-        //Readonly list of promotions
-        public IEnumerable<Promotion> Promotions
-        {
-            get { return _promotions.AsEnumerable(); }
-            set { _promotions = value as List<Promotion>; }
-        }
-
-        //Remove a Promotion, then raise propertyChanged
-        public void RemovePromotion(Promotion promo)
-        {
-            _promotions.Remove(promo);
-            RaisePropertyChanged("Promotions");
-        }
-        //Add a Promotion, then raise propertyChanged
-        public void AddPromotion(Promotion promo)
-        {
-            _promotions.Add(promo);
-            RaisePropertyChanged("Promotions");
-        }
-
-
-
-        /// <summary>
-        /// A readonly version of the list of EstablishmentEvent, as a Property
-        /// </summary>
-        public IEnumerable<EstablishmentEvent> EstablishmentEvents
-        {
-            //Get readonly collection of tags
-            get { return _events.AsEnumerable(); }
-            set { _events = value as List<EstablishmentEvent>; }
-        }
-        //Remove an event, then raise propertyChanged
-        public void RemoveEvent(EstablishmentEvent ev)
-        {
-            _events.Remove(ev);
-            RaisePropertyChanged("EstablishmentEvents");
-        }
-        //Add an event, then raise propertyChanged
-        public void AddEvent(EstablishmentEvent ev)
-        {
-            _events.Add(ev);
-            RaisePropertyChanged("EstablishmentEvents");
-        }
+        #endregion
     }
 }

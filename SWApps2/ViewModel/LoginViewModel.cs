@@ -15,25 +15,66 @@ namespace SWApps2.ViewModel
         private LoginWrapper _wrapper;
         private LoginValidator _validator;
         private ValidationResult _validationResult;
+        private bool _isValid;
+
+        private string _emailError;
+        private string _passwordError;
 
         public LoginViewModel() {
             _wrapper = new LoginWrapper();
             _validator = new LoginValidator();
-            ResetValidationErrors();
+            EmailError = "";
+            PasswordError = "";
         }
 
         #region properties
         public string Email {
             get { return _wrapper.Email; }
-            set { _wrapper.Email = value; }
+            set {
+                if (_wrapper.Email != value)
+                {
+                    _wrapper.Email = value;
+                    RaisePropertyChanged(nameof(Email));
+                }
+            }
         }
         public string Password {
             get { return _wrapper.Password; }
-            set { _wrapper.Password = value; }
+            set {
+                if (_wrapper.Password != value)
+                {
+                    _wrapper.Password = value;
+                    RaisePropertyChanged(nameof(Password));
+                }
+            }
         }
 
-        public string EmailError { get; set; }
-        public string PasswordError { get; set; }
+        public string EmailError { get { return _emailError; }
+            set {
+                if (_emailError != value)
+                {
+                    _emailError = value;
+                    RaisePropertyChanged(nameof(EmailError));
+                }
+            }
+        }
+        public string PasswordError {
+            get { return _passwordError; } set {
+                if (_passwordError != value)
+                {
+                    _passwordError = value;
+                    RaisePropertyChanged(nameof(PasswordError));
+                }
+            }
+        }
+
+        public bool IsValid {
+            get { return _isValid; }
+            set { if (value != _isValid)
+                    _isValid = value;
+                    RaisePropertyChanged(nameof(IsValid));
+                }
+        }
 
         #endregion
 
@@ -49,25 +90,16 @@ namespace SWApps2.ViewModel
             }
         }
 
-        public void ResetValidationErrors()
-        {
-            EmailError = "";
-            PasswordError = "";
-        }
-
         public void Validate()
         {
             _validationResult = _validator.Validate(_wrapper);
-            if (!_validationResult.IsValid)
+            IsValid = _validationResult.IsValid;
+            if (!IsValid)
             {
                 foreach (ValidationFailure fail in _validationResult.Errors)
                 {
                     MapErrorToProperty(fail);
                 }
-            }
-            else
-            {
-                ResetValidationErrors();
             }
         }
     }

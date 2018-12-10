@@ -9,34 +9,45 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding RegisterViewModel, Source={StaticResource Locator}}">
 
-    <StackPanel x:Name="Root">
+    <StackPanel>
         <TextBlock x:Name="Title" Text="Register" HorizontalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}"/>
-        <StackPanel Margin="0,10,0,0" Grid.Row="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <RelativePanel Margin="20,0,0,0">
-                <TextBox x:Name="FirstName" Header="First Name" HorizontalAlignment="Left" MinWidth="300" Width="{Binding ElementName=Root,Path=Width}"  PlaceholderText="John" Text="{x:Bind FirstName}"/>
-                <TextBlock x:Name="FirstNameError" HorizontalAlignment="Left" Text="{x:Bind FirstNameError}" Foreground="Red" RelativePanel.Below="FirstName"/>
+                <TextBox x:Name="FirstName" Header="First Name" HorizontalAlignment="Left" MinWidth="300"  PlaceholderText="John" TextChanged="FirstName_TextChanged"/>
+                <TextBlock x:Name="FirstNameError" HorizontalAlignment="Left"  Foreground="Red" RelativePanel.Below="FirstName"/>
             </RelativePanel>
-            <RelativePanel Margin="20,0,0,0">
-                <TextBox x:Name="LastName" Header="Last Name" HorizontalAlignment="Left" MinWidth="300"  PlaceholderText="Doe" Text="{x:Bind LastName}"/>
-                <TextBlock x:Name="LastNameError" HorizontalAlignment="Left" Text="{x:Bind LastNameError}" Foreground="Red" RelativePanel.Below="LastName"/>
+            <RelativePanel Grid.Row="1" Margin="20,0,0,0">
+                <TextBox x:Name="LastName" Header="Last Name" HorizontalAlignment="Left" MinWidth="300"  PlaceholderText="Doe" TextChanged="LastName_TextChanged"/>
+                <TextBlock x:Name="LastNameError" HorizontalAlignment="Left" Foreground="Red" RelativePanel.Below="LastName"/>
             </RelativePanel>
-            <RelativePanel Margin="20,0,0,0">
-                <TextBox x:Name="Email" Header="Email" HorizontalAlignment="Left" MinWidth="300"  PlaceholderText="john.doe@example.com" Text="{x:Bind Email}"/>
-                <TextBlock x:Name="EmailError" HorizontalAlignment="Left" Text="{x:Bind EmailError}" Foreground="Red" RelativePanel.Below="Email"/>
+            <RelativePanel Grid.Row="2" Margin="20,0,0,0">
+                <TextBox x:Name="Email" Header="Email" HorizontalAlignment="Left" MinWidth="300"  PlaceholderText="john.doe@example.com" TextChanged="Email_TextChanged"/>
+                <TextBlock x:Name="EmailError" HorizontalAlignment="Left" Foreground="Red" RelativePanel.Below="Email"/>
             </RelativePanel>
-            <RelativePanel Margin="20,0,0,0">
-                <PasswordBox x:Name="Password" Header="Password" HorizontalAlignment="Left" MinWidth="300" Password="{x:Bind Password}"/>
-                <TextBlock x:Name="PasswordError" HorizontalAlignment="Left" Text="{x:Bind PasswordError}" Foreground="Red" RelativePanel.Below="Password"/>
+            <RelativePanel Grid.Row="3" Margin="20,0,0,0">
+                <PasswordBox x:Name="Password" Header="Password" HorizontalAlignment="Left" MinWidth="300" PasswordChanged="Password_PasswordChanged"/>
+                <TextBlock x:Name="PasswordError" HorizontalAlignment="Left" Foreground="Red" RelativePanel.Below="Password"/>
             </RelativePanel>
-            <RelativePanel Margin="20,0,0,0">
-                <PasswordBox x:Name="PasswordRepeat" Header="Repeat Password" HorizontalAlignment="Left" MinWidth="300" Password="{x:Bind PasswordRepeat}"/>
-                <TextBlock x:Name="PasswordRepeatError" HorizontalAlignment="Left" Text="{x:Bind PasswordRepeatError}" Foreground="Red" RelativePanel.Below="PasswordRepeat"/>
+            <RelativePanel Grid.Row="4" Margin="20,0,0,0">
+                <PasswordBox x:Name="PasswordRepeat" Header="Repeat Password" HorizontalAlignment="Left" MinWidth="300" PasswordChanged="PasswordRepeat_PasswordChanged"/>
+                <TextBlock x:Name="PasswordRepeatError" HorizontalAlignment="Left" Foreground="Red" RelativePanel.Below="PasswordRepeat"/>
             </RelativePanel>
-            <StackPanel Orientation="Horizontal" Margin="20,10,0,0" HorizontalAlignment="Center">
-                <RadioButton x:Name="UserRadio" Content="Normal User" Checked="UserRadio_Checked"/>
-                <RadioButton x:Name="EntrepreneurRadio" Content="Entrepreneur" RelativePanel.LeftOf="UserRadio" Checked="UserRadio_Checked"/>
+            <StackPanel Grid.Row="5">
+                <StackPanel Orientation="Horizontal" Margin="20,10,0,0" HorizontalAlignment="Center" Grid.Row="5">
+                    <RadioButton x:Name="UserRadio" Content="Normal User" Checked="UserRadio_Checked"/>
+                    <RadioButton x:Name="EntrepreneurRadio" Content="Entrepreneur" RelativePanel.LeftOf="UserRadio" Checked="UserRadio_Checked"/>
+                </StackPanel>
+                <Button x:Name="RegisterButton" Content="Register" HorizontalAlignment="Center" Margin="0,40,0,0" Click="RegisterButton_Click"/>
             </StackPanel>
-            <Button x:Name="RegisterButton" Content="Register" HorizontalAlignment="Center" Margin="0,40,0,0"/>
-        </StackPanel>
+
+        </Grid>
     </StackPanel>
 </Page>

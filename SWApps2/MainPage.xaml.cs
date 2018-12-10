@@ -61,6 +61,12 @@ namespace SWApps2
                 case "Establishment":
                     _pageWrapper.Navigate(typeof(EstablishmentView), Parameters);
                     break;
+                case "Login":
+                    _pageWrapper.Navigate(typeof(LoginView), Parameters);
+                    break;
+                case "Register":
+                    _pageWrapper.Navigate(typeof(RegisterView), Parameters);
+                    break;
             }
             _navigation.IsBackEnabled = _pageWrapper.CanGoBack;
         }

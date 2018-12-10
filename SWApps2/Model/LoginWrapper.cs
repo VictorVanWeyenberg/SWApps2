@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GalaSoft.MvvmLight;
 
 namespace SWApps2.Model
 {
     /// <summary>
-    /// This class is a wrapper for use with an AbstractValidator for login
-    /// <see cref="FluentValidation.AbstractValidator{T}"/>
+    /// This class is a wrapper for use with an <see cref="FluentValidation.AbstractValidator{T}"/> for login
     /// </summary>
-    [NotMapped]
     public class LoginWrapper
     {
+        /// <summary>
+        /// The email to use for the login request
+        /// </summary>
         public string Email { get; set; }
+        /// <summary>
+        /// The password to use for the login request
+        /// </summary>
         public string Password { get; set; }
 
         public LoginWrapper()

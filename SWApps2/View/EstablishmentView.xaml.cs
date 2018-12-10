@@ -33,15 +33,10 @@ namespace SWApps2.View
         private MapControl _map;
         public EstablishmentView()
         {
+            DataContextChanged += (s, e) => Establishment = DataContext as EstablishmentViewModel;
             InitializeComponent();
-            var mapControl = (GPSMap)FindName("GPSMapControl");
-            _map = (MapControl)mapControl.FindName("Map");
-            DataContextChanged += (s, e) =>
-            {
-                Establishment = DataContext as EstablishmentViewModel;
-                GeneratePointOfInterest();
-            };
-            _map.ZoomLevel = 20;
+            InitializeMap();
+            GeneratePointOfInterest();
         }
 
         async private void GeneratePointOfInterest()
@@ -73,12 +68,20 @@ namespace SWApps2.View
             };
             _map.Layers.Add(positionsLayer);
             _map.Center = position;
+            _map.UpdateLayout();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navigator = (e.Parameter as dynamic)?.Navigator;
             Establishment.Establishment = (e.Parameter as dynamic)?.Parameter;
+        }
+
+        private void InitializeMap()
+        {
+            var mapControl = (GPSMap)FindName("GPSMapControl");
+            _map = (MapControl)mapControl.FindName("Map");
+            _map.ZoomLevel = 20;
         }
     }
 }

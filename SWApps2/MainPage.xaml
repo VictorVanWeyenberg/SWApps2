@@ -17,12 +17,11 @@
             Grid.Column="0" 
             Name="Nav" 
             IsPaneOpen="True">
-            <!-- dynamic insert of items-->
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Establishments" x:Name="Establishments" Icon="World"></NavigationViewItem>
-                <NavigationViewItem Content="Promotions" x:Name="Promotions" Icon="OutlineStar"></NavigationViewItem>
-                <NavigationViewItem Content="Events" x:Name="Events" Icon="MapPin"></NavigationViewItem>
-                <NavigationViewItem Content="Profile" x:Name="Profile" Icon="People"></NavigationViewItem>
+                <NavigationViewItem Content="Establishments" x:Name="Establishments" Icon="World"/>
+                <NavigationViewItem Content="Promotions" x:Name="Promotions" Icon="OutlineStar"/>
+                <NavigationViewItem Content="Events" x:Name="Events" Icon="MapPin"/>
+                <NavigationViewItem Content="Log In" x:Name="Login" Icon="People"/>
             </NavigationView.MenuItems>
         </Windows10FallCreatorsUpdate:NavigationView>
         <Frame x:Name="PageWrapper" Grid.Column="1"></Frame>

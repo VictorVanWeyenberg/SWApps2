@@ -119,6 +119,7 @@
     <Compile Include="Model\RegisterWrapper.cs" />
     <Compile Include="Model\ServiceHours.cs" />
     <Compile Include="Model\TimeInterval.cs" />
+    <Compile Include="Model\AbstractUser.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\IValidate.cs" />

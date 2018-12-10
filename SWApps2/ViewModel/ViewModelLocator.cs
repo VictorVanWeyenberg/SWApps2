@@ -33,10 +33,6 @@ namespace SWApps2.ViewModel
             {
                 return;
             }
-            else
-            {
-                
-            }
 
             SimpleIoc.Default.Register<EstablishmentViewModel>();
             SimpleIoc.Default.Register<EstablishmentListViewModel>();

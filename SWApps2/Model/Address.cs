@@ -7,27 +7,30 @@ using System.Threading.Tasks;
 
 namespace SWApps2.Model
 {
-    public class Address : ObservableObject
+    /// <summary>
+    /// An address as used by <see cref="Establishment"/>
+    /// </summary>
+    public class Address
     {
-        /// <summary>
-        /// An address as used by <see cref="Establishment"/>
-        /// </summary>
         //Constants
         private const string country = "België";
         private const string city = "Gent";
 
-        //The street part of the address
-        private string _street;
-        //The number part of the address
-        private int _number;
-
-        //Constructor
+        /// <summary>
+        /// Sole constructor
+        /// </summary>
+        /// <param name="street">The street portion of the address</param>
+        /// <param name="number">The number portion of the address</param>
         public Address(string street, int number)
         {
             Street = street;
             Number = number;
         }
 
+        /// <summary>
+        /// This method will convert the address to a string
+        /// </summary>
+        /// <returns>A string representation of this address</returns>
         public override string ToString()
         {
             return Street + " " + Number + ", " + city;
@@ -43,17 +46,9 @@ namespace SWApps2.Model
             get { return country; }
         }
 
-        public string Street
-        {
-            get { return _street; }
-            set { Set("Street", ref _street, value); }
-        }
+        public string Street { get; set; }
 
-        public int Number
-        {
-            get { return _number; }
-            set { Set("Number", ref _number, value); }
-        }
+        public int Number { get; set; }
 
         #endregion
     }

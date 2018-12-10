@@ -11,8 +11,6 @@ namespace SWApps2.Validation
     {
         void Validate();
 
-        void ResetValidationErrors();
-
         void MapErrorToProperty(ValidationFailure fail);
     }
 }

@@ -26,8 +26,8 @@ namespace SWApps2.View
         public PromotionListViewModel PromotionList;
         public PromotionListView()
         {
-            InitializeComponent();
             DataContextChanged += (s, e) => PromotionList = DataContext as PromotionListViewModel;
+            InitializeComponent();
             InitializeSearchBox();
         }
 

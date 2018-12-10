@@ -23,15 +23,7 @@ namespace SWApps2.ViewModel
         public EstablishmentListViewModel()
         {
             _establishments = new ObservableCollection<EstablishmentViewModel>();
-            //FakeDataService fakenews = new FakeDataService();
-            //foreach (Establishment establishment in fakenews.Establishments)
-            //{
-            //    EstablishmentViewModel evm = new EstablishmentViewModel();
-            //    evm.Establishment = establishment;
-            //    _establishments.Add(evm);
-            //}
             LoadData();
-
         }
 
         private async void LoadData()

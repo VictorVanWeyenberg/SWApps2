@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <controls:GPSMap x:Name="GPSMapControl"/>
-            <StackPanel Orientation="Vertical" Grid.Column="1">
+            <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10,0,0,0">
                 <TextBlock FontSize="32" Text="Events" />
                 <ListView ItemsSource="{x:Bind Establishment.Events}">
                     <ListView.ItemTemplate>
@@ -46,8 +46,16 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Address" Style="{StaticResource SubtitleTextBlockStyle}"/>
                     <TextBlock Text="{x:Bind Establishment.Address}" />
-                    <TextBlock Text="{x:Bind Establishment.ServiceHours}" />
+                    <TextBlock Text="Opening Hours" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(0)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(1)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(2)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(3)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(4)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(5)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(6)}" FontSize="12"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

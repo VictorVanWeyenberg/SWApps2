@@ -34,16 +34,11 @@ namespace SWApps2.View
         private MapControl _map;
         public EstablishmentListView()
         {
+            DataContextChanged += (s, e) => EstablishmentList = DataContext as EstablishmentListViewModel;
             InitializeComponent();
-            GPSMap mapControl = (GPSMap)FindName("MapControl");
-            _map = (MapControl)mapControl.FindName("Map");
-            DataContextChanged += (s, e) =>
-            {
-                EstablishmentList = DataContext as EstablishmentListViewModel;
-                GeneratePointsOfInterest();
-            };
-            _map.ZoomLevel = 14.5;
+            InitializeMap();
             InitializeSearchBox();
+            GeneratePointsOfInterest();
         }
 
         async private void GeneratePointsOfInterest()
@@ -98,6 +93,13 @@ namespace SWApps2.View
             AutoSuggestBox search = (AutoSuggestBox)FindName("Search");
             search.PlaceholderText = resourceLoader.GetString("EstablishSearchPlaceholder");
             //TODO: eventHandlers
+        }
+
+        private void InitializeMap()
+        {
+            GPSMap mapControl = (GPSMap)FindName("MapControl");
+            _map = (MapControl)mapControl.FindName("Map");
+            _map.ZoomLevel = 14.5;
         }
     }
 }

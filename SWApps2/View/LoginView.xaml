@@ -16,17 +16,17 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            
-            <RelativePanel Margin="20,0,0,10">
-                <TextBox x:Name="Email" Header="Email" HorizontalAlignment="Left" MinWidth="300"  PlaceholderText="john.doe@example.com" Text="{x:Bind Email}"/>
-                <TextBlock x:Name="EmailError" HorizontalAlignment="Left" Text="{x:Bind EmailError}" Foreground="Red" RelativePanel.Below="Email"/>
-            </RelativePanel>
-            <RelativePanel Margin="20,0,0,0" Grid.Row="1">
-                <PasswordBox x:Name="Password" Header="Password" HorizontalAlignment="Left" MinWidth="300" Password="{x:Bind Password}"/>
-                <TextBlock x:Name="PasswordError" HorizontalAlignment="Left" Text="{x:Bind PasswordError}" Foreground="Red" RelativePanel.Below="Password"/>
-            </RelativePanel>
-            <Button x:Name="LoginButton" Content="Log In" Grid.Row="2" HorizontalAlignment="Center" Margin="0,50,0,0"/>
+            <TextBox x:Name="Email" Grid.Row="0" Header="Email" HorizontalAlignment="Left" MinWidth="300"  PlaceholderText="john.doe@example.com" TextChanged="Email_TextChanged" Text="{x:Bind LoginViewModel.Email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock x:Name="EmailError" Grid.Row="1" HorizontalAlignment="Left" Foreground="Red"/>
+            <PasswordBox x:Name="Password" Grid.Row="2" Header="Password" HorizontalAlignment="Left" MinWidth="300" PasswordChanged="Password_PasswordChanged" Password="{x:Bind LoginViewModel.Password, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock x:Name="PasswordError" Grid.Row="3" HorizontalAlignment="Left" Foreground="Red"/>
+            <StackPanel HorizontalAlignment="Center" Margin="0,20,0,0" Orientation="Horizontal" Grid.Row="4">
+                <Button x:Name="LoginButton" Content="Log In" Click="LoginButton_Click" Margin="0,0,70,0"/>
+                <Button x:Name="RegisterButton" Content="Register" Click="RegisterButton_Click"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

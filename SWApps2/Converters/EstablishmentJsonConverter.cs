@@ -18,10 +18,11 @@ namespace SWApps2.Converters
 
             JObject jObject = JObject.Load(reader);
             if (jObject == null) return null;
-
+            
             string name = jObject.Value<string>("Name");
             List<string> tags = jObject.Value<JArray>("Tags").ToObject<string[]>().ToList();
             Address address = jObject.Value<JToken>("Address").ToObject<Address>();
+
             ServiceHours jsonServiceHours = JsonConvert.DeserializeObject<ServiceHours>(jObject.ToString(), new ServiceHoursJsonConverter());
 
             List<EstablishmentEvent> events = new List<EstablishmentEvent>();
@@ -31,10 +32,7 @@ namespace SWApps2.Converters
             foreach (JObject jsonPromotion in jObject.Value<JArray>("Promotions").ToObject<List<JObject>>()) promotions.Add(JsonConvert.DeserializeObject<Promotion>(jsonPromotion.ToString(), new PromotionJsonConverter()));
 
             EstablishmentType type = (EstablishmentType) Enum.Parse(typeof(EstablishmentType), jObject.Value<string>("Type"));
-            Establishment est = new Establishment(name, address, jsonServiceHours, type);
-            est.EstablishmentEvents = events;
-            est.Promotions = promotions;
-            est.Tags = tags;
+            Establishment est = new Establishment(name, address, jsonServiceHours, type,tags,promotions,events);
 
             foreach (EstablishmentEvent eventje in events) eventje.Establishment = est;
             foreach (Promotion promotion in promotions) promotion.Establishment = est;

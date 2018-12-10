@@ -21,7 +21,7 @@ namespace SWApps2.View
     {
         public EventView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

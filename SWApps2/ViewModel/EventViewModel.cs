@@ -18,16 +18,18 @@ namespace SWApps2.ViewModel
         public string Name { get { return _event.Name; } }
         public string Interval { get; private set; }
         #endregion
-        public EventViewModel(Event eventje) {
-            this._event = eventje;
+        public EventViewModel(Event evt) {
+            _event = evt;
             ParseInterval();
         }
 
+        //Redo this
         public void ParseInterval()
         {
+            
             StringBuilder sb = new StringBuilder();
-            DateTime beginDate = this._event.Start.Date;
-            DateTime endDate = this._event.End.Date;
+            DateTime beginDate = _event.Start.Date;
+            DateTime endDate = _event.End.Date;
 
             sb.Append(beginDate.DayOfWeek.ToString());
             sb.Append(" ");

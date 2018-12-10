@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace SWApps2.Model
 {
+    /// <summary>
+    /// This enum contains all possible Establishment types
+    /// </summary>
     public enum EstablishmentType
     {
-        //The type of an establishment is one of the following
         RESTAURANT,
         BAR,
         STORE,

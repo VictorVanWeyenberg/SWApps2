@@ -7,49 +7,20 @@ using System.Threading.Tasks;
 
 namespace SWApps2.Model
 {
-    public class Event : ObservableObject
+    /// <summary>
+    /// An Event describes some action that happens at a set moment in time, for a certain <see cref="Establishment"/>
+    /// </summary>
+    public class Event
     {
-
-        private Establishment _establishment;
-        //the start date of the event
-        private DateTime _startDate;
-        //the end date of the event
-        private DateTime _endDate;
-
-        //The name of this event
-        private string _name;
-        //The Desription for this event
-        private string _description;
-
         #region Properties
 
-        //Start date property
-        public DateTime Start
-        {
-            get { return _startDate; }
-            set { Set("Start", ref _startDate, value); }
-        }
+        public DateTime Start { get; set; }
 
-        //End date property
-        public DateTime End
-        {
-            get { return _endDate; }
-            set { Set("End", ref _endDate, value); }
-        }
+        public DateTime End { get; set; }
 
-        //Name property
-        public string Name
-        {
-            get { return _name; }
-            set { Set("Name", ref _name, value); }
-        }
+        public string Name { get; set; }
 
-        //Description property
-        public string Description
-        {
-            get { return _description; }
-            set { Set("Description", ref _description, value); }
-        }
+        public string Description { get; set; }
 
         public Establishment Establishment { get; set; }
 
@@ -62,6 +33,7 @@ namespace SWApps2.Model
         /// <param name="description">The description of the event</param>
         /// <param name="start">The start date</param>
         /// <param name="end">The end date</param>
+        /// <param name="establishment">The establishment that is linked to this event</param>
         public Event(Establishment establishment, string name, string description, DateTime start, DateTime end)
         {
             Start = start;

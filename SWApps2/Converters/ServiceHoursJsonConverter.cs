@@ -18,17 +18,23 @@ namespace SWApps2.Converters
             JObject jObject = JObject.Load(reader);
             if (jObject == null) return null;
 
-            ServiceHours sh = new ServiceHours();
             JArray jsonsh = jObject.Value<JArray>("ServiceHours");
+            TimeInterval[] intervals = new TimeInterval[7];
             foreach (JToken jsonTimeInterval in jsonsh)
             {
                 int day = jsonTimeInterval.Value<int>("DayOfWeek");
-                NodaTime.LocalTime startTime = new NodaTime.LocalTime((jsonTimeInterval as dynamic).Value<int>("StartHour"), (jsonTimeInterval as dynamic).Value<int>("StartMinute"));
-                NodaTime.LocalTime endTime = new NodaTime.LocalTime((jsonTimeInterval as dynamic).Value<int>("EndHour"), (jsonTimeInterval as dynamic).Value<int>("EndMinute"));
-                TimeInterval ti = new TimeInterval(startTime, endTime);
-                sh.setHoursForDay(day, ti);
+                NodaTime.LocalTime startTime = new NodaTime.LocalTime((jsonTimeInterval as dynamic)?.Value<int>("StartHour"), (jsonTimeInterval as dynamic)?.Value<int>("StartMinute"));
+                NodaTime.LocalTime endTime = new NodaTime.LocalTime((jsonTimeInterval as dynamic)?.Value<int>("EndHour"), (jsonTimeInterval as dynamic)?.Value<int>("EndMinute"));
+                try
+                {
+                    intervals[day] = new TimeInterval(startTime, endTime);
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    //index was out of range, skip
+                }
             }
-            return sh;
+            return new ServiceHours(intervals);
         }
 
         public override void WriteJson(JsonWriter writer, ServiceHours value, JsonSerializer serializer)
