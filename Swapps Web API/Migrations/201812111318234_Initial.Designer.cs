@@ -13,7 +13,7 @@ namespace Swapps_Web_API.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201812021702433_Initial"; }
+            get { return "201812111318234_Initial"; }
         }
         
         string IMigrationMetadata.Source

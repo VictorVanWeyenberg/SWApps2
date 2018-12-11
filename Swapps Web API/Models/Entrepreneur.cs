@@ -10,13 +10,13 @@ namespace Swapps_Web_API.Models
     public class Entrepreneur
     {
         [Key]
-        public int EntrepreneurID { get; set; }
+        public int ID { get; set; }
 
         public int UserID { get; set; }
 
         [ForeignKey("UserID")]
         [Required]
-        public User User { get; set; }
+        public AbstractUser User { get; set; }
 
         public int EstablishmentID { get; set; }
 

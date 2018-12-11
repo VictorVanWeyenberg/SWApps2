@@ -10,13 +10,7 @@ namespace Swapps_Web_API.Models
     public class TimeInterval
     {
         [Key]
-        public int TimeIntervalID { get; set; }
-
-        [ForeignKey("Establishment")]
-        public int? EstablishmentID { get; set; }
-
-        public virtual Establishment Establishment { get; set; }
-
+        public int ID { get; set; }
 
         public int DayOfWeek { get; set; }
 

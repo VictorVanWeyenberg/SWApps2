@@ -182,15 +182,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201812021702433_Initial.cs" />
-    <Compile Include="Migrations\201812021702433_Initial.Designer.cs">
-      <DependentUpon>201812021702433_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201812040749199_Tags.cs" />
-    <Compile Include="Migrations\201812040749199_Tags.Designer.cs">
-      <DependentUpon>201812040749199_Tags.cs</DependentUpon>
+    <Compile Include="Migrations\201812111318234_Initial.cs" />
+    <Compile Include="Migrations\201812111318234_Initial.Designer.cs">
+      <DependentUpon>201812111318234_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AbstractUser.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Entrepreneur.cs" />
     <Compile Include="Models\Establishment.cs" />
@@ -198,6 +195,7 @@
     <Compile Include="Models\EstablishmentType.cs" />
     <Compile Include="Models\Promotion.cs" />
     <Compile Include="Models\Swapps_Web_APIContext.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TimeInterval.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -212,11 +210,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201812021702433_Initial.resx">
-      <DependentUpon>201812021702433_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201812040749199_Tags.resx">
-      <DependentUpon>201812040749199_Tags.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201812111318234_Initial.resx">
+      <DependentUpon>201812111318234_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

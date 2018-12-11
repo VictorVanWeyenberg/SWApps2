@@ -10,19 +10,24 @@ namespace Swapps_Web_API.Models
     public class Promotion
     {
         [Key]
-        public int PromotionID { get; set; }
+        public int ID { get; set; }
 
         [ForeignKey("Establishment")]
-        public int? EstablishmentID { get; set; }
+        public int EstablishmentID { get; set; }
 
-        public virtual Establishment Establishment { get; set; }
+        [Required]
+        public Establishment Establishment { get; set; }
 
+        [Required]
         public DateTime StartDate { get; set; }
 
+        [Required]
         public DateTime EndDate { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Description { get; set; }
     }
 }

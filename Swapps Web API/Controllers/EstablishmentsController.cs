@@ -10,13 +10,14 @@ namespace Swapps_Web_API.Controllers
 {
     public class EstablishmentsController : ApiController
     {
-        private Swapps_Web_APIContext db = new Swapps_Web_APIContext();
+        private readonly Swapps_Web_APIContext db = new Swapps_Web_APIContext();
 
         // GET: api/Establishments
         public IQueryable<Establishment> GetEstablishments()
         {
             return db.Establishments
                 .Include(est => est.Address)
+                .Include(est => est.Tags)
                 .Include(est => est.Events)
                 .Include(est => est.Promotions)
                 .Include(est => est.ServiceHours);
@@ -44,7 +45,7 @@ namespace Swapps_Web_API.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != establishment.EstablishmentID)
+            if (id != establishment.ID)
             {
                 return BadRequest();
             }
@@ -82,7 +83,7 @@ namespace Swapps_Web_API.Controllers
             db.Establishments.Add(establishment);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = establishment.EstablishmentID }, establishment);
+            return CreatedAtRoute("DefaultApi", new { id = establishment.ID }, establishment);
         }
 
         // DELETE: api/Establishments/5
@@ -112,7 +113,7 @@ namespace Swapps_Web_API.Controllers
 
         private bool EstablishmentExists(int id)
         {
-            return db.Establishments.Count(e => e.EstablishmentID == id) > 0;
+            return db.Establishments.Count(e => e.ID == id) > 0;
         }
     }
 }
