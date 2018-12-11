@@ -123,6 +123,9 @@
   <data name="EndDate" xml:space="preserve">
     <value>End Date</value>
   </data>
+  <data name="Entrepreneur" xml:space="preserve">
+    <value>Entrepreneur</value>
+  </data>
   <data name="EstablishSearchPlaceholder" xml:space="preserve">
     <value>Find Establishment</value>
     <comment>The establishment search box placeholder text</comment>
@@ -139,6 +142,9 @@
   <data name="PromotionSearchPlaceholder" xml:space="preserve">
     <value>Find Promotion</value>
   </data>
+  <data name="RegisterUserBtnError" xml:space="preserve">
+    <value>Please select a user type</value>
+  </data>
   <data name="StartDate" xml:space="preserve">
     <value>Start Date</value>
   </data>
@@ -147,5 +153,8 @@
   </data>
   <data name="TimeInterval_StartTimeInvalid" xml:space="preserve">
     <value>A start date for a time interval should be in the future</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Normal User</value>
   </data>
 </root>

@@ -11,6 +11,9 @@ namespace SWApps2.Model
     /// </summary>
     public class Entrepreneur : User
     {
+        public Entrepreneur() : this(null,null,null,null)
+        {}
+
         /// <summary>
         /// Sole constructor
         /// </summary>
@@ -24,6 +27,6 @@ namespace SWApps2.Model
             Establishment = establishment;
         }
 
-        public Establishment Establishment { get; }
+        public Establishment Establishment { get; set; }
     }
 }

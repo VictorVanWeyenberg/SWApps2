@@ -14,7 +14,8 @@
         <!--Global View Model Locator-->
         <vm:ViewModelLocator x:Key="Locator"
                              d:IsDataSource="True" />
-       
+        <x:Double x:Key="MobileBreakpoint">1</x:Double>
+        <x:Double x:Key="DesktopBreakpoint">641</x:Double>
     </Application.Resources>
 </Application>
 

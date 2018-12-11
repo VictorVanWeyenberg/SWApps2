@@ -1,4 +1,5 @@
-﻿using SWApps2.ViewModel;
+﻿using SWApps2.Model;
+using SWApps2.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,46 +31,93 @@ namespace SWApps2.View
             DataContextChanged += (s, e) => RegisterViewModel = DataContext as RegisterViewModel;
             InitializeComponent();
             RegisterViewModel.PropertyChanged += RegisterViewModel_PropertyChanged;
+            SetupRadios();
         }
 
         private void RegisterViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            switch (e.PropertyName)
+            {
+                case "FirstNameError": ShowError("FirstNameError", RegisterViewModel.FirstNameError);
+                    break;
+                case "EmailError": ShowError("EmailError", RegisterViewModel.EmailError);
+                    break;
+                case "PasswordError": ShowError("PasswordError", RegisterViewModel.PasswordError);
+                    break;
+                case "LastNameError": ShowError("LastNameError", RegisterViewModel.LastNameError);
+                    break;
+                case "PasswordRepeatError": ShowError("PasswordRepeatError", RegisterViewModel.PasswordRepeatError);
+                    break;
+                case "RadioButtonError": ShowError("RadioError", RegisterViewModel.RadioButtonError); break;
+            }
         }
 
         private void UserRadio_Checked(object sender, RoutedEventArgs e)
         {
-
+            RadioButton button = sender as RadioButton;
+            RegisterViewModel.SetUser(button.Content as string);
+            RegisterViewModel.RadioButtonError = "";
         }
 
         private void FirstName_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            RegisterViewModel.FirstName = (sender as TextBox)?.Text;
+            RegisterViewModel.FirstNameError = "";
         }
 
         private void LastName_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            RegisterViewModel.LastName = (sender as TextBox)?.Text;
+            RegisterViewModel.LastNameError = "";
         }
 
         private void Email_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            RegisterViewModel.Email = (sender as TextBox)?.Text;
+            RegisterViewModel.EmailError = "";
         }
 
         private void Password_PasswordChanged(object sender, RoutedEventArgs e)
         {
-
+            RegisterViewModel.Password = (sender as PasswordBox)?.Password;
+            RegisterViewModel.PasswordError = "";
         }
 
         private void PasswordRepeat_PasswordChanged(object sender, RoutedEventArgs e)
         {
-
+            RegisterViewModel.PasswordRepeat = (sender as PasswordBox)?.Password;
+            RegisterViewModel.PasswordRepeatError = "";
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
+            RegisterViewModel.Validate();
+            if (RegisterViewModel.IsValid)
+            {
+                DoRegisterAPICall();
+            }
+        }
 
+        private void SetupRadios()
+        {
+            RadioButton user = FindName("UserRadio") as RadioButton;
+            RadioButton entrepreneur = FindName("EntrepreneurRadio") as RadioButton;
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            user.Content = resourceLoader.GetString("User");
+            entrepreneur.Content = resourceLoader.GetString("Entrepreneur");
+            TextBlock radioErr = FindName("RadioError") as TextBlock;
+            radioErr.Text = "";
+        }
+
+        private void ShowError(string element, string value)
+        {
+            TextBlock target = FindName(element) as TextBlock;
+            target.Text = value ?? "";
+        }
+
+        private void DoRegisterAPICall()
+        {
+            //TODO
         }
     }
 }

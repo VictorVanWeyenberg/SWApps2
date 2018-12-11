@@ -46,8 +46,7 @@ namespace SWApps2.View
             LoginViewModel.Validate();
             if (LoginViewModel.IsValid)
             {
-                //push API request
-                throw new NotImplementedException();
+                DoLoginAPICall();
             }
         }
 
@@ -84,6 +83,11 @@ namespace SWApps2.View
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             _navigator.Navigate("Register", new { Navigator = _navigator });
+        }
+
+        private void DoLoginAPICall()
+        {
+            //TODO
         }
     }
 }

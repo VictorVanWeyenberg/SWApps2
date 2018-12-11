@@ -16,6 +16,14 @@ namespace SWApps2.ViewModel
         private RegisterValidator _validator;
         private RegisterWrapper _wrapper;
         private ValidationResult _validationResult;
+        private string _firstnameError;
+        private string _lastnameError;
+        private string _emailError;
+        private string _passwordError;
+        private string _passwordRepeatError;
+        private string _radioButtonError;
+        private bool _isValid;
+        private AbstractUser _user;
 
         public RegisterViewModel() {
             _validator = new RegisterValidator();
@@ -51,22 +59,95 @@ namespace SWApps2.ViewModel
             set { _wrapper.PasswordRepeat = value; }
         }
 
+        public bool IsValid
+        {
+            get { return _isValid; }
+            set
+            {
+                if (value != _isValid)
+                    _isValid = value;
+                RaisePropertyChanged(nameof(IsValid));
+            }
+        }
+
         #endregion
 
         #region validation properties
         //When validating, call validate on the validator with the object to validate, then loop through the errors and set them here.
         //These properties should be bound with the view for error displays
-        public string FirstNameError { get; set; }
-        public string LastNameError { get; set; }
+        public string FirstNameError {
+            get { return _firstnameError; }
+            set {
+                if (_firstnameError != value)
+                {
+                    _firstnameError = value;
+                    RaisePropertyChanged(nameof(FirstNameError));
+                }
+            }
+        }
+        public string LastNameError {
+            get { return _lastnameError; }
+            set {
+                if (_lastnameError != value)
+                {
+                    _lastnameError = value;
+                    RaisePropertyChanged(nameof(LastNameError));
+                }
+            }
+        }
 
-        public string EmailError { get; set; }
+        public string EmailError {
+            get { return _emailError; }
+            set {
+                if (_emailError != value)
+                {
+                    _emailError = value;
+                    RaisePropertyChanged(nameof(EmailError));
+                }
+            }
+        }
 
-        public string PasswordError { get; set; }
+        public string PasswordError {
+            get { return _passwordError; }
+            set {
+                if (_passwordError != value)
+                {
+                    _passwordError = value;
+                    RaisePropertyChanged(nameof(PasswordError));
+                }
+            }
+        }
 
-        public string PasswordRepeatError { get; set; }
+        public string PasswordRepeatError {
+            get { return _passwordRepeatError; }
+            set {
+                if (_passwordRepeatError != value)
+                {
+                    _passwordRepeatError = value;
+                    RaisePropertyChanged(nameof(PasswordRepeatError));
+                }
+            }
+        }
+
+        public string RadioButtonError {
+            get { return _radioButtonError; }
+            set {
+                    if (_radioButtonError != value)
+                    {
+                        _radioButtonError = value;
+                        RaisePropertyChanged(nameof(RadioButtonError));
+                    }
+            }
+        }
 
         public void Validate()
         {
+            if (_user == null)//No radio checked
+            {
+                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse();
+                RadioButtonError = resourceLoader.GetString("RegisterUserBtnError");
+            }
+            //Validate the rest with validator
             _validationResult =  _validator.Validate(_wrapper);
             //When not valid, loop through the errors
             if (!_validationResult.IsValid)
@@ -76,8 +157,13 @@ namespace SWApps2.ViewModel
                     MapErrorToProperty(fail);
                 }
             }
-            else {
+            else if (_user != null)//Radio checked
+            {
                 ResetValidationErrors();
+                _user.Email = _wrapper.Email;
+                _user.LastName = _wrapper.LastName;
+                _user.FirstName = _wrapper.FirstName;
+                IsValid = _validationResult.IsValid;
             }
         }
 
@@ -105,7 +191,22 @@ namespace SWApps2.ViewModel
             EmailError = "";
             PasswordError = "";
             PasswordRepeatError = "";
+            RadioButtonError = "";
         }
+
         #endregion
+
+        public void SetUser(string checkedBtnText)
+        {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse();
+            if (checkedBtnText.Equals(resourceLoader.GetString("Entrepreneur")))
+            {
+                _user = new Entrepreneur();
+            }
+            if (checkedBtnText.Equals(resourceLoader.GetString("User")))
+            {
+                _user = new User();
+            }
+        }
     }
 }

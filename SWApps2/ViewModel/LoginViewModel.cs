@@ -93,14 +93,14 @@ namespace SWApps2.ViewModel
         public void Validate()
         {
             _validationResult = _validator.Validate(_wrapper);
-            IsValid = _validationResult.IsValid;
-            if (!IsValid)
+            if (!_validationResult.IsValid)
             {
                 foreach (ValidationFailure fail in _validationResult.Errors)
                 {
                     MapErrorToProperty(fail);
                 }
             }
+            IsValid = _validationResult.IsValid;
         }
     }
 }

@@ -21,5 +21,8 @@ namespace SWApps2.Model
         {
             SubsribedEstablishments = new List<Establishment>();
         }
+
+        public User() : this(null,null,null)
+        { }
     }
 }

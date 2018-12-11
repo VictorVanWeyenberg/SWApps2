@@ -11,22 +11,15 @@
 
     <Grid>
         <TextBlock x:Name="Title" Text="Log In" HorizontalAlignment="Center" Margin="0,50,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBox x:Name="Email" Grid.Row="0" Header="Email" HorizontalAlignment="Left" MinWidth="300"  PlaceholderText="john.doe@example.com" TextChanged="Email_TextChanged" Text="{x:Bind LoginViewModel.Email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock x:Name="EmailError" Grid.Row="1" HorizontalAlignment="Left" Foreground="Red"/>
-            <PasswordBox x:Name="Password" Grid.Row="2" Header="Password" HorizontalAlignment="Left" MinWidth="300" PasswordChanged="Password_PasswordChanged" Password="{x:Bind LoginViewModel.Password, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock x:Name="PasswordError" Grid.Row="3" HorizontalAlignment="Left" Foreground="Red"/>
-            <StackPanel HorizontalAlignment="Center" Margin="0,20,0,0" Orientation="Horizontal" Grid.Row="4">
+        <StackPanel x:Name="StackPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBox x:Name="Email" Header="Email" HorizontalAlignment="Stretch" PlaceholderText="john.doe@example.com" TextChanged="Email_TextChanged"/>
+            <TextBlock x:Name="EmailError" HorizontalAlignment="Left" Foreground="Red"/>
+            <PasswordBox x:Name="Password" Header="Password" HorizontalAlignment="Stretch" PasswordChanged="Password_PasswordChanged"/>
+            <TextBlock x:Name="PasswordError" HorizontalAlignment="Left" Foreground="Red"/>
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="LoginButton" Content="Log In" Click="LoginButton_Click" Margin="0,0,70,0"/>
                 <Button x:Name="RegisterButton" Content="Register" Click="RegisterButton_Click"/>
             </StackPanel>
-        </Grid>
+        </StackPanel>
     </Grid>
 </Page>
