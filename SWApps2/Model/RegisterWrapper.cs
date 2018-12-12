@@ -41,6 +41,12 @@ namespace SWApps2.Model
         /// </summary>
         public string PasswordRepeat { get; set; }
 
+        public bool IsEntrepreneur{ get; set; }
+        public string Hash { get; set; }
+        public string Salt { get; set; }
+
+
+
 
         #endregion
         public RegisterWrapper()
@@ -50,6 +56,7 @@ namespace SWApps2.Model
             Password = "";
             PasswordRepeat = "";
             Email = "";
+            IsEntrepreneur = false;
         }
     }
 }

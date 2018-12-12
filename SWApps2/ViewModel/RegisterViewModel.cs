@@ -249,20 +249,17 @@ namespace SWApps2.ViewModel
             }
         }
 
-        private FormUrlEncodedContent GeneratePostRequestContent()
+        private StringContent GeneratePostRequestContent()
         {
             byte[] salt = new byte[32];
             var random = new RNGCryptoServiceProvider();
             random.GetNonZeroBytes(salt);
-            return new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string, string>("FirstName", FirstName),
-                new KeyValuePair<string, string>("LastName", LastName),
-                new KeyValuePair<string, string>("Email", Email),
-                new KeyValuePair<string, string>("Hash", Encoding.Default.GetString(SecurePassword.Hash(Password, salt))),
-                new KeyValuePair<string, string>("Salt", Encoding.Default.GetString(salt)),
-                new KeyValuePair<string, string>("IsEntrepreneur", (_user is Entrepreneur).ToString())
-            });
+            string hash = Encoding.Default.GetString(SecurePassword.Hash(Password, salt));
+
+            _wrapper.Salt = Encoding.Default.GetString(salt);
+            _wrapper.Hash = hash;
+
+            return new StringContent(JsonConvert.SerializeObject(_wrapper, new RegisterWrapperJsonConverter()));
         }
 
         private void DownloadCompleted(string json)
