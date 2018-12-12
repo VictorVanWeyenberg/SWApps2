@@ -27,12 +27,19 @@ namespace SWApps2.View
     public sealed partial class RegisterView : Page
     {
         public RegisterViewModel RegisterViewModel { get; set; }
+        private INavigation _navigator;
         public RegisterView()
         {
             DataContextChanged += (s, e) => RegisterViewModel = DataContext as RegisterViewModel;
             InitializeComponent();
             RegisterViewModel.PropertyChanged += RegisterViewModel_PropertyChanged;
             SetupRadios();
+        }
+        
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            _navigator = (e.Parameter as dynamic)?.Navigator;
+            base.OnNavigatedTo(e);
         }
 
         private void RegisterViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -98,7 +105,11 @@ namespace SWApps2.View
             RegisterViewModel.Validate();
             if (RegisterViewModel.IsValid)
             {
-                RegisterViewModel.DoRegisterAPICall();
+                bool succeeded = await RegisterViewModel.DoRegisterAPICall();
+                if (succeeded)
+                {
+                    _navigator.Navigate("Establishments", new { Navigator = _navigator });
+                }
             }
         }
 
