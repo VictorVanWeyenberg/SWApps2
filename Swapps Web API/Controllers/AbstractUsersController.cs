@@ -64,13 +64,13 @@ namespace Swapps_Web_API.Controllers
 
         [HttpPost]
         [Route("api/register")]
-        public HttpResponseMessage RegisterUser([FromBody]string jsonArgs)
+        public HttpResponseMessage RegisterUser(JObject jsonArgs)
         {
             //Convert string to JSON object
-            RegisterJSON body;
+            RegisterJSON body = null;
             try
             {
-                body = JsonConvert.DeserializeObject<RegisterJSON>(jsonArgs, new RegisterJSONConverter());
+                body = JsonConvert.DeserializeObject<RegisterJSON>(jsonArgs.ToString(), new RegisterJSONConverter());
             }
             catch (JsonSerializationException)
             {

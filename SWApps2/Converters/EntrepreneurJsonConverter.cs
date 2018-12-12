@@ -18,7 +18,11 @@ namespace SWApps2.Converters
             JObject jObject = JObject.Load(reader);
             if (jObject == null) return null;
 
-            Establishment est = JsonConvert.DeserializeObject<Establishment>(jObject.Value<JObject>("Establishment").ToString());
+            Establishment est = null;
+            if (jObject.Value<JObject>("Establishment") != null)
+            {
+                est = JsonConvert.DeserializeObject<Establishment>(jObject.Value<JObject>("Establishment").ToString());
+            }
             string firstName = jObject.Value<string>("User.FirstName");
             string lastName = jObject.Value<string>("User.LastName");
             string email = jObject.Value<string>("User.Email");

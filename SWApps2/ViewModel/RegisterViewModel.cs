@@ -238,7 +238,7 @@ namespace SWApps2.ViewModel
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             string contentString = GeneratePostRequestContent();
-            var content = new StringContent(contentString);
+            StringContent content = new StringContent(contentString, Encoding.UTF8, "application/json");
             var result = await client.PostAsync(new Uri(url), content);
             if (result.IsSuccessStatusCode)
             {
