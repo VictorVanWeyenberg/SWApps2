@@ -261,6 +261,7 @@ namespace SWApps2.ViewModel
 
             _wrapper.Salt = Encoding.Default.GetString(salt);
             _wrapper.Hash = hash;
+            _wrapper.IsEntrepreneur = _user is Entrepreneur;
 
             return JsonConvert.SerializeObject(_wrapper);
         }

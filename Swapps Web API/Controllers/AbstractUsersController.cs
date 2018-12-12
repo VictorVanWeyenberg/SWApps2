@@ -77,13 +77,17 @@ namespace Swapps_Web_API.Controllers
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.BadRequest);
                 response.ReasonPhrase = "The body could not be parsed";
             }
-            AbstractUser existingUser = db.AbstractUsers.Where(u => u.Email.Equals(body.Email)).FirstOrDefault();
-            if (existingUser != null)
+            try
             {
-                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.BadRequest);
-                response.ReasonPhrase = "User with email already exists";
-                return response;
+                AbstractUser existingUser = db.AbstractUsers.Where(u => u.Email.Equals(body.Email)).First();
+                if (existingUser.Email.Equals(body.Email))
+                {
+                    HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.BadRequest);
+                    response.ReasonPhrase = "User with email already exists";
+                    return response;
+                }
             }
+            catch (InvalidOperationException) { }
             //Add abstract user for email + firstname + lastname + salt + passwordHash
             AbstractUser newUser = new AbstractUser
             {
