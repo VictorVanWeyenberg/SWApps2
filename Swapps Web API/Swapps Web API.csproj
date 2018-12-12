@@ -177,6 +177,7 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AbstractUsersController.cs" />
     <Compile Include="Controllers\EstablishmentsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -189,6 +190,10 @@
     <Compile Include="Migrations\201812120957344_AddMissingTables.cs" />
     <Compile Include="Migrations\201812120957344_AddMissingTables.Designer.cs">
       <DependentUpon>201812120957344_AddMissingTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812121256556_EstablishmentRequiredChange.cs" />
+    <Compile Include="Migrations\201812121256556_EstablishmentRequiredChange.Designer.cs">
+      <DependentUpon>201812121256556_EstablishmentRequiredChange.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AbstractUser.cs" />
@@ -219,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812120957344_AddMissingTables.resx">
       <DependentUpon>201812120957344_AddMissingTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812121256556_EstablishmentRequiredChange.resx">
+      <DependentUpon>201812121256556_EstablishmentRequiredChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

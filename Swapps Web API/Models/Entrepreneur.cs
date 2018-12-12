@@ -21,7 +21,6 @@ namespace Swapps_Web_API.Models
         public int EstablishmentID { get; set; }
 
         [ForeignKey("EstablishmentID")]
-        [Required]
         public Establishment Establishment { get; set; }
 
     }
