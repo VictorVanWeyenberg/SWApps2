@@ -24,5 +24,8 @@ namespace Swapps_Web_API.Models
         public DbSet<EstablishmentEvent> Events { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<TimeInterval> TimeIntervals { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Entrepreneur> Entrepreneurs { get; set; }
+        public DbSet<AbstractUser> AbstractUsers { get; set; }
     }
 }

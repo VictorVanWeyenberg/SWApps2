@@ -186,6 +186,10 @@
     <Compile Include="Migrations\201812111318234_Initial.Designer.cs">
       <DependentUpon>201812111318234_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812120957344_AddMissingTables.cs" />
+    <Compile Include="Migrations\201812120957344_AddMissingTables.Designer.cs">
+      <DependentUpon>201812120957344_AddMissingTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AbstractUser.cs" />
     <Compile Include="Models\Address.cs" />
@@ -212,6 +216,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201812111318234_Initial.resx">
       <DependentUpon>201812111318234_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120957344_AddMissingTables.resx">
+      <DependentUpon>201812120957344_AddMissingTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
