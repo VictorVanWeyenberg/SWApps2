@@ -17,10 +17,10 @@ namespace SWApps2.Converters
             return new SHA256Managed().ComputeHash(saltedPassword);
         }
 
-        public static bool ConfirmPassword(byte[] passwordHash, byte[] passwordSalt, string password)
+        public static bool ConfirmPassword(string passwordHash, string passwordSalt, string password)
         {
-            byte[] enteredHashedPassword = Hash(password, passwordSalt);
-            return passwordHash.SequenceEqual(enteredHashedPassword);
+            byte[] enteredHashedPassword = Hash(password, Encoding.UTF8.GetBytes(passwordSalt));
+            return Encoding.UTF8.GetBytes(passwordHash).SequenceEqual(enteredHashedPassword);
         }
     }
 }
