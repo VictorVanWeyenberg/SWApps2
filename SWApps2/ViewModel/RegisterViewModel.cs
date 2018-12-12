@@ -237,7 +237,8 @@ namespace SWApps2.ViewModel
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
-            var content = GeneratePostRequestContent();
+            string contentString = GeneratePostRequestContent();
+            var content = new StringContent(contentString);
             var result = await client.PostAsync(new Uri(url), content);
             if (result.IsSuccessStatusCode)
             {
@@ -251,7 +252,7 @@ namespace SWApps2.ViewModel
             return false;
         }
 
-        private StringContent GeneratePostRequestContent()
+        private string GeneratePostRequestContent()
         {
             byte[] salt = new byte[32];
             var random = new RNGCryptoServiceProvider();
@@ -261,7 +262,7 @@ namespace SWApps2.ViewModel
             _wrapper.Salt = Encoding.Default.GetString(salt);
             _wrapper.Hash = hash;
 
-            return new StringContent(JsonConvert.SerializeObject(_wrapper));
+            return JsonConvert.SerializeObject(_wrapper);
         }
 
         private void DownloadCompleted(string json)
