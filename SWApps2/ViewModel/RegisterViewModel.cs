@@ -261,7 +261,7 @@ namespace SWApps2.ViewModel
             _wrapper.Salt = Encoding.Default.GetString(salt);
             _wrapper.Hash = hash;
 
-            return new StringContent(JsonConvert.SerializeObject(_wrapper, new RegisterWrapperJsonConverter()));
+            return new StringContent(JsonConvert.SerializeObject(_wrapper));
         }
 
         private void DownloadCompleted(string json)

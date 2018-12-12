@@ -100,7 +100,6 @@
     <Compile Include="Converters\EstablishmentEventJsonConverter.cs" />
     <Compile Include="Converters\EstablishmentJsonConverter.cs" />
     <Compile Include="Converters\PromotionJsonConverter.cs" />
-    <Compile Include="Converters\RegisterWrapperJsonConverter.cs" />
     <Compile Include="Converters\SecurePassword.cs" />
     <Compile Include="Converters\ServiceHoursJsonConverter.cs" />
     <Compile Include="CustomControls\GPSMap.xaml.cs">
