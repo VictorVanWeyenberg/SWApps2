@@ -64,7 +64,7 @@ namespace Swapps_Web_API.Controllers
 
         [HttpPost]
         [Route("api/register")]
-        public IHttpActionResult RegisterUser([FromBody]string jsonArgs)
+        public HttpResponseMessage RegisterUser([FromBody]string jsonArgs)
         {
             //Convert string to JSON object
             RegisterJSON body;
@@ -74,12 +74,15 @@ namespace Swapps_Web_API.Controllers
             }
             catch (JsonSerializationException)
             {
-                return BadRequest($"Could not parse the request. The body was: {jsonArgs}");
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.BadRequest);
+                response.ReasonPhrase = "The body could not be parsed";
             }
             AbstractUser existingUser = db.AbstractUsers.Where(u => u.Email.Equals(body.Email)).FirstOrDefault();
             if (existingUser != null)
             {
-                return BadRequest("User with email already exists");
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.BadRequest);
+                response.ReasonPhrase = "User with email already exists";
+                return response;
             }
             //Add abstract user for email + firstname + lastname + salt + passwordHash
             AbstractUser newUser = new AbstractUser
@@ -99,7 +102,9 @@ namespace Swapps_Web_API.Controllers
                 };
                 db.Entrepreneurs.Add(entre);
                 db.SaveChanges();
-                return Created("api/register", entre);
+                var response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(JsonConvert.SerializeObject(entre));
+                return response;
             }
             else {
                 User user = new User
@@ -109,7 +114,9 @@ namespace Swapps_Web_API.Controllers
                 };
                 db.Users.Add(user);
                 db.SaveChanges();
-                return Created("api/register", user);
+                var response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(JsonConvert.SerializeObject(user));
+                return response;
             }
         }
 
