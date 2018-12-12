@@ -195,6 +195,10 @@
     <Compile Include="Migrations\201812121256556_EstablishmentRequiredChange.Designer.cs">
       <DependentUpon>201812121256556_EstablishmentRequiredChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812121602426_EstablishmentNotRequired.cs" />
+    <Compile Include="Migrations\201812121602426_EstablishmentNotRequired.Designer.cs">
+      <DependentUpon>201812121602426_EstablishmentNotRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AbstractUser.cs" />
     <Compile Include="Models\Address.cs" />
@@ -227,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812121256556_EstablishmentRequiredChange.resx">
       <DependentUpon>201812121256556_EstablishmentRequiredChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812121602426_EstablishmentNotRequired.resx">
+      <DependentUpon>201812121602426_EstablishmentNotRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
