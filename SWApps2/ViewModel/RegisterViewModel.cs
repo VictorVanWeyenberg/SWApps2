@@ -233,7 +233,7 @@ namespace SWApps2.ViewModel
             }
         }
 
-        public async void DoRegisterAPICall()
+        public async Task<bool> DoRegisterAPICall()
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -243,10 +243,12 @@ namespace SWApps2.ViewModel
             {
                 string jsonresult = await result.Content.ReadAsStringAsync();
                 DownloadCompleted(jsonresult);
+                return true;
             } else
             {
                 GlobalError = "Server Error " + result.StatusCode + ": " + result.Content.ReadAsStringAsync();
             }
+            return false;
         }
 
         private StringContent GeneratePostRequestContent()
