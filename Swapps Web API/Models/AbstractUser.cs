@@ -22,5 +22,11 @@ namespace Swapps_Web_API.Models
 
         [Required]
         public string Email { get; set; }
+
+        [Required]
+        public string Salt { get; set; }
+
+        [Required]
+        public string Hash { get; set; }
     }
 }
