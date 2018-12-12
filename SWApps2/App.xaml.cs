@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using SWApps2.View;
 using SWApps2.ViewModel;
+using SWApps2.Model;
 
 namespace SWApps2
 {
@@ -24,6 +25,9 @@ namespace SWApps2
     /// </summary>
     sealed partial class App : Application
     {
+
+        public AbstractUser User { get; set; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().

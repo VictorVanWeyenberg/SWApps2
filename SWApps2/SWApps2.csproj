@@ -96,6 +96,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\EntrepreneurJsonConverter.cs" />
     <Compile Include="Converters\EstablishmentEventJsonConverter.cs" />
     <Compile Include="Converters\EstablishmentJsonConverter.cs" />
     <Compile Include="Converters\PromotionJsonConverter.cs" />

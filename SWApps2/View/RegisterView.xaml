@@ -10,6 +10,7 @@
     DataContext="{Binding RegisterViewModel, Source={StaticResource Locator}}">
 
     <RelativePanel>
+        <TextBlock x:Name="GlobalError" Margin="15,0,15,10" Foreground="Red" RelativePanel.Below="Title"/>
         <TextBlock x:Name="Title" Text="Register" Margin="0,10,0,0" Style="{StaticResource TitleTextBlockStyle}" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
         <TextBox x:Name="FirstName" Margin="15,10,15,0" Header="First Name" PlaceholderText="John" TextChanged="FirstName_TextChanged"
                  RelativePanel.Below="Title" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>

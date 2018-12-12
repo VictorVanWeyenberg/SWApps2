@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -48,7 +49,10 @@ namespace SWApps2.View
                     break;
                 case "PasswordRepeatError": ShowError("PasswordRepeatError", RegisterViewModel.PasswordRepeatError);
                     break;
-                case "RadioButtonError": ShowError("RadioError", RegisterViewModel.RadioButtonError); break;
+                case "RadioButtonError": ShowError("RadioError", RegisterViewModel.RadioButtonError);
+                    break;
+                case "GlobalError": ShowError("GlobalError", RegisterViewModel.GlobalError);
+                    break;
             }
         }
 
@@ -89,12 +93,12 @@ namespace SWApps2.View
             RegisterViewModel.PasswordRepeatError = "";
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             RegisterViewModel.Validate();
             if (RegisterViewModel.IsValid)
             {
-                DoRegisterAPICall();
+                RegisterViewModel.DoRegisterAPICall();
             }
         }
 
@@ -113,11 +117,6 @@ namespace SWApps2.View
         {
             TextBlock target = FindName(element) as TextBlock;
             target.Text = value ?? "";
-        }
-
-        private void DoRegisterAPICall()
-        {
-            //TODO
         }
     }
 }

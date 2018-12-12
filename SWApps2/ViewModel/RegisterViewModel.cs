@@ -1,13 +1,18 @@
 ﻿using FluentValidation.Results;
 using GalaSoft.MvvmLight;
+using Newtonsoft.Json;
+using SWApps2.Converters;
 using SWApps2.Model;
 using SWApps2.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace SWApps2.ViewModel
 {
@@ -16,6 +21,7 @@ namespace SWApps2.ViewModel
         private RegisterValidator _validator;
         private RegisterWrapper _wrapper;
         private ValidationResult _validationResult;
+        private string _globalError;
         private string _firstnameError;
         private string _lastnameError;
         private string _emailError;
@@ -24,6 +30,8 @@ namespace SWApps2.ViewModel
         private string _radioButtonError;
         private bool _isValid;
         private AbstractUser _user;
+
+        private const string url = "http://localhost:54100/api/register";
 
         public RegisterViewModel() {
             _validator = new RegisterValidator();
@@ -73,6 +81,18 @@ namespace SWApps2.ViewModel
         #endregion
 
         #region validation properties
+
+        public string GlobalError {
+            get { return _globalError; }
+            set {
+                if (_globalError != value)
+                {
+                    _globalError = value;
+                    RaisePropertyChanged(nameof(GlobalError));
+                }
+            }
+        }
+
         //When validating, call validate on the validator with the object to validate, then loop through the errors and set them here.
         //These properties should be bound with the view for error displays
         public string FirstNameError {
@@ -139,6 +159,10 @@ namespace SWApps2.ViewModel
                     }
             }
         }
+
+        #endregion
+
+        #region methods
 
         public void Validate()
         {
@@ -207,6 +231,53 @@ namespace SWApps2.ViewModel
             {
                 _user = new User();
             }
+        }
+
+        public async void DoRegisterAPICall()
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            var content = GeneratePostRequestContent();
+            var result = await client.PostAsync(new Uri(url), content);
+            if (result.IsSuccessStatusCode)
+            {
+                string jsonresult = await result.Content.ReadAsStringAsync();
+                DownloadCompleted(jsonresult);
+            } else
+            {
+                GlobalError = "Server Error " + result.StatusCode + ": " + result.Content.ReadAsStringAsync();
+            }
+        }
+
+        private FormUrlEncodedContent GeneratePostRequestContent()
+        {
+            byte[] salt = new byte[32];
+            var random = new RNGCryptoServiceProvider();
+            random.GetNonZeroBytes(salt);
+            return new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("FirstName", FirstName),
+                new KeyValuePair<string, string>("LastName", LastName),
+                new KeyValuePair<string, string>("Email", Email),
+                new KeyValuePair<string, string>("Hash", Encoding.Default.GetString(SecurePassword.Hash(Password, salt))),
+                new KeyValuePair<string, string>("Salt", Encoding.Default.GetString(salt)),
+                new KeyValuePair<string, string>("IsEntrepreneur", (_user is Entrepreneur).ToString())
+            });
+        }
+
+        private void DownloadCompleted(string json)
+        {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse();
+            AbstractUser user = null;
+            if (_user is Entrepreneur)
+            {
+                user = JsonConvert.DeserializeObject<Entrepreneur>(json, new EntrepreneurJsonConverter());
+            }
+            if (_user is User)
+            {
+                user = JsonConvert.DeserializeObject<User>(json);
+            }
+            (Application.Current as App).User = user;
         }
     }
 }
