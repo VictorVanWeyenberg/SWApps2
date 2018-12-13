@@ -24,42 +24,71 @@ namespace Swapps_Web_API.Controllers
         /// <param name="email">The email to use during lookup</param>
         /// <returns>The id of the user if found; A bad request result if the email is null or a NotFound result if the user wasn't found</returns>
         [Route("api/login")]
-        [HttpGet]
-        public IHttpActionResult CheckUserExistsForEmail(string email)
+        [HttpPost]
+        public HttpResponseMessage CheckUserExistsForEmail(JObject emailJson)
         {
+            string email = emailJson.Value<string>("Email");
+            HttpResponseMessage response;
             if (email == null)
             {
-                return BadRequest();
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest);
+                response.ReasonPhrase = "Email wasn't sent.";
+                return response;
             }
-            AbstractUser abstractuser = db.AbstractUsers.Where(u => u.Email.Equals(email)).FirstOrDefault();
-            if (abstractuser == null)
+            AbstractUser abstractuser = null;
+            try
             {
-                return NotFound();
+                abstractuser = db.AbstractUsers.Where(u => u.Email.Equals(email)).First();
+            } catch (InvalidOperationException)
+            {
+                abstractuser = null;
             }
-            return Ok(abstractuser);
+            if (abstractuser != null)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new StringContent(JsonConvert.SerializeObject(abstractuser));
+                return response;
+            }
+            response = new HttpResponseMessage(HttpStatusCode.BadRequest);
+            response.ReasonPhrase = "No user found with that email address.";
+            return response;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/getUser")]
-        public IHttpActionResult GetUserData(int id)
+        public HttpResponseMessage GetUserData(JObject idjson)
         {
+            int id = idjson.Value<int>("Id");
             AbstractUser abstractuser = db.AbstractUsers.Find(id);
+            HttpResponseMessage response;
             if (abstractuser == null)
             {
-                return BadRequest($"Could not fetch data for user with id {id}");
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest);
+                response.ReasonPhrase = $"Could not fetch data for user with id {id}";
+                return response;
             }
             Entrepreneur entre = db.Entrepreneurs.Where(e => e.UserID == abstractuser.ID)
                 .Include(e => e.User).Include(e => e.Establishment).FirstOrDefault();
             if (entre != null)
             {
-                return Ok(entre);
+                response = new HttpResponseMessage(HttpStatusCode.OK);
+                JObject jsonContent = JObject.Parse(JsonConvert.SerializeObject(entre));
+                jsonContent.Add("Type", "Entrepreneur");
+                response.Content = new StringContent(jsonContent.ToString());
+                return response;
             }
             User user = db.Users.Where(u => u.AbstractUserID == abstractuser.ID).Include(u => u.Subscriptions).FirstOrDefault();
             if (user != null)
             {
-                return Ok(user);
+                response = new HttpResponseMessage(HttpStatusCode.OK);
+                JObject jsonContent = JObject.Parse(JsonConvert.SerializeObject(user));
+                jsonContent.Add("Type", "User");
+                response.Content = new StringContent(jsonContent.ToString());
+                return response;
             }
-            return NotFound();
+            response = new HttpResponseMessage(HttpStatusCode.NotFound);
+            response.ReasonPhrase = $"Could not find user type.";
+            return response;
         }
 
         [HttpPost]

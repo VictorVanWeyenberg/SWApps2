@@ -26,7 +26,19 @@ namespace SWApps2
     /// </summary>
     public sealed partial class MainPage : Page, INavigation
     {
+        public User User {
+            get {
+                var user = (Application.Current as App).User;
+                return user is User ? user as User : null;
+            }
+        }
 
+        public Entrepreneur Entrepreneur {
+            get {
+                var user = (Application.Current as App).User;
+                return user is Entrepreneur ? user as Entrepreneur : null;
+            }
+        }
         private Frame _pageWrapper;
         private NavigationView _navigation;
         public MainPage()
@@ -80,6 +92,23 @@ namespace SWApps2
             if (_pageWrapper.CanGoBack)
             {
                 _pageWrapper.GoBack();
+            }
+        }
+
+        public void UpdateView()
+        {
+            if ((Application.Current as App).User is Entrepreneur)
+            {
+                (this.FindName("Login") as NavigationViewItem).Visibility = Visibility.Collapsed;
+                (this.FindName("MyEstablishment") as NavigationViewItem).Visibility = Visibility.Visible;
+            }
+            if ((Application.Current as App).User is User)
+            {
+
+            }
+            if ((Application.Current as App) is null)
+            {
+
             }
         }
     }

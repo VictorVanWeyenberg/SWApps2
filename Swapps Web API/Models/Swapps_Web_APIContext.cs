@@ -18,6 +18,20 @@ namespace Swapps_Web_API.Models
         {
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>()
+                .HasMany<Establishment>(user => user.Subscriptions)
+                .WithMany()
+                .Map(bond =>
+                {
+                    bond.MapLeftKey("EstablishmentRefId");
+                    bond.MapRightKey("UserRefId");
+                    bond.ToTable("UserSubscriptions");
+                });
+        }
+
         public DbSet<Establishment> Establishments { get; set; }
 
         public DbSet<Address> Addresses { get; set; }

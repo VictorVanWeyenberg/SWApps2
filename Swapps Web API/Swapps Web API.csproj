@@ -199,6 +199,10 @@
     <Compile Include="Migrations\201812121602426_EstablishmentNotRequired.Designer.cs">
       <DependentUpon>201812121602426_EstablishmentNotRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812121852080_StrangeSuddenChange.cs" />
+    <Compile Include="Migrations\201812121852080_StrangeSuddenChange.Designer.cs">
+      <DependentUpon>201812121852080_StrangeSuddenChange.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AbstractUser.cs" />
     <Compile Include="Models\Address.cs" />
@@ -207,6 +211,7 @@
     <Compile Include="Models\EstablishmentEvent.cs" />
     <Compile Include="Models\EstablishmentType.cs" />
     <Compile Include="Models\Promotion.cs" />
+    <Compile Include="Models\SecurePassword.cs" />
     <Compile Include="Models\Swapps_Web_APIContext.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TimeInterval.cs" />
@@ -234,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812121602426_EstablishmentNotRequired.resx">
       <DependentUpon>201812121602426_EstablishmentNotRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812121852080_StrangeSuddenChange.resx">
+      <DependentUpon>201812121852080_StrangeSuddenChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
