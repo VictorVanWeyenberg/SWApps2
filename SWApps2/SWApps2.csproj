@@ -126,6 +126,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\IValidate.cs" />
     <Compile Include="Validation\LoginValidator.cs" />
+    <Compile Include="Validation\RegisterEstablishmentValidator.cs" />
     <Compile Include="Validation\RegisterValidator.cs" />
     <Compile Include="ViewModel\EstablishmentListViewModel.cs" />
     <Compile Include="ViewModel\EstablishmentViewModel.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\PromotionListViewModel.cs" />
     <Compile Include="ViewModel\PromotionViewModel.cs" />
+    <Compile Include="ViewModel\RegisterEstablishmentViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\EstablishmentListView.xaml.cs">
@@ -149,6 +151,9 @@
     </Compile>
     <Compile Include="View\EventView.xaml.cs">
       <DependentUpon>EventView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RegisterEstablishmentView.xaml.cs">
+      <DependentUpon>RegisterEstablishmentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RegisterView.xaml.cs">
       <DependentUpon>RegisterView.xaml</DependentUpon>
@@ -201,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EventView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RegisterEstablishmentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

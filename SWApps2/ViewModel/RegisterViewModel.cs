@@ -28,7 +28,6 @@ namespace SWApps2.ViewModel
         private string _passwordError;
         private string _passwordRepeatError;
         private string _radioButtonError;
-        private bool _isValid;
         private AbstractUser _user;
 
         private const string url = "http://localhost:54100/api/register";
@@ -67,16 +66,7 @@ namespace SWApps2.ViewModel
             set { _wrapper.PasswordRepeat = value; }
         }
 
-        public bool IsValid
-        {
-            get { return _isValid; }
-            set
-            {
-                if (value != _isValid)
-                    _isValid = value;
-                RaisePropertyChanged(nameof(IsValid));
-            }
-        }
+        public bool IsValid { get; private set; }
 
         #endregion
 
@@ -278,7 +268,8 @@ namespace SWApps2.ViewModel
             {
                 user = JsonConvert.DeserializeObject<User>(json);
             }
-            (Application.Current as App).User = user;
+            var app = Application.Current as App;
+            app.User = user;
         }
     }
 }

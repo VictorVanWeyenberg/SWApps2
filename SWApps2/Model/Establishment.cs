@@ -42,7 +42,7 @@ namespace SWApps2.Model
         {
             Name = name;
             Address = address;
-            Hours = hours;
+            ServiceHours = hours;
             Type = type;
             Image = image;
             Tags = tags;
@@ -77,7 +77,7 @@ namespace SWApps2.Model
 
         public Address Address { get; set; }
 
-        public ServiceHours Hours { get; }
+        public ServiceHours ServiceHours { get; set; }
 
         #endregion
     }

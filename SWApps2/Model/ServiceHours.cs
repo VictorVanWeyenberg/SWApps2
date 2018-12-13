@@ -25,6 +25,9 @@ namespace SWApps2.Model
             Hours = serviceHours;
         }
 
+        public ServiceHours() : this(new TimeInterval[7])
+        { }
+
         /// <summary>
         /// Returns a string representation of the opening hours for a certain day
         /// </summary>
@@ -44,6 +47,15 @@ namespace SWApps2.Model
             }
             //Invalid day
             return "";
+        }
+
+        public void ChangeHourForDay(int day, TimeInterval hour)
+        {
+            try
+            {
+                Hours[day] = hour;
+            }
+            catch (IndexOutOfRangeException) { }
         }
     }
 }

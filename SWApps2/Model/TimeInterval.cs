@@ -30,6 +30,22 @@ namespace SWApps2.Model
 
         public LocalTime End { get; }
 
+        public override bool Equals(object obj)
+        {
+            var interval = obj as TimeInterval;
+            return interval != null &&
+                   Start.Equals(interval.Start) &&
+                   End.Equals(interval.End);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -1676728671;
+            hashCode = hashCode * -1521134295 + EqualityComparer<LocalTime>.Default.GetHashCode(Start);
+            hashCode = hashCode * -1521134295 + EqualityComparer<LocalTime>.Default.GetHashCode(End);
+            return hashCode;
+        }
+
         /// <summary>
         /// Converts this object to a string
         /// </summary>

@@ -40,6 +40,7 @@ namespace SWApps2.ViewModel
             SimpleIoc.Default.Register<EstablishmentViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<RegisterViewModel>();
+            SimpleIoc.Default.Register<RegisterEstablishmentViewModel>();
         }
 
         /// <summary>
@@ -77,6 +78,13 @@ namespace SWApps2.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public RegisterViewModel RegisterViewModel {
             get { return ServiceLocator.Current.GetInstance<RegisterViewModel>(); }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public RegisterEstablishmentViewModel RegisterEstablishmentViewModel {
+            get { return ServiceLocator.Current.GetInstance<RegisterEstablishmentViewModel>(); }
         }
     }
 }

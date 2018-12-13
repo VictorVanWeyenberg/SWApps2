@@ -37,7 +37,7 @@ namespace SWApps2.ViewModel
 
         public string Name { get { return Establishment.Name; } }
         public Address Address { get { return Establishment.Address; } }
-        public ServiceHours ServiceHours { get { return Establishment.Hours; } }
+        public ServiceHours ServiceHours { get { return Establishment.ServiceHours; } }
         
         public ObservableCollection<EventViewModel> Events { get; set; }
         public ObservableCollection<PromotionViewModel> Promotions { get; set; }

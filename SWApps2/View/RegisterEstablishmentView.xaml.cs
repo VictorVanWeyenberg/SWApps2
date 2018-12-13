@@ -1,0 +1,112 @@
+﻿using SWApps2.Model;
+using SWApps2.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+
+namespace SWApps2.View
+{
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class RegisterEstablishmentView : Page
+    {
+        private RegisterEstablishmentViewModel RegisterEstablishmentViewModel;
+        public RegisterEstablishmentView()
+        {
+            DataContextChanged += (s, e) => RegisterEstablishmentViewModel = DataContext as RegisterEstablishmentViewModel;
+            InitializeComponent();
+            RegisterEstablishmentViewModel.PropertyChanged += ViewOnPropertyChanged;
+            InitErrorLabels();
+            InitComboBox();
+        }
+
+        private void ViewOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void InitErrorLabels()
+        {
+            TextBlock error = FindName("ServerError") as TextBlock;
+            error.Text = "";
+            TextBlock nameError = FindName("NameError") as TextBlock;
+            nameError.Text = "";
+            TextBlock streetError = FindName("StreetError") as TextBlock;
+            streetError.Text = "";
+        }
+
+        private void InitComboBox()
+        {
+            ComboBox combo = FindName("TypeSelection") as ComboBox;
+            combo.ItemsSource = Enum.GetNames(typeof(EstablishmentType));
+            combo.SelectedItem = combo.Items.First();
+            RegisterEstablishmentViewModel.Type = (EstablishmentType)Enum.Parse(typeof(EstablishmentType), combo.SelectedValue as string);
+        }
+
+        private void Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            RegisterEstablishmentViewModel.Name = (sender as TextBox).Text;
+            RegisterEstablishmentViewModel.NameError = "";
+        }
+
+        private void NumberInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox input = sender as TextBox;
+            int value;
+            //Try parsing the text
+            if (int.TryParse(input.Text, out value))
+            {
+                //If  less than or equal to zero, reset
+                if (value <= 0)
+                {
+                    input.Text = "";
+                    return;
+                }
+                //pass value to VM
+                RegisterEstablishmentViewModel.Number = value;
+                RegisterEstablishmentViewModel.NumberError = "";
+            }
+            else {//Failed to parse, reset
+                input.Text = "";
+            }
+        }
+
+        private void TypeSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox cb = sender as ComboBox;
+            RegisterEstablishmentViewModel.Type = (EstablishmentType)Enum.Parse(typeof(EstablishmentType), cb.SelectedValue as string);
+        }
+
+        private void StreetInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox input = sender as TextBox;
+            RegisterEstablishmentViewModel.Street = input.Text;
+            RegisterEstablishmentViewModel.StreetError = "";
+        }
+
+        private void Submit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddHour_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
+}

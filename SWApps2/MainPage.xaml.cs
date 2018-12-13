@@ -67,12 +67,16 @@ namespace SWApps2
                 case "Register":
                     _pageWrapper.Navigate(typeof(RegisterView), Parameters);
                     break;
+                    //Remove when done testing
+                case "Test": _pageWrapper.Navigate(typeof(RegisterEstablishmentView), Parameters);
+                    break;
             }
             _navigation.IsBackEnabled = _pageWrapper.CanGoBack;
         }
 
         public void BackRequestedHandler(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
+            //Check go back in certain cases (eg after login or register)!!!
             if (_pageWrapper.CanGoBack)
             {
                 _pageWrapper.GoBack();
