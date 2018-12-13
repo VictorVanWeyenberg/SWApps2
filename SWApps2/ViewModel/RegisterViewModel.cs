@@ -254,12 +254,10 @@ namespace SWApps2.ViewModel
 
         private string GeneratePostRequestContent()
         {
-            byte[] salt = new byte[32];
-            var random = new RNGCryptoServiceProvider();
-            random.GetNonZeroBytes(salt);
-            string hash = Encoding.Default.GetString(SecurePassword.Hash(Password, salt));
+            byte[] salt = SecurePassword.GetSalt();
+            string hash = SecurePassword.Hash(Password, salt);
 
-            _wrapper.Salt = Encoding.Default.GetString(salt);
+            _wrapper.Salt = Convert.ToBase64String(salt);
             _wrapper.Hash = hash;
             _wrapper.IsEntrepreneur = _user is Entrepreneur;
 

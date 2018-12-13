@@ -23,9 +23,10 @@ namespace SWApps2.Converters
             {
                 est = JsonConvert.DeserializeObject<Establishment>(jObject.Value<JObject>("Establishment").ToString());
             }
-            string firstName = jObject.Value<string>("User.FirstName");
-            string lastName = jObject.Value<string>("User.LastName");
-            string email = jObject.Value<string>("User.Email");
+            var jsonString = jObject.ToString();
+            string firstName = jObject.Value<JObject>("User").Value<string>("FirstName");
+            string lastName = jObject.Value<JObject>("User").Value<string>("LastName");
+            string email = jObject.Value<JObject>("User").Value<string>("Email");
             return new Entrepreneur(firstName, lastName, email, est);
         }
 

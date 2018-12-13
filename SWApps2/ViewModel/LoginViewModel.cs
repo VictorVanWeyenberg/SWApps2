@@ -1,12 +1,17 @@
 ﻿using FluentValidation.Results;
 using GalaSoft.MvvmLight;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using SWApps2.Converters;
 using SWApps2.Model;
 using SWApps2.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace SWApps2.ViewModel
 {
@@ -19,6 +24,9 @@ namespace SWApps2.ViewModel
 
         private string _emailError;
         private string _passwordError;
+
+        private const string loginUrl = "http://localhost:54100/api/login";
+        private const string getUserUrl = "http://localhost:54100/api/getUser";
 
         public LoginViewModel() {
             _wrapper = new LoginWrapper();
@@ -101,6 +109,52 @@ namespace SWApps2.ViewModel
                 }
             }
             IsValid = _validationResult.IsValid;
+        }
+
+        public async Task<bool> DoLoginAPICall()
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            var emailJsonObject = new { Email = Email };
+            string jsonContent = JsonConvert.SerializeObject(emailJsonObject);
+            var result = await client.PostAsync(new Uri(loginUrl), new StringContent(jsonContent, Encoding.UTF8, "application/json"));
+            if (result.IsSuccessStatusCode)
+            {
+                string jsonResult = await result.Content.ReadAsStringAsync();
+                JObject jObject = JObject.Parse(jsonResult);
+                string hash = jObject.Value<string>("Hash");
+                string salt = jObject.Value<string>("Salt");
+                if (SecurePassword.ConfirmPassword(hash, salt, Password))
+                    return await LoginUser(jObject.Value<int>("ID"));
+                else
+                    PasswordError = "Wrong email password combination.";
+            } else
+            {
+                PasswordError = "Server Error " + result.StatusCode + ": " + result.ReasonPhrase;
+            }
+            return false;
+        }
+
+        private async Task<bool> LoginUser(int id)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            var idJsonObject = new { Id = id };
+            string jsonContent = JsonConvert.SerializeObject(idJsonObject);
+            var result = await client.PostAsync(new Uri(getUserUrl), new StringContent(jsonContent, Encoding.UTF8, "application/json"));
+            JObject jsonResponse = JObject.Parse(await result.Content.ReadAsStringAsync());
+            string type = jsonResponse.Value<string>("Type");
+            switch (type)
+            {
+                case "Entrepreneur":
+                    (Application.Current as App).User = JsonConvert.DeserializeObject<Entrepreneur>(jsonResponse.ToString(), new EntrepreneurJsonConverter());
+                    return true;
+                case "User":
+                    (Application.Current as App).User = JsonConvert.DeserializeObject<User>(jsonResponse.ToString());
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

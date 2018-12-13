@@ -41,12 +41,16 @@ namespace SWApps2.View
             base.OnNavigatedTo(e);
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             LoginViewModel.Validate();
             if (LoginViewModel.IsValid)
             {
-                DoLoginAPICall();
+                if (await LoginViewModel.DoLoginAPICall())
+                {
+                    this._navigator.Navigate("Establishments", new { Navigator = this._navigator });
+                    this._navigator.UpdateView();
+                }
             }
         }
 
@@ -83,11 +87,6 @@ namespace SWApps2.View
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             _navigator.Navigate("Register", new { Navigator = _navigator });
-        }
-
-        private void DoLoginAPICall()
-        {
-            //TODO
         }
     }
 }
