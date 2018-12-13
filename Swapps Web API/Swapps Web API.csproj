@@ -211,6 +211,7 @@
     <Compile Include="Models\EstablishmentEvent.cs" />
     <Compile Include="Models\EstablishmentType.cs" />
     <Compile Include="Models\Promotion.cs" />
+    <Compile Include="Models\SecurePassword.cs" />
     <Compile Include="Models\Swapps_Web_APIContext.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TimeInterval.cs" />

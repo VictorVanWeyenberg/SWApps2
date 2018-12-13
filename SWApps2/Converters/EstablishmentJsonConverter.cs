@@ -20,7 +20,7 @@ namespace SWApps2.Converters
             if (jObject == null) return null;
             
             string name = jObject.Value<string>("Name");
-            List<string> tags = jObject.Value<JArray>("Tags").ToObject<string[]>().ToList();
+            List<string> tags = jObject.Value<JArray>("Tags").ToList().Select<JToken, string>(t => (t as dynamic).Value).ToList();
             Address address = jObject.Value<JToken>("Address").ToObject<Address>();
 
             ServiceHours jsonServiceHours = JsonConvert.DeserializeObject<ServiceHours>(jObject.ToString(), new ServiceHoursJsonConverter());
