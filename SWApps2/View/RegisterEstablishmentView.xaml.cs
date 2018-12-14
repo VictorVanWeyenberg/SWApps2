@@ -193,12 +193,12 @@ namespace SWApps2.View
             RegisterEstablishmentViewModel.SetTagToRemove(input.SelectedIndex);
         }
 
-        private void Submit_Click(object sender, RoutedEventArgs e)
+        private async void Submit_ClickAsync(object sender, RoutedEventArgs e)
         {
             RegisterEstablishmentViewModel.Validate();
-            if (RegisterEstablishmentViewModel.IsValid)
+            if (RegisterEstablishmentViewModel.IsValid && await RegisterEstablishmentViewModel.DoRegisterEstablishmentAPICall())
             {
-                //DO API CALL
+                _navigator.Navigate("MyEstablishment", new { Navigator = _navigator });
             }
         }
     }

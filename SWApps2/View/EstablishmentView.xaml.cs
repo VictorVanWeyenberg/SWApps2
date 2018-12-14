@@ -34,6 +34,7 @@ namespace SWApps2.View
         public EstablishmentView()
         {
             DataContextChanged += (s, e) => Establishment = DataContext as EstablishmentViewModel;
+            //Establishment.LoadData();
             InitializeComponent();
             InitializeMap();
             GeneratePointOfInterest();
@@ -74,7 +75,6 @@ namespace SWApps2.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navigator = (e.Parameter as dynamic)?.Navigator;
-            Establishment.Establishment = (e.Parameter as dynamic)?.Parameter;
         }
 
         private void InitializeMap()

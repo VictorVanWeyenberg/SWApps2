@@ -105,7 +105,7 @@
                         </ListView>
                         <Button Content="Remove Tag" x:Name="RemoveTagBtn" Click="RemoveTagBtn_Click"/>
                     </StackPanel>
-                    <Button x:Name="Submit" RelativePanel.Below="ExtraOptionsGrid" Content="Add My Establishment" Click="Submit_Click" Grid.Row="3" Margin="0,20,0,0"/>
+                    <Button x:Name="Submit" RelativePanel.Below="ExtraOptionsGrid" Content="Add My Establishment" Click="Submit_ClickAsync" Grid.Row="3" Margin="0,20,0,0"/>
                 </Grid>
             </RelativePanel>
         </ScrollViewer>

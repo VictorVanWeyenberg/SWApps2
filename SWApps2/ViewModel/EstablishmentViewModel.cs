@@ -5,13 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using System.Net.Http;
 using SWApps2.Model;
+using Windows.UI.Xaml;
 
 namespace SWApps2.ViewModel
 {
     public class EstablishmentViewModel : ViewModelBase
     {
         private const string CLOSED = "CLOSED";
+        private const string GETURL = "http://localhost:54100/api/establishment/owner";
 
         private Establishment _establishment;
         public Establishment Establishment

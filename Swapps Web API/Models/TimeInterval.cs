@@ -14,12 +14,12 @@ namespace Swapps_Web_API.Models
 
         public int DayOfWeek { get; set; }
 
-        public int StartHour { get; set; }
+        public int? StartHour { get; set; }
 
-        public int StartMinute { get; set; }
+        public int? StartMinute { get; set; }
 
-        public int EndHour { get; set; }
+        public int? EndHour { get; set; }
 
-        public int EndMinute { get; set; }
+        public int? EndMinute { get; set; }
     }
 }

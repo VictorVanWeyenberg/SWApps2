@@ -9,12 +9,16 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SWApps2.ViewModel
 {
     public class RegisterEstablishmentViewModel : ViewModelBase, IValidate
     {
         private const string CLOSED = "CLOSED";
+        private const string POSTURL = "http://localhost:54100/api/establishment/new";
 
         private Establishment _establishment;
         private Entrepreneur _entrepreneur;
@@ -29,16 +33,13 @@ namespace SWApps2.ViewModel
         private int _tagToRemove;
         private string _serverError;
 
-        private ObservableCollection<string> _observableHours;
-        private ObservableCollection<string> _observableTags;
-
         public RegisterEstablishmentViewModel()
         {
             _establishment = new Establishment("", new Address("", 0), new ServiceHours(), EstablishmentType.RESTAURANT, null);
             _validator = new RegisterEstablishmentValidator();
             ResetValidationErrors();
             ServerError = "";
-            _observableTags = new ObservableCollection<string>();
+            Tags = new ObservableCollection<string>();
             InitializeObservableHours();
         }
 
@@ -99,7 +100,7 @@ namespace SWApps2.ViewModel
             }
         }
 
-        public ObservableCollection<string> ServiceHours { get { return _observableHours; }  }
+        public ObservableCollection<string> ServiceHours { get; private set; }
 
         public EstablishmentType Type {
             get { return _establishment.Type; }
@@ -112,9 +113,7 @@ namespace SWApps2.ViewModel
             }
         }
 
-        public ObservableCollection<string> Tags {
-            get { return _observableTags; }
-        }
+        public ObservableCollection<string> Tags { get; }
 
         #endregion
 
@@ -170,10 +169,10 @@ namespace SWApps2.ViewModel
 
         private void InitializeObservableHours()
         {
-            _observableHours = new ObservableCollection<string>();
+            ServiceHours = new ObservableCollection<string>();
             foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
             {
-                _observableHours.Add(string.Format("{0}:", day));
+                ServiceHours.Add(string.Format("{0}:", day));
             }
         }
 
@@ -207,7 +206,7 @@ namespace SWApps2.ViewModel
             if (currentHour?.Equals(newHours) != true)
             {
                 _establishment.ServiceHours.Hours[day] = newHours;
-                _observableHours[day] = HoursForDayToString(day);
+                ServiceHours[day] = HoursForDayToString(day);
                 RaisePropertyChanged(nameof(ServiceHours));
             }
         }
@@ -225,7 +224,7 @@ namespace SWApps2.ViewModel
                 return;
             } 
             _establishment.Tags.Add(TagToAdd);
-            _observableTags.Add(TagToAdd);
+            Tags.Add(TagToAdd);
             RaisePropertyChanged(nameof(Tags));
         }
 
@@ -237,8 +236,33 @@ namespace SWApps2.ViewModel
         public void RemoveTag()
         {
             _establishment.Tags.RemoveAt(_tagToRemove);
-            _observableTags.RemoveAt(_tagToRemove);
+            Tags.RemoveAt(_tagToRemove);
             RaisePropertyChanged(nameof(Tags));
+        }
+
+        public async Task<bool> DoRegisterEstablishmentAPICall()
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            JObject body = new JObject();
+            body.Add(new JProperty("Email", _entrepreneur.Email));
+            body.Add(new JProperty("Name", _establishment.Name));
+            body.Add(new JProperty("Type", Enum.GetName(typeof(EstablishmentType), _establishment.Type)));
+            body.Add(new JProperty("Street", _establishment.Address.Street));
+            body.Add(new JProperty("Number", _establishment.Address.Number));
+            body.Add(new JProperty("Tags", MapTagsToJArray(_establishment.Tags.ToArray())));
+            body.Add(new JProperty("ServiceHours", MapServiceHoursToJArray()));
+            
+            string jsonContent = JsonConvert.SerializeObject(body);
+            var result = await client.PostAsync(new Uri(POSTURL), new StringContent(jsonContent, Encoding.UTF8, "application/json"));
+            if (result.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else {
+                ServerError = string.Format("Something went wrong: {0}", result.ReasonPhrase);
+                return false;
+            }
         }
 
         public void Validate()
@@ -262,7 +286,7 @@ namespace SWApps2.ViewModel
         public void RemoveHourForSelectedDay()
         {
             _establishment.ServiceHours.Hours[_hourTorRemove] = null;
-            _observableHours[_hourTorRemove] = string.Format("{0}:", Enum.GetName(typeof(DayOfWeek), _hourTorRemove));
+            ServiceHours[_hourTorRemove] = string.Format("{0}:", Enum.GetName(typeof(DayOfWeek), _hourTorRemove));
             RaisePropertyChanged(nameof(ServiceHours));
         }
 
@@ -294,6 +318,39 @@ namespace SWApps2.ViewModel
         public void RegisterEntrepreneur(Entrepreneur entrepreneur)
         {
             _entrepreneur = entrepreneur;
+        }
+
+        private JArray MapTagsToJArray(string[] tags)
+        {
+            JArray array = new JArray();
+            foreach (string tag in tags)
+            {
+                JObject obj = new JObject();
+                obj.Add(new JProperty("Value", tag));
+                array.Add(obj);
+            }
+            return array;
+        }
+
+        private JArray MapServiceHoursToJArray()
+        {
+            if (_establishment.ServiceHours.Hours == null) return null;
+            JArray array = new JArray();
+            for (int i =0; i<_establishment.ServiceHours.Hours.Count(); i++)
+            {
+                JObject jsonTime = new JObject();
+                TimeInterval t = _establishment.ServiceHours.Hours[i];
+                jsonTime.Add(new JProperty("Index", i));
+                if (t != null)
+                {
+                    jsonTime.Add(new JProperty("StartHour", t.Start.Hour));
+                    jsonTime.Add(new JProperty("StartMinute", t.Start.Minute));
+                    jsonTime.Add(new JProperty("EndHour", t.End.Hour));
+                    jsonTime.Add(new JProperty("EndMinute", t.End.Minute));
+                }
+                array.Add(jsonTime);
+            }
+            return array;
         }
         #endregion
     }

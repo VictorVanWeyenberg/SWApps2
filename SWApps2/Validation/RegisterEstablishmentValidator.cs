@@ -24,7 +24,7 @@ namespace SWApps2.Validation
         public AddressValidator()
         {
             RuleFor(a => a).NotNull().WithMessage("Please provide an address");
-            RuleFor(a => a.Number).Must(n => n > 1).WithMessage("Number must be 1 or higher");
+            RuleFor(a => a.Number).Must(n => n >= 1).WithMessage("Number must be 1 or higher");
             RuleFor(a => a.Street).NotEmpty().WithMessage("Street cannot be empty")
                 .Matches(@"^[a-zA-Z]+[a-zA-Z\s.-]+")
                 .WithMessage("Street must begin with a letter and can only contain letters, dots, '-' or spaces");
