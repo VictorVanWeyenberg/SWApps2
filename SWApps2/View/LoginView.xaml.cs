@@ -44,12 +44,14 @@ namespace SWApps2.View
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             LoginViewModel.Validate();
-            if (LoginViewModel.IsValid)
+            if (LoginViewModel.IsValid && await LoginViewModel.DoLoginAPICall())
             {
-                if (await LoginViewModel.DoLoginAPICall())
+                if (LoginViewModel.IsEntrepreneur())
                 {
-                    this._navigator.Navigate("Establishments", new { Navigator = this._navigator });
-                    this._navigator.UpdateView();
+                    _navigator.Navigate("MyEstablishment", new { Navigator = _navigator });
+                }
+                else {
+                    _navigator.Navigate("Establishments", new { Navigator = _navigator });
                 }
             }
         }

@@ -79,11 +79,14 @@ namespace SWApps2
                 case "Register":
                     _pageWrapper.Navigate(typeof(RegisterView), Parameters);
                     break;
-                    //Remove when done testing
-                case "Test": _pageWrapper.Navigate(typeof(RegisterEstablishmentView), Parameters);
+                case "RegisterEstablishment": _pageWrapper.Navigate(typeof(RegisterEstablishmentView), Parameters);
                     break;
+                case "LogOut": Logout(); break;
+                case "Subscriptions": break;    //TODO
+                case "MyEstablishment": NavigateToMyEstablishmentIfPresent(); break;
             }
             _navigation.IsBackEnabled = _pageWrapper.CanGoBack;
+            UpdateView();
         }
 
         public void BackRequestedHandler(NavigationView sender, NavigationViewBackRequestedEventArgs args)
@@ -95,21 +98,101 @@ namespace SWApps2
             }
         }
 
-        public void UpdateView()
+        private void UpdateView()
         {
-            if ((Application.Current as App).User is Entrepreneur)
+            //Fetch app user
+            AbstractUser currentUser = (Application.Current as App).User;
+            if (currentUser == null)
             {
-                (this.FindName("Login") as NavigationViewItem).Visibility = Visibility.Collapsed;
-                (this.FindName("MyEstablishment") as NavigationViewItem).Visibility = Visibility.Visible;
+                ApplyAnonymousUserNavigation();
+                return;
             }
-            if ((Application.Current as App).User is User)
+            if (currentUser is Entrepreneur)
             {
+                ApplyEntrepreneurNavigation(currentUser as Entrepreneur);
+                return;
+            }
+            if (currentUser is User)
+            {
+                ApplyUserNavigation();
+            }
+        }
 
-            }
-            if ((Application.Current as App) is null)
-            {
+        private void ApplyAnonymousUserNavigation()
+        {
+            //Visible
+            (FindName("Login") as NavigationViewItem).Visibility = Visibility.Visible;
+            (FindName("Establishments") as NavigationViewItem).Visibility = Visibility.Visible;
+            (FindName("Promotions") as NavigationViewItem).Visibility = Visibility.Visible;
+            (FindName("Events") as NavigationViewItem).Visibility = Visibility.Visible;
+            //Invisible
+            (FindName("MyEstablishment") as NavigationViewItem).Visibility = Visibility.Collapsed;
+            (FindName("LogOut") as NavigationViewItem).Visibility = Visibility.Collapsed;
+            (FindName("RegisterEstablishment") as NavigationViewItem).Visibility = Visibility.Collapsed;
+            (FindName("Subscriptions") as NavigationViewItem).Visibility = Visibility.Collapsed;
+        }
 
+        private void ApplyEntrepreneurNavigation(Entrepreneur entrepreneur)
+        {
+            //Visible
+            (FindName("LogOut") as NavigationViewItem).Visibility = Visibility.Visible;
+            if (entrepreneur.Establishment != null)
+            {
+                (FindName("Promotions") as NavigationViewItem).Visibility = Visibility.Visible;
+                (FindName("Events") as NavigationViewItem).Visibility = Visibility.Visible;
+                (FindName("MyEstablishment") as NavigationViewItem).Visibility = Visibility.Visible;
+                (FindName("RegisterEstablishment") as NavigationViewItem).Visibility = Visibility.Collapsed;
             }
+            else {
+                (FindName("Promotions") as NavigationViewItem).Visibility = Visibility.Collapsed;
+                (FindName("Events") as NavigationViewItem).Visibility = Visibility.Collapsed;
+                (FindName("MyEstablishment") as NavigationViewItem).Visibility = Visibility.Collapsed;
+                (FindName("RegisterEstablishment") as NavigationViewItem).Visibility = Visibility.Visible;
+            }
+            //Invisible
+            (FindName("Subscriptions") as NavigationViewItem).Visibility = Visibility.Collapsed;
+            (FindName("Login") as NavigationViewItem).Visibility = Visibility.Collapsed;
+            (FindName("Establishments") as NavigationViewItem).Visibility = Visibility.Collapsed;
+        }
+
+        private void ApplyUserNavigation()
+        {
+            //Visible
+            (FindName("Subscriptions") as NavigationViewItem).Visibility = Visibility.Visible;
+            (FindName("Establishments") as NavigationViewItem).Visibility = Visibility.Visible;
+            (FindName("Promotions") as NavigationViewItem).Visibility = Visibility.Visible;
+            (FindName("Events") as NavigationViewItem).Visibility = Visibility.Visible;
+            (FindName("LogOut") as NavigationViewItem).Visibility = Visibility.Visible;
+            //Invisible
+            (FindName("Login") as NavigationViewItem).Visibility = Visibility.Collapsed;
+            (FindName("MyEstablishment") as NavigationViewItem).Visibility = Visibility.Collapsed;
+            (FindName("RegisterEstablishment") as NavigationViewItem).Visibility = Visibility.Collapsed;
+        }
+
+        private void NavigateToMyEstablishmentIfPresent()
+        {
+            AbstractUser user = (Application.Current as App).User;
+            if (user is Entrepreneur)
+            {
+                if ((user as Entrepreneur).Establishment != null)
+                {
+                    //Navigate to establishment detail page
+                }
+                else {
+                    _pageWrapper.Navigate(typeof(NoEstablishmentView), new { Navigator = this as INavigation });
+                }
+            }
+            else {
+                //Should not happen anyway
+                _pageWrapper.Navigate(typeof(EstablishmentListView), new { Navigator = this as INavigation });
+            }
+        }
+
+        private void Logout()
+        {
+            var app = Application.Current as App;
+            app.User = null;
+            (this as INavigation)?.Navigate("Establishments", new { Navigator = this as INavigation });
         }
     }
 }

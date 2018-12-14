@@ -108,7 +108,14 @@ namespace SWApps2.View
                 bool succeeded = await RegisterViewModel.DoRegisterAPICall();
                 if (succeeded)
                 {
-                    _navigator.Navigate("Establishments", new { Navigator = _navigator });
+                    bool isEntrepreneur = RegisterViewModel.IsEntrepreneur();
+                    if (isEntrepreneur)
+                    {
+                        _navigator.Navigate("MyEstablishment", new { Navigator = _navigator });
+                    }
+                    else {
+                        _navigator.Navigate("Establishments", new { Navigator = _navigator });
+                    }
                 }
             }
         }

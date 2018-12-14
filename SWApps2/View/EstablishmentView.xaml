@@ -49,13 +49,13 @@
                     <TextBlock Text="Address" Style="{StaticResource SubtitleTextBlockStyle}"/>
                     <TextBlock Text="{x:Bind Establishment.Address}" />
                     <TextBlock Text="Opening Hours" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(0)}" FontSize="12"/>
-                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(1)}" FontSize="12"/>
-                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(2)}" FontSize="12"/>
-                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(3)}" FontSize="12"/>
-                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(4)}" FontSize="12"/>
-                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(5)}" FontSize="12"/>
-                    <TextBlock Text="{x:Bind Establishment.ServiceHours.HoursForDayToString(6)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(0)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(1)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(2)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(3)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(4)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(5)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(6)}" FontSize="12"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

@@ -34,8 +34,10 @@ namespace SWApps2
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
+            //Start as anonymous user
+            User = null;
         }
 
         /// <summary>

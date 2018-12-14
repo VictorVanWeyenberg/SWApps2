@@ -150,6 +150,11 @@ namespace SWApps2.ViewModel
             }
         }
 
+        public bool IsEntrepreneur()
+        {
+            return _user is Entrepreneur;
+        }
+
         #endregion
 
         #region methods

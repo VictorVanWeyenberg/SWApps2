@@ -17,6 +17,5 @@ namespace SWApps2.Model
         /// <param name="pageName">The name of the destination page</param>
         /// <param name="Parameters">Any parameters that should be passed along with the navigation</param>
         void Navigate(string pageName, object Parameters);
-        void UpdateView();
     }
 }

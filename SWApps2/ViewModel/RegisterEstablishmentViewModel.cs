@@ -5,6 +5,7 @@ using SWApps2.Model;
 using SWApps2.Validation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,23 +14,44 @@ namespace SWApps2.ViewModel
 {
     public class RegisterEstablishmentViewModel : ViewModelBase, IValidate
     {
+        private const string CLOSED = "CLOSED";
+
         private Establishment _establishment;
+        private Entrepreneur _entrepreneur;
         private RegisterEstablishmentValidator _validator;
         private ValidationResult _validationResult;
 
         private string _nameError;
         private string _streetErrror;
-        private string _numberError;
+        private string _addTagError;
+        private string _tempTag;
+        private int _hourTorRemove;
+        private int _tagToRemove;
+        private string _serverError;
+
+        private ObservableCollection<string> _observableHours;
+        private ObservableCollection<string> _observableTags;
 
         public RegisterEstablishmentViewModel()
         {
             _establishment = new Establishment("", new Address("", 0), new ServiceHours(), EstablishmentType.RESTAURANT, null);
             _validator = new RegisterEstablishmentValidator();
             ResetValidationErrors();
+            ServerError = "";
+            _observableTags = new ObservableCollection<string>();
+            InitializeObservableHours();
         }
 
         #region properties
         public bool IsValid { get; private set; }
+
+        public string DayForHourToAdd { get; set; }
+
+        public int StartHour { get; set; }
+        public int StartMinute { get; set; }
+
+        public int EndHour { get; set; }
+        public int EndMinute { get; set; }
 
         public string Name {
             get { return _establishment.Name; }
@@ -66,7 +88,18 @@ namespace SWApps2.ViewModel
             }
         }
 
-        public ServiceHours ServiceHours { get { return _establishment.ServiceHours; } }
+        public string TagToAdd {
+            get { return _tempTag; }
+            set {
+                if (_tempTag != value)
+                {
+                    _tempTag = value;
+                    RaisePropertyChanged(nameof(TagToAdd));
+                }
+            }
+        }
+
+        public ObservableCollection<string> ServiceHours { get { return _observableHours; }  }
 
         public EstablishmentType Type {
             get { return _establishment.Type; }
@@ -79,8 +112,8 @@ namespace SWApps2.ViewModel
             }
         }
 
-        public IEnumerable<string> Tags {
-            get { return _establishment.Tags as IEnumerable<string>; }
+        public ObservableCollection<string> Tags {
+            get { return _observableTags; }
         }
 
         #endregion
@@ -110,14 +143,23 @@ namespace SWApps2.ViewModel
             }
         }
 
-        public string NumberError {
-            get { return _numberError; }
-            set
-            {
-                if (_numberError != value)
+        public string AddTagError {
+            get { return _addTagError; }
+            set {
+                if (_addTagError != value)
                 {
-                    _numberError = value;
-                    RaisePropertyChanged(nameof(NumberError));
+                    _addTagError = value;
+                    RaisePropertyChanged(nameof(AddTagError));
+                }
+            }
+        }
+
+        public string ServerError { get { return _serverError; }
+            private set {
+                if (_serverError != value)
+                {
+                    _serverError = value;
+                    RaisePropertyChanged(nameof(ServerError));
                 }
             }
         }
@@ -126,33 +168,82 @@ namespace SWApps2.ViewModel
 
         #region methods
 
-        public void AddServiceHour(int day, int startHour, int startMinute, int endHour, int endMinute)
+        private void InitializeObservableHours()
         {
-            if (day < 0 || day > 6) return;
-            TimeInterval interval = null;
-            try
+            _observableHours = new ObservableCollection<string>();
+            foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
             {
-                interval = new TimeInterval(new LocalTime(startHour, startMinute), new LocalTime(endHour, endMinute));
-                if (!_establishment.ServiceHours.Hours[day].Equals(interval))
-                {
-                    _establishment.ServiceHours.Hours[day] = interval;
-                    RaisePropertyChanged(nameof(ServiceHours));
-                }
+                _observableHours.Add(string.Format("{0}:", day));
             }
-            catch (ArgumentOutOfRangeException)
-            { }
         }
 
-        public void AddTag(string tag)
+        /// <summary>
+        /// Returns a string representation of the opening hours for a certain day
+        /// </summary>
+        /// <param name="number">The day of the week as an integer in the range [0-6]</param>
+        /// <returns></returns>
+        public string HoursForDayToString(int number)
         {
-            if (string.IsNullOrWhiteSpace(tag)) return;
-            if (_establishment.Tags.Contains(tag)) return;
-            _establishment.Tags.Add(tag);
+            if (number >= 0 && number < 7)
+            {
+                //Get the day as string
+                string dayOfWeek = ((DayOfWeek)number).ToString();
+                //Get the hours
+                TimeInterval day = _establishment.ServiceHours.Hours[number];
+                //If there is an object -> hours available
+                //Else they are closed on said day
+                return string.Format("{0}: {1}", dayOfWeek, day.ToString() ?? CLOSED);
+            }
+            //Invalid day
+            return "";
+        }
+
+        public void AddServiceHour()
+        {
+            DayOfWeek dow = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), DayForHourToAdd);
+            int day = (int)dow;
+            TimeInterval newHours = new TimeInterval(new LocalTime(StartHour, StartMinute), new LocalTime(EndHour, EndMinute));
+            TimeInterval currentHour = _establishment.ServiceHours.Hours[day];
+            if (currentHour?.Equals(newHours) != true)
+            {
+                _establishment.ServiceHours.Hours[day] = newHours;
+                _observableHours[day] = HoursForDayToString(day);
+                RaisePropertyChanged(nameof(ServiceHours));
+            }
+        }
+
+        public void AddTag()
+        {
+            if (string.IsNullOrWhiteSpace(TagToAdd))
+            {
+                AddTagError = "Tag should not be whitespace";
+                return;
+            }
+            if (_establishment.Tags.Contains(TagToAdd))
+            {
+                AddTagError = "Tag already exists";
+                return;
+            } 
+            _establishment.Tags.Add(TagToAdd);
+            _observableTags.Add(TagToAdd);
+            RaisePropertyChanged(nameof(Tags));
+        }
+
+        public void SetTagToRemove(int selectedIndex)
+        {
+            _tagToRemove = selectedIndex;
+        }
+
+        public void RemoveTag()
+        {
+            _establishment.Tags.RemoveAt(_tagToRemove);
+            _observableTags.RemoveAt(_tagToRemove);
             RaisePropertyChanged(nameof(Tags));
         }
 
         public void Validate()
         {
+            ResetValidationErrors();
             _validationResult = _validator.Validate(_establishment);
             if (!_validationResult.IsValid)
             {
@@ -160,21 +251,35 @@ namespace SWApps2.ViewModel
                 {
                     MapErrorToProperty(fail);
                 }
-                return;
             }
-            ResetValidationErrors();
             IsValid = _validationResult.IsValid;
+            if (IsValid)
+            {
+                _entrepreneur.Establishment = _establishment;
+            }
+        }
+
+        public void RemoveHourForSelectedDay()
+        {
+            _establishment.ServiceHours.Hours[_hourTorRemove] = null;
+            _observableHours[_hourTorRemove] = string.Format("{0}:", Enum.GetName(typeof(DayOfWeek), _hourTorRemove));
+            RaisePropertyChanged(nameof(ServiceHours));
+        }
+
+        public void SetServiceHourToRemove(int selectedIndex)
+        {
+            _hourTorRemove = selectedIndex;
         }
 
         public void MapErrorToProperty(ValidationFailure fail)
         {
             switch (fail.PropertyName)
             {
-                case nameof(_establishment.Address.Street): StreetError = fail.ErrorMessage;
-                    break;
-                case nameof(_establishment.Address.Number): NumberError = fail.ErrorMessage;
+                case "Address.Street": StreetError = fail.ErrorMessage;
                     break;
                 case nameof(_establishment.Name): NameError = fail.ErrorMessage;
+                    break;
+                case nameof(_establishment.Tags): AddTagError = fail.ErrorMessage;
                     break;
             }
         }
@@ -182,10 +287,14 @@ namespace SWApps2.ViewModel
         private void ResetValidationErrors()
         {
             NameError = "";
-            NumberError = "";
             StreetError = "";
+            AddTagError = "";
         }
 
+        public void RegisterEntrepreneur(Entrepreneur entrepreneur)
+        {
+            _entrepreneur = entrepreneur;
+        }
         #endregion
     }
 }

@@ -34,7 +34,6 @@
                 <RadioButton x:Name="EntrepreneurRadio" GroupName="Radios" Checked="UserRadio_Checked"/>
             </StackPanel>
         </StackPanel>
-        
-        <Button x:Name="RegisterButton" RelativePanel.Below="BtnStackpanel" RelativePanel.AlignHorizontalCenterWithPanel="True" Content="Register" Margin="0,15,0,0" Click="RegisterButton_Click"/>
+        <Button x:Name="RegisterButton" RelativePanel.Below="BtnStackpanel" RelativePanel.AlignHorizontalCenterWithPanel="True" Content="Register" Margin="0,15,0,20" Click="RegisterButton_Click"/>
     </RelativePanel>
 </Page>

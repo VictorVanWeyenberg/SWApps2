@@ -1,0 +1,15 @@
+﻿<Page
+    x:Class="SWApps2.View.NoEstablishmentView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SWApps2.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <RelativePanel>
+        <TextBlock x:Name="Title" Text="No Establishment" Margin="0,50,0,50" RelativePanel.AlignHorizontalCenterWithPanel="True" Style="{StaticResource TitleTextBlockStyle}"/>
+        <TextBlock x:Name="Description"  TextAlignment="Center" TextWrapping="Wrap" Width="300"  Text="You do not have an establishment yet, please create one through the menu" RelativePanel.Below="Title" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+    </RelativePanel>
+</Page>

@@ -12,8 +12,6 @@ namespace SWApps2.Model
     /// </summary>
     public class ServiceHours
     {
-        private const string CLOSED = "CLOSED";
-
         public TimeInterval[] Hours { get; }
 
         /// <summary>
@@ -27,35 +25,5 @@ namespace SWApps2.Model
 
         public ServiceHours() : this(new TimeInterval[7])
         { }
-
-        /// <summary>
-        /// Returns a string representation of the opening hours for a certain day
-        /// </summary>
-        /// <param name="number">The day of the week as an integer in the range [0-6]</param>
-        /// <returns></returns>
-        public string HoursForDayToString(int number)
-        {
-            if (number >= 0 && number < 7)
-            {
-                //Get the day as string
-                string dayOfWeek = ((DayOfWeek)number).ToString();
-                //Get the hours
-                TimeInterval day = Hours[number];
-                //If there is an object -> hours available
-                //Else they are closed on said day
-                return string.Format("{0}: {1}", dayOfWeek, day.ToString() ?? CLOSED);         
-            }
-            //Invalid day
-            return "";
-        }
-
-        public void ChangeHourForDay(int day, TimeInterval hour)
-        {
-            try
-            {
-                Hours[day] = hour;
-            }
-            catch (IndexOutOfRangeException) { }
-        }
     }
 }

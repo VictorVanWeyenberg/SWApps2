@@ -9,7 +9,7 @@ namespace SWApps2.Model
     /// <summary>
     /// An Entrepreneur is an owner of an <see cref="Establishment"/>
     /// </summary>
-    public class Entrepreneur : User
+    public class Entrepreneur : AbstractUser
     {
         public Entrepreneur() : this(null,null,null,null)
         {}

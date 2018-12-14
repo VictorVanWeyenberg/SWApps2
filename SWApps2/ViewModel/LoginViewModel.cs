@@ -111,6 +111,11 @@ namespace SWApps2.ViewModel
             IsValid = _validationResult.IsValid;
         }
 
+        public bool IsEntrepreneur()
+        {
+            return (Application.Current as App).User is Entrepreneur;
+        }
+
         public async Task<bool> DoLoginAPICall()
         {
             HttpClient client = new HttpClient();

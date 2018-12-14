@@ -11,6 +11,8 @@ namespace SWApps2.ViewModel
 {
     public class EstablishmentViewModel : ViewModelBase
     {
+        private const string CLOSED = "CLOSED";
+
         private Establishment _establishment;
         public Establishment Establishment
         {
@@ -41,5 +43,21 @@ namespace SWApps2.ViewModel
         
         public ObservableCollection<EventViewModel> Events { get; set; }
         public ObservableCollection<PromotionViewModel> Promotions { get; set; }
+
+        public string HoursForDayToString(int number)
+        {
+            if (number >= 0 && number < 7)
+            {
+                //Get the day as string
+                string dayOfWeek = ((DayOfWeek)number).ToString();
+                //Get the hours
+                TimeInterval day = _establishment.ServiceHours.Hours[number];
+                //If there is an object -> hours available
+                //Else they are closed on said day
+                return string.Format("{0}: {1}", dayOfWeek, day.ToString() ?? CLOSED);
+            }
+            //Invalid day
+            return "";
+        }
     }
 }
