@@ -133,6 +133,9 @@
   <data name="Event" xml:space="preserve">
     <value>Event</value>
   </data>
+  <data name="EventSearchPlaceholder" xml:space="preserve">
+    <value>Find Event</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>

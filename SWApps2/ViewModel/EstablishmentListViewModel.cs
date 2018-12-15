@@ -37,6 +37,13 @@ namespace SWApps2.ViewModel
         private void DownloadCompleted(string json)
         {
             var establishments = JsonConvert.DeserializeObject<Establishment[]>(json, new EstablishmentJsonConverter());
+            foreach (Establishment establishment in establishments)
+            {
+                foreach (EstablishmentEvent eventje in establishment.EstablishmentEvents)
+                {
+                    eventje.Establishment = establishment;
+                }
+            }
             Establishments.Clear();
             foreach (Establishment establishment in establishments)
             {

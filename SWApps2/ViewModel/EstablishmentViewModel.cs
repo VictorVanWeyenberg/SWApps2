@@ -24,10 +24,12 @@ namespace SWApps2.ViewModel
                 if (value != null)
                 {
                     _establishment = value;
-                    Events = new ObservableCollection<EventViewModel>();
+                    Events = new ObservableCollection<EstablishmentEventViewModel>();
                     foreach (EstablishmentEvent establishmentEvent in _establishment.EstablishmentEvents)
                     {
-                        Events.Add(new EventViewModel(establishmentEvent));
+                        EstablishmentEventViewModel eventje = new EstablishmentEventViewModel();
+                        eventje.Event = establishmentEvent;
+                        Events.Add(eventje);
                     }
                     Promotions = new ObservableCollection<PromotionViewModel>();
                     foreach (Promotion promotion in _establishment.Promotions)
@@ -44,7 +46,7 @@ namespace SWApps2.ViewModel
         public Address Address { get { return Establishment.Address; } }
         public ServiceHours ServiceHours { get { return Establishment.ServiceHours; } }
         
-        public ObservableCollection<EventViewModel> Events { get; set; }
+        public ObservableCollection<EstablishmentEventViewModel> Events { get; set; }
         public ObservableCollection<PromotionViewModel> Promotions { get; set; }
 
         public string HoursForDayToString(int number)

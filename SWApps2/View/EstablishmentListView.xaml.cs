@@ -34,7 +34,10 @@ namespace SWApps2.View
         private MapControl _map;
         public EstablishmentListView()
         {
-            DataContextChanged += (s, e) => EstablishmentList = DataContext as EstablishmentListViewModel;
+            DataContextChanged += (s, e) =>
+            {
+                EstablishmentList = DataContext as EstablishmentListViewModel;
+            };
             InitializeComponent();
             InitializeMap();
             InitializeSearchBox();

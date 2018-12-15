@@ -23,7 +23,21 @@ namespace SWApps2.Converters
             string description = jObject.Value<string>("Description");
             DateTime startDate = jObject.Value<DateTime>("StartDate");
             DateTime endDate = jObject.Value<DateTime>("EndDate");
-            return new EstablishmentEvent(null, name, description, startDate, endDate);
+            Establishment est = null;
+            try
+            {
+                est = JsonConvert.DeserializeObject<Establishment>(
+                    jObject.Value<JObject>("Establishment").ToString(),
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        Converters = new List<JsonConverter>()
+                        {
+                        new EstablishmentJsonConverter()
+                        }
+                    });
+            } catch (ArgumentException) { } catch (NullReferenceException) { }
+            return new EstablishmentEvent(est, name, description, startDate, endDate);
         }
 
         public override void WriteJson(JsonWriter writer, EstablishmentEvent value, JsonSerializer serializer)

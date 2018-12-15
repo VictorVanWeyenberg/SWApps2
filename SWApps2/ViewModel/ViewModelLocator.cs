@@ -34,13 +34,21 @@ namespace SWApps2.ViewModel
                 return;
             }
 
+            SimpleIoc.Default.Register<EstablishmentEventListViewModel>();
             SimpleIoc.Default.Register<EstablishmentViewModel>();
             SimpleIoc.Default.Register<EstablishmentListViewModel>();
             SimpleIoc.Default.Register<PromotionListViewModel>();
-            SimpleIoc.Default.Register<EstablishmentViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<RegisterViewModel>();
             SimpleIoc.Default.Register<RegisterEstablishmentViewModel>();
+            SimpleIoc.Default.Register<EstablishmentEventViewModel>();
+        }
+        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public EstablishmentEventListViewModel EventList {
+            get { return ServiceLocator.Current.GetInstance<EstablishmentEventListViewModel>(); }
         }
 
         /// <summary>
@@ -85,6 +93,13 @@ namespace SWApps2.ViewModel
             Justification = "This non-static member is needed for data binding purposes.")]
         public RegisterEstablishmentViewModel RegisterEstablishmentViewModel {
             get { return ServiceLocator.Current.GetInstance<RegisterEstablishmentViewModel>(); }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public EstablishmentEventViewModel Event {
+            get { return ServiceLocator.Current.GetInstance<EstablishmentEventViewModel>(); }
         }
     }
 }

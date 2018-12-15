@@ -1,4 +1,5 @@
-﻿using SWApps2.Model;
+﻿using GalaSoft.MvvmLight;
+using SWApps2.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,20 +8,26 @@ using System.Threading.Tasks;
 
 namespace SWApps2.ViewModel
 {
-    public class EventViewModel
+    public class EstablishmentEventViewModel : ViewModelBase
     {
         #region Attributes
 
-        private Event _event;
+        private EstablishmentEvent _event;
+        public EstablishmentEvent Event { get { return this._event; } set 
+                {
+                this._event = value;
+                ParseInterval();
+            } }
         #endregion
 
         #region Properties
-        public string Name { get { return _event.Name; } }
+        public string Name { get { return Event.Name; } }
         public string Interval { get; private set; }
+        public string Description { get { return Event.Description; } }
+        public string EstablishmentName { get { return Event.Establishment.Name; } }
         #endregion
-        public EventViewModel(Event evt) {
-            _event = evt;
-            ParseInterval();
+        public EstablishmentEventViewModel() {
+            
         }
 
         //Redo this
@@ -28,8 +35,8 @@ namespace SWApps2.ViewModel
         {
             
             StringBuilder sb = new StringBuilder();
-            DateTime beginDate = _event.Start.Date;
-            DateTime endDate = _event.End.Date;
+            DateTime beginDate = Event.Start.Date;
+            DateTime endDate = Event.End.Date;
 
             sb.Append(beginDate.DayOfWeek.ToString());
             sb.Append(" ");
@@ -43,8 +50,8 @@ namespace SWApps2.ViewModel
             }
             sb.Append("\n");
 
-            DateTime beginTime = this._event.Start;
-            DateTime endTime = this._event.End;
+            DateTime beginTime = this.Event.Start;
+            DateTime endTime = this.Event.End;
 
             sb.Append(beginTime.ToString("HH:mm"));
             sb.Append(" - ");

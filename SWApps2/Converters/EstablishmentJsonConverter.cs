@@ -18,24 +18,34 @@ namespace SWApps2.Converters
 
             JObject jObject = JObject.Load(reader);
             if (jObject == null) return null;
-            
-            string name = jObject.Value<string>("Name");
-            List<string> tags = jObject.Value<JArray>("Tags").ToList().Select<JToken, string>(t => (t as dynamic)?.Value).ToList();
-            Address address = jObject.Value<JToken>("Address").ToObject<Address>();
 
-            ServiceHours jsonServiceHours = JsonConvert.DeserializeObject<ServiceHours>(jObject.ToString(), new ServiceHoursJsonConverter());
+            Establishment est = null;
+            try
+            {
+                string name = jObject.Value<string>("Name");
+                List<string> tags = jObject.Value<JArray>("Tags").ToList().Select<JToken, string>(t => (t as dynamic)?.Value).ToList();
+                Address address = jObject.Value<JToken>("Address").ToObject<Address>();
 
-            List<EstablishmentEvent> events = new List<EstablishmentEvent>();
-            List<Promotion> promotions = new List<Promotion>();
+                ServiceHours jsonServiceHours = JsonConvert.DeserializeObject<ServiceHours>(jObject.ToString(), new ServiceHoursJsonConverter());
 
-            foreach (JObject jsonEvent in jObject.Value<JArray>("Events").ToObject<List<JObject>>()) events.Add(JsonConvert.DeserializeObject<EstablishmentEvent>(jsonEvent.ToString(), new EstablishmentEventJsonConverter()));
-            foreach (JObject jsonPromotion in jObject.Value<JArray>("Promotions").ToObject<List<JObject>>()) promotions.Add(JsonConvert.DeserializeObject<Promotion>(jsonPromotion.ToString(), new PromotionJsonConverter()));
+                List<EstablishmentEvent> events = new List<EstablishmentEvent>();
+                List<Promotion> promotions = new List<Promotion>();
 
-            EstablishmentType type = (EstablishmentType) Enum.Parse(typeof(EstablishmentType), jObject.Value<string>("Type"));
-            Establishment est = new Establishment(name, address, jsonServiceHours, type,tags,promotions,events);
+                foreach (JObject jsonEvent in jObject.Value<JArray>("Events").ToObject<List<JObject>>()) events.Add(JsonConvert.DeserializeObject<EstablishmentEvent>(jsonEvent.ToString(), new EstablishmentEventJsonConverter()));
+                foreach (JObject jsonPromotion in jObject.Value<JArray>("Promotions").ToObject<List<JObject>>()) promotions.Add(JsonConvert.DeserializeObject<Promotion>(jsonPromotion.ToString(), new PromotionJsonConverter()));
 
-            foreach (EstablishmentEvent eventje in events) eventje.Establishment = est;
-            foreach (Promotion promotion in promotions) promotion.Establishment = est;
+                EstablishmentType type = (EstablishmentType)Enum.Parse(typeof(EstablishmentType), jObject.Value<string>("Type"));
+                est = new Establishment(name, address, jsonServiceHours, type, tags, promotions, events);
+
+                foreach (EstablishmentEvent eventje in events) eventje.Establishment = est;
+                foreach (Promotion promotion in promotions) promotion.Establishment = est;
+            } catch (NullReferenceException)
+            {
+
+            } catch (ArgumentNullException)
+            {
+
+            }
 
             return est;
         }
