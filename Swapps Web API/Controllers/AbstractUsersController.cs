@@ -67,17 +67,31 @@ namespace Swapps_Web_API.Controllers
                 response.ReasonPhrase = $"Could not fetch data for user with id {id}";
                 return response;
             }
-            Entrepreneur entre = db.Entrepreneurs.Where(e => e.UserID == abstractuser.ID)
-                .Include(e => e.User).Include(e => e.Establishment).FirstOrDefault();
+            Entrepreneur entre = db.Entrepreneurs
+                .Where(e => e.UserID == abstractuser.ID)
+                .Include(e => e.User)
+                .Include(e => e.Establishment)
+                .Include(e => e.Establishment.Address)
+                .Include(e => e.Establishment.Tags)
+                .Include(e => e.Establishment.Events)
+                .Include(e => e.Establishment.Promotions)
+                .Include(e => e.Establishment.ServiceHours)
+                .FirstOrDefault();
             if (entre != null)
             {
                 response = new HttpResponseMessage(HttpStatusCode.OK);
-                JObject jsonContent = JObject.Parse(JsonConvert.SerializeObject(entre));
+                JObject jsonContent = JObject.Parse(JsonConvert.SerializeObject(entre, new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                }));
                 jsonContent.Add("Type", "Entrepreneur");
                 response.Content = new StringContent(jsonContent.ToString());
                 return response;
             }
-            User user = db.Users.Where(u => u.AbstractUserID == abstractuser.ID).Include(u => u.Subscriptions).FirstOrDefault();
+            User user = db.Users
+                .Where(u => u.AbstractUserID == abstractuser.ID)
+                .Include(u => u.Subscriptions)
+                .FirstOrDefault();
             if (user != null)
             {
                 response = new HttpResponseMessage(HttpStatusCode.OK);

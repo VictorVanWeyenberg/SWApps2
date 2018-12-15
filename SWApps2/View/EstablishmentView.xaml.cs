@@ -75,6 +75,7 @@ namespace SWApps2.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navigator = (e.Parameter as dynamic)?.Navigator;
+            this.Establishment.Establishment = (e.Parameter as dynamic)?.Parameter;
         }
 
         private void InitializeMap()

@@ -176,7 +176,7 @@ namespace SWApps2
             {
                 if ((user as Entrepreneur).Establishment != null)
                 {
-                    _pageWrapper.Navigate(typeof(EstablishmentView), new { Navigator = this as INavigation });
+                    _pageWrapper.Navigate(typeof(EstablishmentView), new { Navigator = this as INavigation, Parameter = (user as Entrepreneur).Establishment });
                 }
                 else {
                     _pageWrapper.Navigate(typeof(NoEstablishmentView), new { Navigator = this as INavigation });
