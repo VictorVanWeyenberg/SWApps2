@@ -82,8 +82,8 @@ namespace SWApps2.View
 
         public void ItemClickHandler(object sender, ItemClickEventArgs e)
         {
-            Establishment selectedEstablishment = (e.ClickedItem as EstablishmentViewModel)?.Establishment;
-            _navigator.Navigate("Establishment", new { Navigator = _navigator, Parameter = selectedEstablishment });
+            (Application.Current as App).SelectedEstablishment = (e.ClickedItem as EstablishmentViewModel)?.Establishment;
+            _navigator.Navigate("Establishment", new { Navigator = _navigator });
         }
 
         private void InitializeSearchBox()

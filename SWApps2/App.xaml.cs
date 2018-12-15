@@ -27,6 +27,7 @@ namespace SWApps2
     {
 
         public AbstractUser User { get; set; }
+        public Establishment SelectedEstablishment { get; set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -38,6 +39,7 @@ namespace SWApps2
             Suspending += OnSuspending;
             //Start as anonymous user
             User = null;
+            SelectedEstablishment = null;
         }
 
         /// <summary>

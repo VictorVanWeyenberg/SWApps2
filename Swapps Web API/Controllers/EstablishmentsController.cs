@@ -15,15 +15,24 @@ namespace Swapps_Web_API.Controllers
     {
         private readonly Swapps_Web_APIContext db = new Swapps_Web_APIContext();
 
-        // GET: api/Establishments
-        public IQueryable<Establishment> GetEstablishments()
+        [HttpGet]
+        [Route("api/establishment")]
+        public IHttpActionResult GetEstablishments()
         {
-            return db.Establishments
+            JArray estblArray = new JArray();
+
+            IList<Establishment> list = db.Establishments
                 .Include(est => est.Address)
                 .Include(est => est.Tags)
                 .Include(est => est.Events)
                 .Include(est => est.Promotions)
-                .Include(est => est.ServiceHours);
+               .Include(est => est.ServiceHours).ToList();
+
+            foreach (Establishment est in list)
+            {
+                estblArray.Add(ConvertEstablishmentToJson(est));
+            }
+            return Ok(estblArray);
         }
 
         [HttpPost]
@@ -47,7 +56,7 @@ namespace Swapps_Web_API.Controllers
                 .Include(est => est.Promotions)
                 .Include(est => est.ServiceHours).First();
 
-            return Ok(establishment);
+            return Ok(ConvertEstablishmentToJson(establishment));
         }
 
         [HttpPost]
@@ -84,6 +93,21 @@ namespace Swapps_Web_API.Controllers
             db.SaveChanges();
 
             return Ok();
+        }
+
+        private JObject ConvertEstablishmentToJson(Establishment establishment)
+        {
+            JObject estJson = new JObject();
+            estJson.Add(new JProperty("EstablishmentID", establishment.ID));
+            estJson.Add(new JProperty("Name", establishment.Name));
+            estJson.Add(new JProperty("AddressNumber", establishment.Address.Number));
+            estJson.Add(new JProperty("AddressStreet", establishment.Address.Street));
+            estJson.Add(new JProperty("Type", establishment.Type.ToString()));
+            ConvertTagsToJson(estJson, establishment.Tags);
+            ConvertPromotionsToJson(estJson, establishment.Promotions);
+            ConvertEventsToJson(estJson, establishment.Events);
+            ConvertServiceHoursToJson(estJson, establishment.ServiceHours);
+            return estJson;
         }
 
         private bool CheckRequestBodyForPostEstablishment(JObject body)
@@ -130,6 +154,71 @@ namespace Swapps_Web_API.Controllers
             return list;
         }
 
+        private void ConvertTagsToJson(JObject estJson, ICollection<Tag> tags)
+        {
+            JArray tagsArray = new JArray();
+            foreach (Tag t in tags)
+            {
+                JObject obj = new JObject();
+                obj.Add(new JProperty("Value", t.Value));
+                tagsArray.Add(obj);
+            }
+            estJson.Add(new JProperty("Tags", tagsArray));
+        }
+
+        private void ConvertPromotionsToJson(JObject estJson, ICollection<Promotion> promotions)
+        {
+            JArray array = new JArray();
+            foreach (Promotion promotion in promotions)
+            {
+                JObject promo = new JObject();
+                promo.Add(new JProperty("Name", promotion.Name));
+                promo.Add(new JProperty("Description", promotion.Description));
+                promo.Add(new JProperty("StartDate", promotion.StartDate.ToString()));
+                promo.Add(new JProperty("EndDate", promotion.EndDate.ToString()));
+                array.Add(promo);
+            }
+            estJson.Add(new JProperty("Promotions", array));
+        }
+
+        private void ConvertEventsToJson(JObject estJson, ICollection<EstablishmentEvent> events)
+        {
+            JArray array = new JArray();
+            foreach (EstablishmentEvent evt in events)
+            {
+                JObject evtJson = new JObject();
+                evtJson.Add(new JProperty("Name", evt.Name));
+                evtJson.Add(new JProperty("Description", evt.Description));
+                evtJson.Add(new JProperty("StartDate", evt.StartDate.ToString()));
+                evtJson.Add(new JProperty("EndDate", evt.EndDate.ToString()));
+                array.Add(evtJson);
+            }
+            estJson.Add(new JProperty("Events", array));
+        }
+
+        private void ConvertServiceHoursToJson(JObject estJson, ICollection<TimeInterval> serviceHours)
+        {
+            JArray array = new JArray();
+            foreach (TimeInterval time in serviceHours)
+            {
+                JObject t = new JObject();
+                t.Add(new JProperty("DayOfWeek", time.DayOfWeek));
+                if (time.StartHour != null)
+                {
+                    t.Add(new JProperty("IsClosed", false));
+                    t.Add(new JProperty("StartHour", time.StartHour));
+                    t.Add(new JProperty("StartMinute", time.StartMinute));
+                    t.Add(new JProperty("EndHour", time.EndHour));
+                    t.Add(new JProperty("EndMinute", time.EndMinute));
+                }
+                else
+                {
+                    t.Add(new JProperty("IsClosed", true));
+                }
+                array.Add(t);
+            }
+            estJson.Add(new JProperty("ServiceHours", array));
+        }
 
 
         // GET: api/Establishments/5
@@ -180,21 +269,6 @@ namespace Swapps_Web_API.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Establishments
-        [ResponseType(typeof(Establishment))]
-        public IHttpActionResult PostEstablishment(Establishment establishment)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Establishments.Add(establishment);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = establishment.ID }, establishment);
-        }
-
         // DELETE: api/Establishments/5
         [ResponseType(typeof(Establishment))]
         public IHttpActionResult DeleteEstablishment(int id)
@@ -211,6 +285,7 @@ namespace Swapps_Web_API.Controllers
             return Ok(establishment);
         }
 
+        #region Generated Methods
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -224,5 +299,7 @@ namespace Swapps_Web_API.Controllers
         {
             return db.Establishments.Count(e => e.ID == id) > 0;
         }
+
+        #endregion
     }
 }

@@ -24,7 +24,7 @@ namespace SWApps2.Model
         /// <param name="type">The type of establishment</param>
         /// <param name="image">An optional image for the establishment</param>
         public Establishment(string name, Address address, ServiceHours hours, EstablishmentType type, Uri image)
-            : this(name,address,hours,type,new List<string>(),new List<Promotion>(),new List<EstablishmentEvent>(), image){}
+            : this(name, address, hours, type, new List<string>(), new List<Promotion>(), new List<EstablishmentEvent>(), image) { }
 
         /// <summary>
         /// Constructor
@@ -61,9 +61,11 @@ namespace SWApps2.Model
 
         public string Name { get; set; }
 
-        public List<Promotion> Promotions { get; }
+        public List<Promotion> Promotions { get; set; }
 
-        public List<EstablishmentEvent> EstablishmentEvents { get; }
+        public List<EstablishmentEvent> EstablishmentEvents { get; set; }
+
+        public int ID { get; set; }
 
         public Uri Image
         {

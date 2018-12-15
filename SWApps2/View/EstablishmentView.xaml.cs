@@ -34,7 +34,6 @@ namespace SWApps2.View
         public EstablishmentView()
         {
             DataContextChanged += (s, e) => Establishment = DataContext as EstablishmentViewModel;
-            //Establishment.LoadData();
             InitializeComponent();
             InitializeMap();
             GeneratePointOfInterest();

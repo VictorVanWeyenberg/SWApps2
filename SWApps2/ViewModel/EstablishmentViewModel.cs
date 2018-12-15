@@ -16,6 +16,19 @@ namespace SWApps2.ViewModel
         private const string CLOSED = "CLOSED";
         private const string GETURL = "http://localhost:54100/api/establishment/owner";
 
+        public EstablishmentViewModel()
+        {
+            App app = Application.Current as App;
+            if (app.User != null && app.User is Entrepreneur)
+            {
+                Establishment = (app.User as Entrepreneur)?.Establishment;
+            }
+            else {
+                Establishment = app.SelectedEstablishment;
+                app.SelectedEstablishment = null;
+            }
+        }
+
         private Establishment _establishment;
         public Establishment Establishment
         {
@@ -38,8 +51,6 @@ namespace SWApps2.ViewModel
             }
         }
 
-        public EstablishmentViewModel() { }
-
         public string Name { get { return Establishment.Name; } }
         public Address Address { get { return Establishment.Address; } }
         public ServiceHours ServiceHours { get { return Establishment.ServiceHours; } }
@@ -57,7 +68,7 @@ namespace SWApps2.ViewModel
                 TimeInterval day = _establishment.ServiceHours.Hours[number];
                 //If there is an object -> hours available
                 //Else they are closed on said day
-                return string.Format("{0}: {1}", dayOfWeek, day.ToString() ?? CLOSED);
+                return string.Format("{0}: {1}", dayOfWeek, day?.ToString() ?? CLOSED);
             }
             //Invalid day
             return "";

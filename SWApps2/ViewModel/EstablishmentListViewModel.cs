@@ -8,16 +8,15 @@ using SWApps2.Data;
 using SWApps2.Model;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Controls;
-using System.Net;
 using Newtonsoft.Json;
 using SWApps2.Converters;
-using Windows.Web.Http;
+using System.Net.Http;
 
 namespace SWApps2.ViewModel
 {
     public class EstablishmentListViewModel : ViewModelBase
     {
-        const string url = "http://localhost:54100/api/Establishments";
+        const string url = "http://localhost:54100/api/establishment";
         public ObservableCollection<EstablishmentViewModel> Establishments { get { return _establishments; } set { _establishments = value; } }
         private ObservableCollection<EstablishmentViewModel> _establishments;
         public EstablishmentListViewModel()
@@ -36,7 +35,7 @@ namespace SWApps2.ViewModel
 
         private void DownloadCompleted(string json)
         {
-            var establishments = JsonConvert.DeserializeObject<Establishment[]>(json, new EstablishmentJsonConverter());
+            var establishments = JsonConvert.DeserializeObject<Establishment[]>(json, new EstablishmentJsonConverter2());
             Establishments.Clear();
             foreach (Establishment establishment in establishments)
             {

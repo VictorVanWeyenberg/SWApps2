@@ -99,6 +99,8 @@
     <Compile Include="Converters\EntrepreneurJsonConverter.cs" />
     <Compile Include="Converters\EstablishmentEventJsonConverter.cs" />
     <Compile Include="Converters\EstablishmentJsonConverter.cs" />
+    <Compile Include="Converters\EstablishmentJsonConverter2.cs" />
+    <Compile Include="Converters\EstablishmentsJsonConverter.cs" />
     <Compile Include="Converters\PromotionJsonConverter.cs" />
     <Compile Include="Converters\SecurePassword.cs" />
     <Compile Include="Converters\ServiceHoursJsonConverter.cs" />

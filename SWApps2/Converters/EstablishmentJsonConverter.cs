@@ -18,6 +18,7 @@ namespace SWApps2.Converters
 
             JObject jObject = JObject.Load(reader);
             if (jObject == null) return null;
+
             
             string name = jObject.Value<string>("Name");
             List<string> tags = jObject.Value<JArray>("Tags").ToList().Select<JToken, string>(t => (t as dynamic).Value).ToList();

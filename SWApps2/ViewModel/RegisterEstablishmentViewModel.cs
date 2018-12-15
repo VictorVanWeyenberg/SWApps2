@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Windows.UI.Xaml;
 
 namespace SWApps2.ViewModel
 {
@@ -20,11 +21,11 @@ namespace SWApps2.ViewModel
         private const string CLOSED = "CLOSED";
         private const string POSTURL = "http://localhost:54100/api/establishment/new";
 
-        private Establishment _establishment;
         private Entrepreneur _entrepreneur;
         private RegisterEstablishmentValidator _validator;
         private ValidationResult _validationResult;
 
+        private Establishment _establishment;
         private string _nameError;
         private string _streetErrror;
         private string _addTagError;
@@ -257,6 +258,8 @@ namespace SWApps2.ViewModel
             var result = await client.PostAsync(new Uri(POSTURL), new StringContent(jsonContent, Encoding.UTF8, "application/json"));
             if (result.IsSuccessStatusCode)
             {
+                var app = Application.Current as App;
+                (app.User as Entrepreneur).Establishment = _establishment;
                 return true;
             }
             else {
@@ -279,7 +282,8 @@ namespace SWApps2.ViewModel
             IsValid = _validationResult.IsValid;
             if (IsValid)
             {
-                _entrepreneur.Establishment = _establishment;
+                var app = Application.Current as App;
+                (app.User as Entrepreneur).Establishment = _establishment;
             }
         }
 
