@@ -86,5 +86,6 @@ namespace SWApps2.ViewModel
         public RegisterEstablishmentViewModel RegisterEstablishmentViewModel {
             get { return ServiceLocator.Current.GetInstance<RegisterEstablishmentViewModel>(); }
         }
+
     }
 }

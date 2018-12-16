@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock FontSize="60" HorizontalAlignment="Center" Text="{x:Bind Establishment.Name}" Style="{StaticResource TitleTextBlockStyle}" Grid.ColumnSpan="2" />
+        <TextBlock FontSize="60" HorizontalAlignment="Center" Text="{x:Bind EstablishmentViewModel.Establishment.Name}" Style="{StaticResource TitleTextBlockStyle}" Grid.ColumnSpan="2" />
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
@@ -24,7 +24,7 @@
             <controls:GPSMap x:Name="GPSMapControl"/>
             <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10,0,0,0">
                 <TextBlock FontSize="32" Text="Events" />
-                <ListView ItemsSource="{x:Bind Establishment.Events}">
+                <ListView ItemsSource="{x:Bind EstablishmentViewModel.Events}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewModels:EventViewModel">
                             <StackPanel Orientation="Vertical" Padding="10">
@@ -35,7 +35,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <TextBlock FontSize="32" Text="Promotions" />
-                <ListView ItemsSource="{x:Bind Establishment.Promotions}">
+                <ListView ItemsSource="{x:Bind EstablishmentViewModel.Promotions}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewModels:PromotionViewModel">
                             <StackPanel Orientation="Vertical" Padding="10">
@@ -47,15 +47,15 @@
                 </ListView>
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Address" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind Establishment.Address}" />
+                    <TextBlock Text="{x:Bind EstablishmentViewModel.Address}" />
                     <TextBlock Text="Opening Hours" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(0)}" FontSize="12"/>
-                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(1)}" FontSize="12"/>
-                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(2)}" FontSize="12"/>
-                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(3)}" FontSize="12"/>
-                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(4)}" FontSize="12"/>
-                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(5)}" FontSize="12"/>
-                    <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(6)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=EstablishmentViewModel.HourForDay(0)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=EstablishmentViewModel.HourForDay(1)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=EstablishmentViewModel.HourForDay(2)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=EstablishmentViewModel.HourForDay(3)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=EstablishmentViewModel.HourForDay(4)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=EstablishmentViewModel.HourForDay(5)}" FontSize="12"/>
+                    <TextBlock Text="{x:Bind Path=EstablishmentViewModel.HourForDay(6)}" FontSize="12"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

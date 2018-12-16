@@ -33,7 +33,7 @@ namespace Swapps_Web_API.Models
         }
 
         public DbSet<Establishment> Establishments { get; set; }
-
+        
         public DbSet<Address> Addresses { get; set; }
         public DbSet<EstablishmentEvent> Events { get; set; }
         public DbSet<Promotion> Promotions { get; set; }

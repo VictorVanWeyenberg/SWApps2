@@ -11,17 +11,25 @@ using Windows.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using SWApps2.Converters;
 using System.Net.Http;
+using Windows.UI.Xaml;
 
 namespace SWApps2.ViewModel
 {
     public class EstablishmentListViewModel : ViewModelBase
     {
         const string url = "http://localhost:54100/api/establishment";
-        public ObservableCollection<EstablishmentViewModel> Establishments { get { return _establishments; } set { _establishments = value; } }
-        private ObservableCollection<EstablishmentViewModel> _establishments;
+
+        private ObservableCollection<EstablishmentListViewItemViewModel> _items;
+
+        public ReadOnlyObservableCollection<EstablishmentListViewItemViewModel> Items { get { return new ReadOnlyObservableCollection<EstablishmentListViewItemViewModel>(_items); } }
+
+        public Establishment SelectedEstablishment { get; private set; }
+
+        public bool CanShowExtraOptions { get; private set; }
+
         public EstablishmentListViewModel()
         {
-            _establishments = new ObservableCollection<EstablishmentViewModel>();
+            _items = new ObservableCollection<EstablishmentListViewItemViewModel>();
             LoadData();
         }
 
@@ -35,15 +43,16 @@ namespace SWApps2.ViewModel
 
         private void DownloadCompleted(string json)
         {
+            var app = Application.Current as App;
+            CanShowExtraOptions = app.User == null || app.User is Entrepreneur ? false : true;
             var establishments = JsonConvert.DeserializeObject<Establishment[]>(json, new EstablishmentJsonConverter2());
-            Establishments.Clear();
+            _items.Clear();
             foreach (Establishment establishment in establishments)
             {
-                EstablishmentViewModel evm = new EstablishmentViewModel
-                {
-                    Establishment = establishment
-                };
-                Establishments.Add(evm);
+                _items.Add(new EstablishmentListViewItemViewModel {
+                    Establishment = establishment,
+                    CanShowMenu = CanShowExtraOptions
+                });
             }
         }
     }

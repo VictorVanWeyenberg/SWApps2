@@ -1,5 +1,6 @@
 ﻿using SWApps2.CustomControls;
 using SWApps2.Model;
+using SWApps2.Services;
 using SWApps2.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -28,52 +29,75 @@ namespace SWApps2.View
     /// </summary>
     public sealed partial class EstablishmentView : Page
     {
-        public EstablishmentViewModel Establishment { get; set; }
+        public EstablishmentViewModel EstablishmentViewModel { get; set; }
         private INavigation _navigator;
         private MapControl _map;
         public EstablishmentView()
         {
-            DataContextChanged += (s, e) => Establishment = DataContext as EstablishmentViewModel;
+            DataContextChanged += (s, e) => {
+                EstablishmentViewModel = DataContext as EstablishmentViewModel;
+                FetchEstablishment();
+            };
             InitializeComponent();
             InitializeMap();
-            GeneratePointOfInterest();
         }
 
-        async private void GeneratePointOfInterest()
+        private void FetchEstablishment()
+        {
+            var app = Application.Current as App;
+            if (app.User != null && app.User is Entrepreneur)//Fetch entrepreneur's establishment
+            {
+                Entrepreneur entrepreneur = app.User as Entrepreneur;
+                EstablishmentViewModel.Establishment = entrepreneur.Establishment;
+            }
+            else {//fetch selected establishment
+                EstablishmentViewModel.Establishment = app.EstablishmentFromList;
+            }
+        }
+
+        private void GeneratePOI()
         {
             List<MapElement> mapLocations = new List<MapElement>();
-            Geopoint referencePoint = new Geopoint(new BasicGeoposition() { Latitude = 51.0543, Longitude = 3.7174 });
-            if (Establishment.Establishment == null) return;
-            MapLocationFinderResult result = await MapLocationFinder.FindLocationsAsync(Establishment.Address.ToString(), referencePoint);
-
-            Geopoint position = referencePoint;
-            if (result.Status == MapLocationFinderStatus.Success)
+            Establishment selected = EstablishmentViewModel.Establishment;
+            if (selected == null) return;
+            //Create MapLocationFinderResult w/ address.ToString & Name
+            TaskCompletionNotifier<MapLocationFinderResult> task =
+                new TaskCompletionNotifier<MapLocationFinderResult>(GPSService.FindLocationForAddress(selected.Address.ToString()));
+            if (task.IsSuccessfullyCompleted)
             {
-                position = new Geopoint(new BasicGeoposition
+                MapLocationFinderResult result = task.Result;
+                if (result.Status == MapLocationFinderStatus.Success)
                 {
-                    Longitude = result.Locations[0].Point.Position.Longitude,
-                    Latitude = result.Locations[0].Point.Position.Latitude
-                });
-                MapIcon icon = new MapIcon
+                    Geopoint position = new Geopoint(new BasicGeoposition
+                    {
+                        Longitude = result.Locations[0].Point.Position.Longitude,
+                        Latitude = result.Locations[0].Point.Position.Latitude
+                    });
+                    MapIcon icon = new MapIcon
+                    {
+                        Location = position,
+                        NormalizedAnchorPoint = new Point(0.5, 1.0),
+                        Title = selected.Name
+                    };
+                    mapLocations.Add(icon);
+                }
+                MapElementsLayer positionsLayer = new MapElementsLayer
                 {
-                    Location = position,
-                    NormalizedAnchorPoint = new Point(0.5, 1.0),
-                    Title = Establishment.Name
+                    MapElements = mapLocations
                 };
-                mapLocations.Add(icon);
+                _map.Layers.Add(positionsLayer);
+                _map.Center = GPSService.CenterOfMap;
+                _map.UpdateLayout();
             }
-            MapElementsLayer positionsLayer = new MapElementsLayer
-            {
-                MapElements = mapLocations
-            };
-            _map.Layers.Add(positionsLayer);
-            _map.Center = position;
-            _map.UpdateLayout();
         }
+
+
+
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navigator = (e.Parameter as dynamic)?.Navigator;
+            base.OnNavigatedTo(e);
         }
 
         private void InitializeMap()
@@ -81,6 +105,7 @@ namespace SWApps2.View
             var mapControl = (GPSMap)FindName("GPSMapControl");
             _map = (MapControl)mapControl.FindName("Map");
             _map.ZoomLevel = 20;
+            GeneratePOI();
         }
     }
 }

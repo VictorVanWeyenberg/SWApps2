@@ -198,7 +198,7 @@ namespace SWApps2.View
             RegisterEstablishmentViewModel.Validate();
             if (RegisterEstablishmentViewModel.IsValid && await RegisterEstablishmentViewModel.DoRegisterEstablishmentAPICall())
             {
-                _navigator.Navigate("MyEstablishment", new { Navigator = _navigator});
+                _navigator.Navigate("MyEstablishment", new { Navigator = _navigator });
             }
         }
     }

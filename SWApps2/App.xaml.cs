@@ -25,9 +25,8 @@ namespace SWApps2
     /// </summary>
     sealed partial class App : Application
     {
-
+        public Establishment EstablishmentFromList { get; set; }
         public AbstractUser User { get; set; }
-        public Establishment SelectedEstablishment { get; set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -37,10 +36,9 @@ namespace SWApps2
         {
             InitializeComponent();
             Suspending += OnSuspending;
-            //Start as anonymous user
-            User = null;
-            SelectedEstablishment = null;
         }
+
+
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points

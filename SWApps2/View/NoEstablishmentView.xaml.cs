@@ -23,17 +23,10 @@ namespace SWApps2.View
     /// </summary>
     public sealed partial class NoEstablishmentView : Page
     {
-        private INavigation _navigator;
 
         public NoEstablishmentView()
         {
             InitializeComponent();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            _navigator = (e.Parameter as dynamic)?.Navigator;
-            base.OnNavigatedTo(e);
         }
     }
 }

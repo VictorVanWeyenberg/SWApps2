@@ -18,6 +18,9 @@ using Windows.UI.Xaml.Controls.Maps;
 using Windows.Devices.Geolocation;
 using Windows.Services.Maps;
 using SWApps2.CustomControls;
+using System.Threading.Tasks;
+using SWApps2.Services;
+using System.Collections.ObjectModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -29,26 +32,28 @@ namespace SWApps2.View
     /// </summary>
     public sealed partial class EstablishmentListView : Page
     {
-        public EstablishmentListViewModel EstablishmentList { get; set; }
+        public EstablishmentListViewModel EstablishmentListViewModel { get; set; }
+        private EstablishmentListViewItem _selectedItem;
         private INavigation _navigator;
         private MapControl _map;
         public EstablishmentListView()
         {
-            DataContextChanged += (s, e) => EstablishmentList = DataContext as EstablishmentListViewModel;
+            DataContextChanged += (s, e) => EstablishmentListViewModel = DataContext as EstablishmentListViewModel;
             InitializeComponent();
+            FillListWithItems();
             InitializeMap();
             InitializeSearchBox();
-            GeneratePointsOfInterest();
         }
 
-        async private void GeneratePointsOfInterest()
+        private void GeneratePOI(string address, string name)
         {
             List<MapElement> mapLocations = new List<MapElement>();
-            Geopoint referencePoint = new Geopoint(new BasicGeoposition() { Latitude = 51.0543, Longitude = 3.7174 });
-            foreach (EstablishmentViewModel est in EstablishmentList.Establishments)
+            //Create MapLocationFinderResult w/ address.ToString & Name
+            TaskCompletionNotifier<MapLocationFinderResult> task =
+                new TaskCompletionNotifier<MapLocationFinderResult>(GPSService.FindLocationForAddress(address));
+            if (task.IsSuccessfullyCompleted)
             {
-                MapLocationFinderResult result = await MapLocationFinder.FindLocationsAsync(est.Address.ToString(), referencePoint);
-
+                MapLocationFinderResult result = task.Result;
                 if (result.Status == MapLocationFinderStatus.Success)
                 {
                     Geopoint position = new Geopoint(new BasicGeoposition
@@ -60,30 +65,24 @@ namespace SWApps2.View
                     {
                         Location = position,
                         NormalizedAnchorPoint = new Point(0.5, 1.0),
-                        Title = est.Name
+                        Title = name
                     };
                     mapLocations.Add(icon);
                 }
+                MapElementsLayer positionsLayer = new MapElementsLayer
+                {
+                    MapElements = mapLocations
+                };
+                _map.Layers.Add(positionsLayer);
+                _map.Center = GPSService.CenterOfMap;
+                _map.UpdateLayout();
             }
-            MapElementsLayer positionsLayer = new MapElementsLayer
-            {
-                MapElements = mapLocations
-            };
-            _map.Layers.Add(positionsLayer);
-            _map.Center = referencePoint;
-            _map.UpdateLayout();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navigator = (e.Parameter as dynamic)?.Navigator;
             base.OnNavigatedTo(e);
-        }
-
-        public void ItemClickHandler(object sender, ItemClickEventArgs e)
-        {
-            (Application.Current as App).SelectedEstablishment = (e.ClickedItem as EstablishmentViewModel)?.Establishment;
-            _navigator.Navigate("Establishment", new { Navigator = _navigator });
         }
 
         private void InitializeSearchBox()
@@ -100,6 +99,51 @@ namespace SWApps2.View
             GPSMap mapControl = (GPSMap)FindName("MapControl");
             _map = (MapControl)mapControl.FindName("Map");
             _map.ZoomLevel = 14.5;
+            _map.Center = GPSService.CenterOfMap;
+            _map.UpdateLayout();
+        }
+
+        private void FillListWithItems()
+        {
+            ObservableCollection<EstablishmentListViewItem> collection = new ObservableCollection<EstablishmentListViewItem>();
+            foreach (EstablishmentListViewItemViewModel itemVM in EstablishmentListViewModel.Items)
+            {
+                collection.Add(new EstablishmentListViewItem
+                {
+                    ViewModel = itemVM,
+                    Navigator = _navigator
+                });
+            }
+            ListView list = FindName("items") as ListView;
+            list.ItemsSource = collection;
+        }
+
+        private void Items_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            EstablishmentListViewItem item = e.ClickedItem as EstablishmentListViewItem;
+            if (_selectedItem == null && item != null)//In the beginning no item is selected
+            {
+                item.OpenMenu();//ask the item to open its menu
+                _selectedItem = item;//set selected item
+                GeneratePOI(item.ViewModel.Address, item.ViewModel.Name);
+                return;
+            }
+            if (_selectedItem != null && _selectedItem.Equals(item))//item selected, but is the same as previous selected
+            {
+                //Open or close menu
+                OpenItemMenu();
+            }
+            else{//item selected and its a different one
+                _selectedItem = item;
+                GeneratePOI(_selectedItem.ViewModel.Address, _selectedItem.ViewModel.Name);
+                OpenItemMenu();
+            }
+        }
+
+        private void OpenItemMenu()
+        {
+            if (_selectedItem.IsMenuOpen) _selectedItem.CloseMenu();
+            else _selectedItem.OpenMenu();
         }
     }
 }

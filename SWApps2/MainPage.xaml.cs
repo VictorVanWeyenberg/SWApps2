@@ -179,7 +179,7 @@ namespace SWApps2
                     _pageWrapper.Navigate(typeof(EstablishmentView), new { Navigator = this as INavigation });
                 }
                 else {
-                    _pageWrapper.Navigate(typeof(NoEstablishmentView), new { Navigator = this as INavigation });
+                    _pageWrapper.Navigate(typeof(NoEstablishmentView));
                 }
             }
             else {

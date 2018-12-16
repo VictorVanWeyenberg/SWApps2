@@ -16,18 +16,7 @@ namespace SWApps2.ViewModel
         private const string CLOSED = "CLOSED";
         private const string GETURL = "http://localhost:54100/api/establishment/owner";
 
-        public EstablishmentViewModel()
-        {
-            App app = Application.Current as App;
-            if (app.User != null && app.User is Entrepreneur)
-            {
-                Establishment = (app.User as Entrepreneur)?.Establishment;
-            }
-            else {
-                Establishment = app.SelectedEstablishment;
-                app.SelectedEstablishment = null;
-            }
-        }
+        public EstablishmentViewModel(){}
 
         private Establishment _establishment;
         public Establishment Establishment
@@ -58,7 +47,12 @@ namespace SWApps2.ViewModel
         public ObservableCollection<EventViewModel> Events { get; set; }
         public ObservableCollection<PromotionViewModel> Promotions { get; set; }
 
-        public string HoursForDayToString(int number)
+        public string HourForDay(int number)
+        {
+            return HoursForDayToString(number);
+        }
+
+        private string HoursForDayToString(int number)
         {
             if (number >= 0 && number < 7)
             {

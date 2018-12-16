@@ -1,0 +1,35 @@
+﻿<UserControl
+    x:Class="SWApps2.CustomControls.EstablishmentListViewItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SWApps2.CustomControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    xmlns:models="using:SWApps2.Model">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="ItemDataTemplate" x:DataType="models:Establishment">
+            <StackPanel Orientation="Vertical" Padding="10,0" VerticalAlignment="Top">
+                <TextBlock Text="{x:Bind Name}" FontSize="32"/>
+                <TextBlock Text="{x:Bind Address}" FontSize="10" Foreground="#FF1D1D1D"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <ItemsControl ItemsSource="{x:Bind ViewModel.Establishment}" ItemTemplate="{StaticResource ItemDataTemplate}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <StackPanel x:Name="Menu" Visibility="Collapsed" Orientation="Horizontal" Spacing="20" Margin="0,20,0,0">
+            <Button x:Name="DetailsBtn" Click="DetailsBtn_Click"  Content="ViewDetails"/>
+            <Button x:Name="SubscribeBtn" Click="SubscribeBtn_Click"  Content="Subscribe"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

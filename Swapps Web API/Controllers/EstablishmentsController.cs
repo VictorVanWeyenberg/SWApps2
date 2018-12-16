@@ -221,6 +221,24 @@ namespace Swapps_Web_API.Controllers
         }
 
 
+        public IHttpActionResult SubscribeToEstablishment(JObject body)
+        {
+            if (body.ContainsKey("Email") && body.ContainsKey("SubscribeToID"))
+            {
+                string email = body.Value<string>("Email");
+                int subID = body.Value<int>("SubscribeToID");
+                User user = db.Users.Where(u => u.AbstractUser.Email.Equals(email)).First();
+                if (user == null)
+                {
+                    return BadRequest("User not found for Email");
+                }
+                //Do subscription(Estab ID + User ID)
+                
+                return Ok();
+            }
+            return BadRequest("Email or subscription ID missing");
+        }
+
         // GET: api/Establishments/5
         [ResponseType(typeof(Establishment))]
         public IHttpActionResult GetEstablishment(int id)
