@@ -1,4 +1,5 @@
-﻿using SWApps2.ViewModel;
+﻿using SWApps2.Model;
+using SWApps2.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,6 +25,7 @@ namespace SWApps2.View
     public sealed partial class PromotionListView : Page
     {
         public PromotionListViewModel PromotionList;
+        private INavigation _navigator;
         public PromotionListView()
         {
             DataContextChanged += (s, e) => PromotionList = DataContext as PromotionListViewModel;
@@ -40,6 +42,18 @@ namespace SWApps2.View
             var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
             AutoSuggestBox search = (AutoSuggestBox)FindName("Search");
             search.PlaceholderText = resourceLoader.GetString("PromotionSearchPlaceholder");
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            _navigator = (e.Parameter as dynamic).Navigator as INavigation;
+            base.OnNavigatedTo(e);
+        }
+
+        public void ItemClickHandler(object sender, ItemClickEventArgs e)
+        {
+            Promotion selectedPromotion = (e.ClickedItem as PromotionViewModel)?.Promotion;
+            _navigator.Navigate("Promotion", new { Navigator = _navigator, Parameter = selectedPromotion });
         }
 
     }

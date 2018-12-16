@@ -10,10 +10,13 @@ namespace SWApps2.ViewModel
     public class PromotionViewModel
     {
         public Promotion _promotion;
-        public PromotionViewModel(Promotion promotion)
+        public Promotion Promotion { get { return this._promotion; } set 
+                {
+                this._promotion = value;
+                ParseInterval();
+            }  }
+        public PromotionViewModel()
         {
-            this._promotion = promotion;
-            ParseInterval();
         }
         public Establishment Establishment { get { return this._promotion.Establishment; } }
         public string Name { get { return this._promotion.Name; } }
@@ -25,6 +28,7 @@ namespace SWApps2.ViewModel
             }
         }
         public string Interval { get; set; }
+        public string EstablishmentName { get { return this._promotion.Establishment.Name; } }
         public void ParseInterval()
         {
             StringBuilder sb = new StringBuilder();

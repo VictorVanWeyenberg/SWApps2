@@ -13,7 +13,9 @@
     <StackPanel Orientation="Vertical">
         <AutoSuggestBox  x:Name="Search" QueryIcon="Find"/>
         <ListView x:Name="items"
-                  ItemsSource="{x:Bind PromotionList.Promotions}">
+                  ItemsSource="{x:Bind PromotionList.Promotions}"
+                  IsItemClickEnabled="True"
+                  ItemClick="ItemClickHandler">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewModels:PromotionViewModel">
                     <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Top">

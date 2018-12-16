@@ -70,6 +70,9 @@ namespace SWApps2
                 case "Promotions":
                     _pageWrapper.Navigate(typeof(PromotionListView), Parameters);
                     break;
+                case "Promotion":
+                    _pageWrapper.Navigate(typeof(PromotionView), Parameters);
+                    break;
                 case "Events":
                     _pageWrapper.Navigate(typeof(EventListView), Parameters);
                     break;

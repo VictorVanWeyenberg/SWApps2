@@ -34,7 +34,9 @@ namespace SWApps2.ViewModel
                     Promotions = new ObservableCollection<PromotionViewModel>();
                     foreach (Promotion promotion in _establishment.Promotions)
                     {
-                        Promotions.Add(new PromotionViewModel(promotion));
+                        PromotionViewModel pvm = new PromotionViewModel();
+                        pvm.Promotion = promotion;
+                        Promotions.Add(pvm);
                     }
                 }
             }
