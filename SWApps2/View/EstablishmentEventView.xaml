@@ -17,6 +17,6 @@
             <TextBlock Text="Organized by: " />
             <TextBlock Text="{x:Bind Event.EstablishmentName}" />
         </StackPanel>
-        <Button Content="Go to Establishment" Click="GoToEstablishment" />
+        <!--<Button Content="Go to Establishment" Click="GoToEstablishment" />-->
     </StackPanel>
 </Page>
