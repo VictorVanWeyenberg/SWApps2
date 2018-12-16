@@ -20,10 +20,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <AutoSuggestBox x:Name="Search" Grid.ColumnSpan="2" QueryIcon="Find"/>
+        <AutoSuggestBox x:Name="Search" Grid.ColumnSpan="2" QueryIcon="Find" TextChanged="Filter"/>
         <controls:GPSMap x:Name="MapControl" Grid.Column="0" Grid.Row="1"/>
         <ListView x:Name="items"
-                  ItemsSource="{x:Bind Path=EstablishmentList.Establishments}"
+                  ItemsSource="{x:Bind Path=EstablishmentList.FilteredEstablishments, Mode=OneWay}"
                   ItemClick="{x:Bind Path=ItemClickHandler}"
                   IsItemClickEnabled="True"
                   Grid.Column="1"

@@ -19,10 +19,24 @@ namespace SWApps2.ViewModel
     {
         const string url = "http://localhost:54100/api/Establishments";
         public ObservableCollection<EstablishmentViewModel> Establishments { get { return _establishments; } set { _establishments = value; } }
+        public ObservableCollection<EstablishmentViewModel> FilteredEstablishments { get { return this._filteredEstablishments; } set { this._filteredEstablishments = value; } }
         private ObservableCollection<EstablishmentViewModel> _establishments;
+        private ObservableCollection<EstablishmentViewModel> _filteredEstablishments;
+        private string _lookupString = null;
+        public string LookupString { get { return this._lookupString; } set {
+                this._lookupString = value;
+                if (this._lookupString != null)
+                {
+                    FilteredEstablishments = new ObservableCollection<EstablishmentViewModel>(Establishments.Where(est => est.Name.ToLower().Contains(this._lookupString) || est.Establishment.Tags.Exists(tag => tag.ToLower().Contains(this._lookupString))));
+                } else
+                {
+                    FilteredEstablishments = Establishments;
+                }
+            } }
         public EstablishmentListViewModel()
         {
             _establishments = new ObservableCollection<EstablishmentViewModel>();
+            _filteredEstablishments = _establishments;
             LoadData();
         }
 

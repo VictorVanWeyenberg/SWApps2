@@ -11,7 +11,7 @@
     DataContext="{Binding PromotionList, Source={StaticResource Locator}}">
 
     <StackPanel Orientation="Vertical">
-        <AutoSuggestBox  x:Name="Search" QueryIcon="Find"/>
+        <AutoSuggestBox  x:Name="Search" QueryIcon="Find" TextChanged="Filter"/>
         <ListView x:Name="items"
                   ItemsSource="{x:Bind PromotionList.Promotions}"
                   IsItemClickEnabled="True"

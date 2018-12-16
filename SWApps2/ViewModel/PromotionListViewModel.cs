@@ -17,10 +17,25 @@ namespace SWApps2.ViewModel
     {
         private const string url = "http://localhost:54100/api/Promotions";
         public ObservableCollection<PromotionViewModel> Promotions { get; set; }
+        private ObservableCollection<PromotionViewModel> _filteredPromotions;
+        public ObservableCollection<PromotionViewModel> FilteredPromotions { get { return this._filteredPromotions; } set { this._filteredPromotions = value; } }
+        private string _lookupString = null;
+        public string LookupString { get { return this._lookupString; } set {
+                this._lookupString = value;
+                if (this._lookupString != null)
+                {
+                    FilteredPromotions = new ObservableCollection<PromotionViewModel>(Promotions.Where(pro => pro.Name.ToLower().Contains(this._lookupString)));
+                }
+                else
+                {
+                    FilteredPromotions = Promotions;
+                }
+            } }
 
         public PromotionListViewModel()
         {
             Promotions = new ObservableCollection<PromotionViewModel>();
+            _filteredPromotions = Promotions;
             LoadData();
         }
 

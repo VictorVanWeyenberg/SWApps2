@@ -19,6 +19,23 @@ namespace SWApps2.ViewModel
 
         public ObservableCollection<EstablishmentEventViewModel> Events { get { return this._events; } }
         private ObservableCollection<EstablishmentEventViewModel> _events;
+        private ObservableCollection<EstablishmentEventViewModel> _filteredEvents;
+        public ObservableCollection<EstablishmentEventViewModel> FilteredEvents{ get { return this._filteredEvents; } set { this._filteredEvents = value; } }
+        private string _lookupString = null;
+        public string LookupString {
+            get { return this._lookupString; }
+            set {
+                this._lookupString = value;
+                if (this._lookupString != null)
+                {
+                    FilteredEvents = new ObservableCollection<EstablishmentEventViewModel>(Events.Where(pro => pro.Name.ToLower().Contains(this._lookupString)));
+                }
+                else
+                {
+                    FilteredEvents = Events;
+                }
+            }
+        }
 
         public EstablishmentEventListViewModel()
         {

@@ -56,5 +56,19 @@ namespace SWApps2.View
             _navigator.Navigate("Promotion", new { Navigator = _navigator, Parameter = selectedPromotion });
         }
 
+        public void Filter(object sender, AutoSuggestBoxTextChangedEventArgs e)
+        {
+            string lookupString = (sender as AutoSuggestBox).Text.ToLower();
+            if (lookupString != string.Empty || lookupString != null)
+            {
+                this.PromotionList.LookupString = lookupString;
+            }
+            else
+            {
+                this.PromotionList.LookupString = null;
+            }
+            (FindName("items") as ListView).ItemsSource = this.PromotionList.FilteredPromotions;
+        }
+
     }
 }

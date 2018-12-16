@@ -104,5 +104,18 @@ namespace SWApps2.View
             _map = (MapControl)mapControl.FindName("Map");
             _map.ZoomLevel = 14.5;
         }
+
+        public void Filter(object sender, AutoSuggestBoxTextChangedEventArgs e)
+        {
+            string lookupString = (sender as AutoSuggestBox).Text.ToLower();
+            if (lookupString != string.Empty || lookupString != null)
+            {
+                this.EstablishmentList.LookupString = lookupString;
+            } else
+            {
+                this.EstablishmentList.LookupString = null;
+            }
+            (FindName("items") as ListView).ItemsSource = this.EstablishmentList.FilteredEstablishments;
+        }
     }
 }

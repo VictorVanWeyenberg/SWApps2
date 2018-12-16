@@ -25,6 +25,7 @@ namespace SWApps2.View
     public sealed partial class EventListView : Page
     {
         public EstablishmentEventListViewModel EventList { get; set; }
+
         private INavigation _navigator;
         public EventListView()
         {
@@ -57,6 +58,20 @@ namespace SWApps2.View
         {
             EstablishmentEvent selectedEvent = (e.ClickedItem as EstablishmentEventViewModel)?.Event;
             _navigator.Navigate("Event", new { Navigator = _navigator, Parameter = selectedEvent });
+        }
+
+        public void Filter(object sender, AutoSuggestBoxTextChangedEventArgs e)
+        {
+            string lookupString = (sender as AutoSuggestBox).Text.ToLower();
+            if (lookupString != string.Empty || lookupString != null)
+            {
+                this.EventList.LookupString = lookupString;
+            }
+            else
+            {
+                this.EventList.LookupString = null;
+            }
+            (FindName("items") as ListView).ItemsSource = this.EventList.FilteredEvents;
         }
     }
 }
