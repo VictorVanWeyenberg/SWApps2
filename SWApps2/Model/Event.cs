@@ -14,6 +14,8 @@ namespace SWApps2.Model
     {
         #region Properties
 
+        public int ID { get; private set; }
+
         public DateTime Start { get; set; }
 
         public DateTime End { get; set; }
@@ -41,6 +43,20 @@ namespace SWApps2.Model
             Name = name;
             Description = description;
             Establishment = establishment;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name">The name of the event</param>
+        /// <param name="description">The description of the event</param>
+        /// <param name="start">The start date</param>
+        /// <param name="end">The end date</param>
+        /// <param name="establishment">The establishment that is linked to this event</param>
+        public Event(int id, Establishment establishment, string name, string description, DateTime start, DateTime end) : 
+            this(establishment, name, description, start, end)
+        {
+            ID = id;
         }
     }
 }

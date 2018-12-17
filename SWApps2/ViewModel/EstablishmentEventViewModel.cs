@@ -1,8 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
+using Newtonsoft.Json;
+using SWApps2.Converters;
 using SWApps2.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +14,7 @@ namespace SWApps2.ViewModel
 {
     public class EstablishmentEventViewModel : ViewModelBase
     {
+        private const string GETEVENTBYID = "http://localhost:54100/api/EstablishmentEvents/";
         #region Attributes
 
         private EstablishmentEvent _event;
@@ -27,7 +32,21 @@ namespace SWApps2.ViewModel
         public string EstablishmentName { get { return Event.Establishment.Name; } }
         #endregion
         public EstablishmentEventViewModel() {
-            
+            Messenger.Default.Register<IDArgs>(this, LoadData);
+        }
+
+        private async void LoadData(IDArgs id)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            string jsonresult = await client.GetStringAsync(new Uri(GETEVENTBYID + id.ID));
+            DownloadCompleted(jsonresult);
+        }
+
+        private void DownloadCompleted(string json)
+        {
+            var eventje = JsonConvert.DeserializeObject<EstablishmentEvent>(json, new EstablishmentEventJsonConverter());
+            this.Event = eventje;
         }
 
         //Redo this

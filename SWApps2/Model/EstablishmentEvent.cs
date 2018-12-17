@@ -23,5 +23,9 @@ namespace SWApps2.Model
         : base(establishment, name, description, start, end)
         {
         }
+        public EstablishmentEvent(int id,  Establishment establishment, string name, string description, DateTime start, DateTime end)
+       : base(id, establishment, name, description, start, end)
+        {
+        }
     }
 }

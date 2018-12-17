@@ -32,8 +32,15 @@ namespace Swapps_Web_API.Controllers
         [ResponseType(typeof(EstablishmentEvent))]
         public IHttpActionResult GetEstablishmentEvent(int id)
         {
-            EstablishmentEvent establishmentEvent = db.Events.Find(id);
-            if (establishmentEvent == null)
+            EstablishmentEvent establishmentEvent = db.Events
+                .Include(evt => evt.Establishment)
+                .Include(evt => evt.Establishment.Tags)
+                .Include(evt => evt.Establishment.Events)
+                .Include(evt => evt.Establishment.ServiceHours)
+                .Include(evt => evt.Establishment.Promotions)
+                .Include(evt => evt.Establishment.Address)
+                .FirstOrDefault(evt => evt.ID == id);
+            if (establishmentEvent?.Name == null)
             {
                 return NotFound();
             }

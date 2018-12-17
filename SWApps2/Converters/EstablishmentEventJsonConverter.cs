@@ -19,6 +19,7 @@ namespace SWApps2.Converters
             JObject jObject = JObject.Load(reader);
             if (jObject == null) return null;
 
+            int id = jObject.Value<int>("ID");
             string name = jObject.Value<string>("Name");
             string description = jObject.Value<string>("Description");
             DateTime startDate = jObject.Value<DateTime>("StartDate");
@@ -37,7 +38,7 @@ namespace SWApps2.Converters
                         }
                     });
             } catch (ArgumentException) { } catch (NullReferenceException) { }
-            return new EstablishmentEvent(est, name, description, startDate, endDate);
+            return new EstablishmentEvent(id, est, name, description, startDate, endDate);
         }
 
         public override void WriteJson(JsonWriter writer, EstablishmentEvent value, JsonSerializer serializer)

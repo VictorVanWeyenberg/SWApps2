@@ -1,4 +1,5 @@
-﻿using SWApps2.Model;
+﻿using GalaSoft.MvvmLight.Messaging;
+using SWApps2.Model;
 using SWApps2.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,7 @@ namespace SWApps2.View
         public void ItemClickHandler(object sender, ItemClickEventArgs e)
         {
             EstablishmentEvent selectedEvent = (e.ClickedItem as EstablishmentEventViewModel)?.Event;
+            Messenger.Default.Send(new IDArgs(selectedEvent.ID));
             _navigator.Navigate("Event", new { Navigator = _navigator, Parameter = selectedEvent });
         }
 
