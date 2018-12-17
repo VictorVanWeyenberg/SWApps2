@@ -6,8 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding RegisterViewModel, Source={StaticResource Locator}}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <RelativePanel>
         <TextBlock x:Name="GlobalError" Margin="15,0,15,10" Foreground="Red" RelativePanel.Below="Title"/>

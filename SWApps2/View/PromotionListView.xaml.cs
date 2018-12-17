@@ -29,7 +29,8 @@ namespace SWApps2.View
         private INavigation _navigator;
         public PromotionListView()
         {
-            DataContextChanged += (s, e) => PromotionList = DataContext as PromotionListViewModel;
+            PromotionList = new PromotionListViewModel();
+            DataContext = PromotionList;
             InitializeComponent();
             InitializeSearchBox();
         }

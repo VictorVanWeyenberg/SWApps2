@@ -28,7 +28,8 @@ namespace SWApps2.View
         private INavigation _navigator;
         public PromotionView()
         {
-            DataContextChanged += (s, e) => Promotion = DataContext as PromotionViewModel;
+            Promotion = new PromotionViewModel();
+            DataContext = Promotion;
             this.InitializeComponent();
         }
 

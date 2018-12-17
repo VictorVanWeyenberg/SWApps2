@@ -30,7 +30,8 @@ namespace SWApps2.View
 
         public LoginView()
         {
-            DataContextChanged +=(s, e) => LoginViewModel = DataContext as LoginViewModel;
+            LoginViewModel = new LoginViewModel();
+            DataContext = LoginViewModel;
             InitializeComponent();
             LoginViewModel.PropertyChanged += UpdateUI_PropertyChanged;
         }

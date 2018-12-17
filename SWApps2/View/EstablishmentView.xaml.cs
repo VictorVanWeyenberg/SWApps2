@@ -33,11 +33,9 @@ namespace SWApps2.View
         private MapControl _map;
         public EstablishmentView()
         {
-            DataContextChanged += (s, e) =>
-            {
-                Establishment = DataContext as EstablishmentViewModel;
-                GeneratePointOfInterest();
-            };
+            Establishment = new EstablishmentViewModel();
+            DataContext = Establishment;
+            GeneratePointOfInterest();
             //Establishment.LoadData();
             InitializeComponent();
             InitializeMap();

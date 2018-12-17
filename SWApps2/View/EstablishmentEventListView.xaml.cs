@@ -30,10 +30,8 @@ namespace SWApps2.View
         private INavigation _navigator;
         public EventListView()
         {
-            DataContextChanged += (s, e) =>
-            {
-                EventList = DataContext as EstablishmentEventListViewModel;
-            };
+            EventList = new EstablishmentEventListViewModel();
+            DataContext = EventList;
             InitializeComponent();
             InitializeSearchBox();
         }

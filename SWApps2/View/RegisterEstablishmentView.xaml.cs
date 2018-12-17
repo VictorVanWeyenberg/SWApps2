@@ -29,7 +29,8 @@ namespace SWApps2.View
         private INavigation _navigator;
         public RegisterEstablishmentView()
         {
-            DataContextChanged += (s, e) => RegisterEstablishmentViewModel = DataContext as RegisterEstablishmentViewModel;
+            DataContext = new RegisterEstablishmentViewModel();
+            RegisterEstablishmentViewModel = DataContext as RegisterEstablishmentViewModel;
             InitializeComponent();
             RegisterEstablishmentViewModel.PropertyChanged += ViewOnPropertyChanged;
             InitErrorLabels();

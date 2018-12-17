@@ -140,7 +140,6 @@
     <Compile Include="ViewModel\PromotionViewModel.cs" />
     <Compile Include="ViewModel\RegisterEstablishmentViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\EstablishmentEventView.xaml.cs">
       <DependentUpon>EstablishmentEventView.xaml</DependentUpon>
     </Compile>

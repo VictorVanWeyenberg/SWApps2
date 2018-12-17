@@ -35,10 +35,8 @@ namespace SWApps2.View
         private MapControl _map;
         public SubscriptionView()
         {
-            DataContextChanged += (s, e) =>
-            {
-                EstablishmentList = DataContext as SubscriptionViewModel;
-            };
+            DataContext = new SubscriptionViewModel();
+            EstablishmentList = DataContext as SubscriptionViewModel;
             InitializeComponent();
             InitializeMap();
             InitializeSearchBox();

@@ -30,7 +30,8 @@ namespace SWApps2.View
         private INavigation _navigator;
         public RegisterView()
         {
-            DataContextChanged += (s, e) => RegisterViewModel = DataContext as RegisterViewModel;
+            DataContext = new RegisterViewModel();
+            RegisterViewModel = DataContext as RegisterViewModel;
             InitializeComponent();
             RegisterViewModel.PropertyChanged += RegisterViewModel_PropertyChanged;
             SetupRadios();

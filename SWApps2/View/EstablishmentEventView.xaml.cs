@@ -28,7 +28,8 @@ namespace SWApps2.View
         private INavigation _navigator;
         public EstablishmentEventView()
         {
-            DataContextChanged += (s, e) => Event = DataContext as EstablishmentEventViewModel;
+            Event = new EstablishmentEventViewModel();
+            DataContext = Event;
             this.InitializeComponent();
         }
 
