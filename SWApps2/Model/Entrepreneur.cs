@@ -26,6 +26,11 @@ namespace SWApps2.Model
         {
             Establishment = establishment;
         }
+        public Entrepreneur(int id, string firstname, string lastname, string email, Establishment establishment)
+           : base(id, firstname, lastname, email)
+        {
+            Establishment = establishment;
+        }
 
         public Establishment Establishment { get; set; }
     }

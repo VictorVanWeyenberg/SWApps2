@@ -155,7 +155,7 @@ namespace SWApps2.ViewModel
                     (Application.Current as App).User = JsonConvert.DeserializeObject<Entrepreneur>(jsonResponse.ToString(), new EntrepreneurJsonConverter());
                     return true;
                 case "User":
-                    (Application.Current as App).User = JsonConvert.DeserializeObject<User>(jsonResponse.ToString());
+                    (Application.Current as App).User = JsonConvert.DeserializeObject<User>(jsonResponse.ToString(), new UserJsonConverter());
                     return true;
                 default:
                     return false;

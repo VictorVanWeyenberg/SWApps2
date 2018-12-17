@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using Swapps_Web_API.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SWApps2.Converters;
 
 namespace Swapps_Web_API.Controllers
 {
@@ -55,6 +56,19 @@ namespace Swapps_Web_API.Controllers
         }
 
         [HttpPost]
+        [Route("api/updateUser")]
+        public HttpResponseMessage UpdateUser(JObject user)
+        {
+            User updatedUser = JsonConvert.DeserializeObject<User>(user.ToString(), new UserJsonConverter());
+            User oldUser = db.Users.Include(usertje => usertje.AbstractUser).FirstOrDefault(usertje => usertje.AbstractUser.ID == updatedUser.AbstractUser.ID);
+            oldUser.Subscriptions = updatedUser.Subscriptions;
+            db.SaveChanges();
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            response.Content = new StringContent(JsonConvert.SerializeObject(updatedUser));
+            return response;
+        }
+
+        [HttpPost]
         [Route("api/getUser")]
         public HttpResponseMessage GetUserData(JObject idjson)
         {
@@ -68,7 +82,6 @@ namespace Swapps_Web_API.Controllers
                 return response;
             }
             Entrepreneur entre = db.Entrepreneurs
-                .Where(e => e.UserID == abstractuser.ID)
                 .Include(e => e.User)
                 .Include(e => e.Establishment)
                 .Include(e => e.Establishment.Address)
@@ -76,8 +89,8 @@ namespace Swapps_Web_API.Controllers
                 .Include(e => e.Establishment.Events)
                 .Include(e => e.Establishment.Promotions)
                 .Include(e => e.Establishment.ServiceHours)
-                .FirstOrDefault();
-            if (entre != null)
+                .FirstOrDefault(e => e.User.ID == abstractuser.ID);
+            if (entre?.Establishment != null)
             {
                 response = new HttpResponseMessage(HttpStatusCode.OK);
                 JObject jsonContent = JObject.Parse(JsonConvert.SerializeObject(entre, new JsonSerializerSettings()
@@ -89,13 +102,20 @@ namespace Swapps_Web_API.Controllers
                 return response;
             }
             User user = db.Users
-                .Where(u => u.AbstractUserID == abstractuser.ID)
+                .Include(u => u.AbstractUser)
                 .Include(u => u.Subscriptions)
-                .FirstOrDefault();
-            if (user != null)
+                .Include(u => u.Subscriptions.Select(est => est.Address))
+                .Include(u => u.Subscriptions.Select(est => est.ServiceHours))
+                .Include(u => u.Subscriptions.Select(est => est.Tags))
+                .Include(u => u.Subscriptions.Select(est => est.Events))
+                .Include(u => u.Subscriptions.Select(est => est.Promotions))
+                .FirstOrDefault(e => e.AbstractUser.ID == abstractuser.ID);
+            if (user?.Subscriptions != null)
             {
                 response = new HttpResponseMessage(HttpStatusCode.OK);
-                JObject jsonContent = JObject.Parse(JsonConvert.SerializeObject(user));
+                JObject jsonContent = JObject.Parse(JsonConvert.SerializeObject(user, new JsonSerializerSettings {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                }));
                 jsonContent.Add("Type", "User");
                 response.Content = new StringContent(jsonContent.ToString());
                 return response;

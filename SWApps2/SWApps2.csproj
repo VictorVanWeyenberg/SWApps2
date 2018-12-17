@@ -102,6 +102,7 @@
     <Compile Include="Converters\PromotionJsonConverter.cs" />
     <Compile Include="Converters\SecurePassword.cs" />
     <Compile Include="Converters\ServiceHoursJsonConverter.cs" />
+    <Compile Include="Converters\UserJsonConverter.cs" />
     <Compile Include="CustomControls\GPSMap.xaml.cs">
       <DependentUpon>GPSMap.xaml</DependentUpon>
     </Compile>
@@ -129,6 +130,7 @@
     <Compile Include="Validation\LoginValidator.cs" />
     <Compile Include="Validation\RegisterEstablishmentValidator.cs" />
     <Compile Include="Validation\RegisterValidator.cs" />
+    <Compile Include="ViewModel\SubscriptionViewModel.cs" />
     <Compile Include="ViewModel\EstablishmentListViewModel.cs" />
     <Compile Include="ViewModel\EstablishmentViewModel.cs" />
     <Compile Include="ViewModel\EstablishmentEventListViewModel.cs" />
@@ -141,6 +143,9 @@
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\EstablishmentEventView.xaml.cs">
       <DependentUpon>EstablishmentEventView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SubscriptionView.xaml.cs">
+      <DependentUpon>SubscriptionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EstablishmentListView.xaml.cs">
       <DependentUpon>EstablishmentListView.xaml</DependentUpon>
@@ -206,6 +211,10 @@
     <Page Include="View\EstablishmentEventView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SubscriptionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\EstablishmentListView.xaml">
       <SubType>Designer</SubType>

@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="SWApps2.View.SubscriptionView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SWApps2.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    xmlns:viewModels="using:SWApps2.ViewModel"
+    xmlns:controls="using:SWApps2.CustomControls"
+    DataContext="{Binding Subscription, Source={StaticResource Locator}}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <AutoSuggestBox x:Name="Search" Grid.ColumnSpan="2" QueryIcon="Find" TextChanged="Filter"/>
+        <controls:GPSMap x:Name="MapControl" Grid.Column="0" Grid.Row="1"/>
+        <ListView x:Name="items"
+                  ItemsSource="{x:Bind Path=EstablishmentList.FilteredEstablishments, Mode=OneWay}"
+                  ItemClick="{x:Bind Path=ItemClickHandler}"
+                  IsItemClickEnabled="True"
+                  Grid.Column="1"
+                  Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:EstablishmentViewModel">
+                    <StackPanel Orientation="Horizontal" Padding="10" VerticalAlignment="Top">
+                        <StackPanel Orientation="Vertical" Padding="10,0">
+                            <TextBlock Text="{x:Bind Path=Name}" FontSize="32"/>
+                            <TextBlock Text="{x:Bind Path=Address}" FontSize="10" Foreground="#FF1D1D1D"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>

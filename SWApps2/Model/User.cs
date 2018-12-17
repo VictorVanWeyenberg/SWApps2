@@ -21,6 +21,14 @@ namespace SWApps2.Model
         {
             SubsribedEstablishments = new List<Establishment>();
         }
+        public User(int id, string firstname, string lastname, string email) : base(id, firstname, lastname, email)
+        {
+            SubsribedEstablishments = new List<Establishment>();
+        }
+        public User(int id, string firstname, string lastname, string email, List<Establishment> subscriptions) : base(id, firstname, lastname, email)
+        {
+            SubsribedEstablishments = subscriptions;
+        }
 
         public User() : this(null,null,null)
         { }

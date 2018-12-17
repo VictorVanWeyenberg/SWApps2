@@ -79,6 +79,17 @@ namespace SWApps2.View
         {
             _navigator = (e.Parameter as dynamic)?.Navigator;
             this.Establishment.Establishment = (e.Parameter as dynamic)?.Parameter;
+            if ((Application.Current as App).User != null)
+            {
+                if (!((Application.Current as App).User as User).SubsribedEstablishments.Select(est => est.ID).Contains(Establishment.Establishment.ID))
+                {
+                    (FindName("Subscribe") as Button).Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    (FindName("UnSubscribe") as Button).Visibility = Visibility.Visible;
+                }
+            }
         }
 
         private void InitializeMap()
@@ -86,6 +97,18 @@ namespace SWApps2.View
             var mapControl = (GPSMap)FindName("GPSMapControl");
             _map = (MapControl)mapControl.FindName("Map");
             _map.ZoomLevel = 20;
+        }
+
+        private void Subscribe_Click(object sender, RoutedEventArgs e)
+        {
+            Establishment.SubscribeToEstablishment();
+            (FindName("UnSubscribe") as Button).Visibility = Visibility.Visible;
+            (FindName("Subscribe") as Button).Visibility = Visibility.Collapsed;
+        }
+
+        private void UnSubscribe_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

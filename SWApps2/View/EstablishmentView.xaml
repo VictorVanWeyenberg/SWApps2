@@ -57,6 +57,8 @@
                     <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(5)}" FontSize="12"/>
                     <TextBlock Text="{x:Bind Path=Establishment.HoursForDayToString(6)}" FontSize="12"/>
                 </StackPanel>
+                <Button x:Name="Subscribe" Visibility="Collapsed" Click="Subscribe_Click" Content="Subscribe to Establishment" />
+                <Button x:Name="UnSubscribe" Visibility="Collapsed" Click="UnSubscribe_Click" Content="Unsubscribe to Establishment" />
             </StackPanel>
         </Grid>
     </Grid>

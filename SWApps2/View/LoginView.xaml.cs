@@ -51,7 +51,7 @@ namespace SWApps2.View
                     _navigator.Navigate("MyEstablishment", new { Navigator = _navigator, Parameter = ((Application.Current as App).User as Entrepreneur).Establishment });
                 }
                 else {
-                    _navigator.Navigate("Establishments", new { Navigator = _navigator });
+                    _navigator.Navigate("Subscriptions", new { Navigator = _navigator });
                 }
             }
         }

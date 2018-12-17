@@ -181,7 +181,12 @@
     <Compile Include="Controllers\EstablishmentEventsController.cs" />
     <Compile Include="Controllers\EstablishmentsController.cs" />
     <Compile Include="Controllers\PromotionsController.cs" />
+    <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Converters\UserJsonConverter.cs" />
+    <Compile Include="Converters\EntrepreneurJsonConverter.cs" />
+    <Compile Include="Converters\EstablishmentEventJsonConverter.cs" />
+    <Compile Include="Converters\PromotionJsonConverter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

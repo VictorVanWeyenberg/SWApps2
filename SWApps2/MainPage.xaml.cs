@@ -91,7 +91,9 @@ namespace SWApps2
                 case "RegisterEstablishment": _pageWrapper.Navigate(typeof(RegisterEstablishmentView), Parameters);
                     break;
                 case "LogOut": Logout(); break;
-                case "Subscriptions": break;    //TODO
+                case "Subscriptions":
+                    _pageWrapper.Navigate(typeof(SubscriptionView), Parameters);
+                    break;    //TODO
                 case "MyEstablishment": NavigateToMyEstablishmentIfPresent(); break;
             }
             _navigation.IsBackEnabled = _pageWrapper.CanGoBack;

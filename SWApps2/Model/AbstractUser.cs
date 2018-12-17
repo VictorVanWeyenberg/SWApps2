@@ -24,8 +24,15 @@ namespace SWApps2.Model
             LastName = lastname;
             Email = email;
         }
+        protected AbstractUser(int id, string firstname, string lastname, string email) : 
+            this(firstname, lastname, email)
+        {
+            ID = id;
+        }
 
         #region Properties
+
+        public int ID { get; set; }
 
         public string FirstName { get; set; }
 

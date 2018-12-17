@@ -19,6 +19,7 @@ namespace SWApps2.ViewModel
         private const string CLOSED = "CLOSED";
         private const string GETURL = "http://localhost:54100/api/establishment/owner";
         private const string GETESTABLISHMENYBYID = "http://localhost:54100/api/Establishments/";
+        private const string SUBSCRIBE = "http://localhost:54100/api/updateUser";
 
         private Establishment _establishment;
         public Establishment Establishment
@@ -89,6 +90,16 @@ namespace SWApps2.ViewModel
             }
             //Invalid day
             return "";
+        }
+
+        public void SubscribeToEstablishment()
+        {
+            User user = (Application.Current as App).User as User;
+            user.SubsribedEstablishments.Add(this.Establishment);
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            StringContent content = new StringContent(JsonConvert.SerializeObject(user, new UserJsonConverter()), Encoding.UTF8, "application/json");
+            string jsonResult = client.PostAsync(SUBSCRIBE, content).Result.Content.ToString();
         }
     }
 }
