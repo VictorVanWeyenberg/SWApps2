@@ -32,8 +32,15 @@ namespace Swapps_Web_API.Controllers
         [ResponseType(typeof(Promotion))]
         public IHttpActionResult GetPromotion(int id)
         {
-            Promotion promotion = db.Promotions.Find(id);
-            if (promotion == null)
+            Promotion promotion = db.Promotions
+                .Include(pro => pro.Establishment)
+                .Include(pro => pro.Establishment.Address)
+                .Include(pro => pro.Establishment.Tags)
+                .Include(pro => pro.Establishment.ServiceHours)
+                .Include(pro => pro.Establishment.Promotions)
+                .Include(pro => pro.Establishment.Events)
+                .FirstOrDefault(pro => pro.ID == id);
+            if (promotion?.Name == null)
             {
                 return NotFound();
             }

@@ -1,7 +1,11 @@
-﻿using SWApps2.Model;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Newtonsoft.Json;
+using SWApps2.Converters;
+using SWApps2.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +13,7 @@ namespace SWApps2.ViewModel
 {
     public class PromotionViewModel
     {
+        private const string GETPROMOTIONBYID = "http://localhost:54100/api/Promotions/";
         public Promotion _promotion;
         public Promotion Promotion { get { return this._promotion; } set 
                 {
@@ -17,6 +22,21 @@ namespace SWApps2.ViewModel
             }  }
         public PromotionViewModel()
         {
+            Messenger.Default.Register<IDArgs>(this, LoadData);
+        }
+
+        private async void LoadData(IDArgs id)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            string jsonresult = await client.GetStringAsync(new Uri(GETPROMOTIONBYID + id.ID));
+            DownloadCompleted(jsonresult);
+        }
+
+        private void DownloadCompleted(string json)
+        {
+            var promotion = JsonConvert.DeserializeObject<Promotion>(json, new PromotionJsonConverter());
+            this.Promotion = promotion;
         }
         public Establishment Establishment { get { return this._promotion.Establishment; } }
         public string Name { get { return this._promotion.Name; } }

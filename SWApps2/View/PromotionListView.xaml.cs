@@ -1,4 +1,5 @@
-﻿using SWApps2.Model;
+﻿using GalaSoft.MvvmLight.Messaging;
+using SWApps2.Model;
 using SWApps2.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,7 @@ namespace SWApps2.View
         public void ItemClickHandler(object sender, ItemClickEventArgs e)
         {
             Promotion selectedPromotion = (e.ClickedItem as PromotionViewModel)?.Promotion;
+            Messenger.Default.Send<IDArgs>(new IDArgs(selectedPromotion.ID));
             _navigator.Navigate("Promotion", new { Navigator = _navigator, Parameter = selectedPromotion });
         }
 
