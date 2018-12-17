@@ -22,6 +22,7 @@ namespace SWApps2.Converters
             Establishment est = null;
             try
             {
+                int id = jObject.Value<int>("ID");
                 string name = jObject.Value<string>("Name");
                 List<string> tags = jObject.Value<JArray>("Tags").ToList().Select<JToken, string>(t => (t as dynamic)?.Value).ToList();
                 Address address = jObject.Value<JToken>("Address").ToObject<Address>();
@@ -35,7 +36,7 @@ namespace SWApps2.Converters
                 foreach (JObject jsonPromotion in jObject.Value<JArray>("Promotions").ToObject<List<JObject>>()) promotions.Add(JsonConvert.DeserializeObject<Promotion>(jsonPromotion.ToString(), new PromotionJsonConverter()));
 
                 EstablishmentType type = (EstablishmentType)Enum.Parse(typeof(EstablishmentType), jObject.Value<string>("Type"));
-                est = new Establishment(name, address, jsonServiceHours, type, tags, promotions, events);
+                est = new Establishment(id, name, address, jsonServiceHours, type, tags, promotions, events);
 
                 foreach (EstablishmentEvent eventje in events) eventje.Establishment = est;
                 foreach (Promotion promotion in promotions) promotion.Establishment = est;

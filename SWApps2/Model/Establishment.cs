@@ -24,7 +24,7 @@ namespace SWApps2.Model
         /// <param name="type">The type of establishment</param>
         /// <param name="image">An optional image for the establishment</param>
         public Establishment(string name, Address address, ServiceHours hours, EstablishmentType type, Uri image)
-            : this(name,address,hours,type,new List<string>(),new List<Promotion>(),new List<EstablishmentEvent>(), image){}
+            : this(name,address,hours,type,new List<string>(),new List<Promotion>(),new List<EstablishmentEvent>(), image){ }
 
         /// <summary>
         /// Constructor
@@ -50,7 +50,26 @@ namespace SWApps2.Model
             EstablishmentEvents = events;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name">The name of the establishment</param>
+        /// <param name="address">The address of the establishment</param>
+        /// <param name="hours">The opening hours of the establishment</param>
+        /// <param name="type">The type of establishment</param>
+        /// <param name="image">An optional image for the establishment</param>
+        /// <param name="events">A list of events for this establishment</param>
+        /// <param name="promotions">A list of promotions for this establishment</param>
+        /// <param name="tags">A list of tags for this establishment</param>
+        public Establishment(int id, string name, Address address, ServiceHours hours, EstablishmentType type,
+            List<string> tags, List<Promotion> promotions, List<EstablishmentEvent> events, Uri image = null) : 
+            this (name, address, hours, type, tags, promotions, events, image)
+        {
+            ID = id;
+        }
+
         #region properties
+        public int ID { get; private set; }
         public EstablishmentType Type { get; set; }
 
         /// <summary>

@@ -115,6 +115,7 @@
     <Compile Include="Model\EstablishmentEvent.cs" />
     <Compile Include="Model\EstablishmentType.cs" />
     <Compile Include="Model\Event.cs" />
+    <Compile Include="Model\IDArgs.cs" />
     <Compile Include="Model\LoginWrapper.cs" />
     <Compile Include="Model\INavigation.cs" />
     <Compile Include="Model\Promotion.cs" />

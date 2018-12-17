@@ -8,6 +8,9 @@ using GalaSoft.MvvmLight;
 using System.Net.Http;
 using SWApps2.Model;
 using Windows.UI.Xaml;
+using GalaSoft.MvvmLight.Messaging;
+using Newtonsoft.Json;
+using SWApps2.Converters;
 
 namespace SWApps2.ViewModel
 {
@@ -15,6 +18,7 @@ namespace SWApps2.ViewModel
     {
         private const string CLOSED = "CLOSED";
         private const string GETURL = "http://localhost:54100/api/establishment/owner";
+        private const string GETESTABLISHMENYBYID = "http://localhost:54100/api/Establishments/";
 
         private Establishment _establishment;
         public Establishment Establishment
@@ -42,7 +46,27 @@ namespace SWApps2.ViewModel
             }
         }
 
-        public EstablishmentViewModel() { }
+        public EstablishmentViewModel() {
+            Messenger.Default.Register<IDArgs>(this, LoadData);
+        }
+
+        private async void LoadData(IDArgs id)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            string jsonresult = await client.GetStringAsync(new Uri(GETESTABLISHMENYBYID + id.ID));
+            DownloadCompleted(jsonresult);
+        }
+
+        private void DownloadCompleted(string json)
+        {
+            var establishment = JsonConvert.DeserializeObject<Establishment>(json, new EstablishmentJsonConverter());
+            foreach (EstablishmentEvent eventje in establishment.EstablishmentEvents)
+            {
+                eventje.Establishment = establishment;
+            }
+            this.Establishment = establishment;
+        }
 
         public string Name { get { return Establishment.Name; } }
         public Address Address { get { return Establishment.Address; } }

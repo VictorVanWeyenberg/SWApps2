@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Controls.Maps;
 using Windows.Devices.Geolocation;
 using Windows.Services.Maps;
 using SWApps2.CustomControls;
+using GalaSoft.MvvmLight.Messaging;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -86,6 +87,7 @@ namespace SWApps2.View
         public void ItemClickHandler(object sender, ItemClickEventArgs e)
         {
             Establishment selectedEstablishment = (e.ClickedItem as EstablishmentViewModel)?.Establishment;
+            Messenger.Default.Send(new IDArgs(selectedEstablishment.ID));
             _navigator.Navigate("Establishment", new { Navigator = _navigator, Parameter = selectedEstablishment });
         }
 
