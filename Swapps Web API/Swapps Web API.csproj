@@ -183,6 +183,8 @@
     <Compile Include="Controllers\PromotionsController.cs" />
     <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Converters\TimeIntervalJsonConverter.cs" />
+    <Compile Include="Converters\EstablishmentJsonConverter.cs" />
     <Compile Include="Converters\UserJsonConverter.cs" />
     <Compile Include="Converters\EntrepreneurJsonConverter.cs" />
     <Compile Include="Converters\EstablishmentEventJsonConverter.cs" />

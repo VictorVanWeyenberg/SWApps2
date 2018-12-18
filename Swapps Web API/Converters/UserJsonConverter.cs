@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Swapps_Web_API.Converters;
 using Swapps_Web_API.Models;
 using System;
 using System.Collections.Generic;
@@ -19,12 +20,13 @@ namespace SWApps2.Converters
             if (jObject == null) return null;
 
             List<Establishment> subscriptions = new List<Establishment>();
-            if (jObject.Value<JObject>("Subscriptions") != null)
+            if (jObject.Value<JArray>("SubsribedEstablishments") != null)
             {
-                foreach (JObject jsonEst in jObject.Value<JObject[]>("Subscriptions"))
+                var subscriptionsJson = jObject.Value<JArray>("SubsribedEstablishments");
+                foreach (JObject jsonEst in subscriptionsJson)
                 {
 
-                    Establishment est = JsonConvert.DeserializeObject<Establishment>(jsonEst.ToString());
+                    Establishment est = JsonConvert.DeserializeObject<Establishment>(jsonEst.ToString(), new EstablishmentJsonConverter());
                     subscriptions.Add(est);
                 }
             }

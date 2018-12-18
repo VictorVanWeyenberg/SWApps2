@@ -16,7 +16,8 @@
             SelectionChanged="Change_Page" 
             Grid.Column="0" 
             Name="Nav" 
-            IsPaneOpen="True">
+            IsPaneOpen="True"
+            IsBackEnabled="False">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="My Subscriptions" x:Name="Subscriptions" Icon="AllApps"/>
                 <NavigationViewItem Content="Establishments" x:Name="Establishments" Icon="World"/>

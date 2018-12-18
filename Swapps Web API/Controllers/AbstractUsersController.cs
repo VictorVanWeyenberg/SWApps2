@@ -60,7 +60,10 @@ namespace Swapps_Web_API.Controllers
         public HttpResponseMessage UpdateUser(JObject user)
         {
             User updatedUser = JsonConvert.DeserializeObject<User>(user.ToString(), new UserJsonConverter());
-            User oldUser = db.Users.Include(usertje => usertje.AbstractUser).FirstOrDefault(usertje => usertje.AbstractUser.ID == updatedUser.AbstractUser.ID);
+            User oldUser = db.Users
+                .Include(usertje => usertje.AbstractUser)
+                .Include(usertje => usertje.Subscriptions)
+                .FirstOrDefault(usertje => usertje.AbstractUser.ID == updatedUser.AbstractUser.ID);
             oldUser.Subscriptions = updatedUser.Subscriptions;
             db.SaveChanges();
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);

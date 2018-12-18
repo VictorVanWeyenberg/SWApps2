@@ -79,6 +79,7 @@ namespace SWApps2.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navigator = (e.Parameter as dynamic)?.Navigator;
+
             base.OnNavigatedTo(e);
         }
 
