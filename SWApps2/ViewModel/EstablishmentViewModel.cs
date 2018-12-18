@@ -48,7 +48,7 @@ namespace SWApps2.ViewModel
         }
 
         public EstablishmentViewModel() {
-            Messenger.Default.Register<IDArgs>(this, LoadData);
+            // Messenger.Default.Register<IDArgs>(this, LoadData);
         }
 
         private async void LoadData(IDArgs id)
@@ -57,6 +57,7 @@ namespace SWApps2.ViewModel
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             string jsonresult = await client.GetStringAsync(new Uri(GETESTABLISHMENYBYID + id.ID));
             DownloadCompleted(jsonresult);
+            Callback();
         }
 
         private void DownloadCompleted(string json)
@@ -75,6 +76,7 @@ namespace SWApps2.ViewModel
         
         public ObservableCollection<EstablishmentEventViewModel> Events { get; set; }
         public ObservableCollection<PromotionViewModel> Promotions { get; set; }
+        public Action Callback { get; internal set; }
 
         public string HoursForDayToString(int number)
         {

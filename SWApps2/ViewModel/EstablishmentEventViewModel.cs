@@ -32,15 +32,18 @@ namespace SWApps2.ViewModel
         public string EstablishmentName { get { return Event.Establishment.Name; } }
         #endregion
         public EstablishmentEventViewModel() {
-            Messenger.Default.Register<IDArgs>(this, LoadData);
+            // Messenger.Default.Register<IDArgs>(this, LoadData);
         }
 
         private async void LoadData(IDArgs id)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
-            string jsonresult = await client.GetStringAsync(new Uri(GETEVENTBYID + id.ID));
-            DownloadCompleted(jsonresult);
+            if (id?.ID != null)
+            {
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                string jsonresult = await client.GetStringAsync(new Uri(GETEVENTBYID + id.ID));
+                DownloadCompleted(jsonresult);
+            }
         }
 
         private void DownloadCompleted(string json)

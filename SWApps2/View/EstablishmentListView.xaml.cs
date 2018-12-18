@@ -35,7 +35,10 @@ namespace SWApps2.View
         private MapControl _map;
         public EstablishmentListView()
         {
-            EstablishmentList = new EstablishmentListViewModel();
+            EstablishmentList = new EstablishmentListViewModel()
+            {
+                Callback = GeneratePointsOfInterest
+            };
             DataContext = EstablishmentList;
             InitializeComponent();
             InitializeMap();

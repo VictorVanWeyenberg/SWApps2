@@ -23,7 +23,7 @@
             <controls:GPSMap x:Name="GPSMapControl"/>
             <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10,0,0,0">
                 <TextBlock FontSize="32" Text="Events" />
-                <ListView ItemsSource="{x:Bind Establishment.Events}">
+                <ListView ItemsSource="{x:Bind Establishment.Events}" IsItemClickEnabled="True" ItemClick="EventClick">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewModels:EstablishmentEventViewModel">
                             <StackPanel Orientation="Vertical" Padding="10">
@@ -34,7 +34,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <TextBlock FontSize="32" Text="Promotions" />
-                <ListView ItemsSource="{x:Bind Establishment.Promotions}">
+                <ListView ItemsSource="{x:Bind Establishment.Promotions}" IsItemClickEnabled="True" ItemClick="PromotionClick">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewModels:PromotionViewModel">
                             <StackPanel Orientation="Vertical" Padding="10">

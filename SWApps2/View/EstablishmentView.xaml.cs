@@ -1,4 +1,5 @@
-﻿using SWApps2.CustomControls;
+﻿using GalaSoft.MvvmLight.Messaging;
+using SWApps2.CustomControls;
 using SWApps2.Model;
 using SWApps2.ViewModel;
 using System;
@@ -33,11 +34,14 @@ namespace SWApps2.View
         private MapControl _map;
         public EstablishmentView()
         {
-            Establishment = new EstablishmentViewModel();
+            Establishment = new EstablishmentViewModel()
+            {
+                Callback = GeneratePointOfInterest
+            };
             DataContext = Establishment;
+            InitializeComponent();
             GeneratePointOfInterest();
             //Establishment.LoadData();
-            InitializeComponent();
             InitializeMap();
         }
 
@@ -77,15 +81,18 @@ namespace SWApps2.View
         {
             _navigator = (e.Parameter as dynamic)?.Navigator;
             this.Establishment.Establishment = (e.Parameter as dynamic)?.Parameter;
-            if ((Application.Current as App).User != null)
+            if ((Application.Current as App).User is User)
             {
-                if (!((Application.Current as App).User as User).SubsribedEstablishments.Select(est => est.ID).Contains(Establishment.Establishment.ID))
+                if ((Application.Current as App).User != null)
                 {
-                    (FindName("Subscribe") as Button).Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    (FindName("UnSubscribe") as Button).Visibility = Visibility.Visible;
+                    if (!((Application.Current as App).User as User).SubsribedEstablishments.Select(est => est.ID).Contains(Establishment.Establishment.ID))
+                    {
+                        (FindName("Subscribe") as Button).Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        (FindName("UnSubscribe") as Button).Visibility = Visibility.Visible;
+                    }
                 }
             }
         }
@@ -107,6 +114,20 @@ namespace SWApps2.View
         private void UnSubscribe_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void PromotionClick(object sender, ItemClickEventArgs e)
+        {
+            Promotion promotion = (e.ClickedItem as PromotionViewModel).Promotion;
+            Messenger.Default.Send(new IDArgs(promotion.ID));
+            _navigator.Navigate("Promotion", new { Navigator = _navigator, Parameter = promotion });
+        }
+
+        private void EventClick(object sender, ItemClickEventArgs e)
+        {
+            EstablishmentEvent eventje = (e.ClickedItem as EstablishmentEventViewModel).Event;
+            Messenger.Default.Send(new IDArgs(eventje.ID));
+            _navigator.Navigate("Event", new { Navigator = _navigator, Parameter = eventje });
         }
     }
 }

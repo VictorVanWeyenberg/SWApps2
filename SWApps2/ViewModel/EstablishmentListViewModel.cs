@@ -33,6 +33,9 @@ namespace SWApps2.ViewModel
                     FilteredEstablishments = Establishments;
                 }
             } }
+
+        public Action Callback { get; internal set; }
+
         public EstablishmentListViewModel()
         {
             _establishments = new ObservableCollection<EstablishmentViewModel>();
@@ -46,6 +49,7 @@ namespace SWApps2.ViewModel
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             string jsonresult = await client.GetStringAsync(new Uri(url));
             DownloadCompleted(jsonresult);
+            Callback();
         }
 
         private void DownloadCompleted(string json)
